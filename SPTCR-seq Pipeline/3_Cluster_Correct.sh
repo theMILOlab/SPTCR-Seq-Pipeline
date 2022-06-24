@@ -86,6 +86,8 @@ EOF
 ################################################################
 if [ ${OUTFOLDER} = "PWD" ];then
     OUTFOLDER=$PWD
+    mkdir ${PWD}/ClusterCorrect
+    OUTFOLDER=${PWD}/ClusterCorrect
 else
     OUTFOLDER=${OUTFOLDER}
 fi 
@@ -217,6 +219,10 @@ else
 fi
 echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast File is in ${OUTDIR}/IGB/${SAMPLE_NAME}_Final_Blast.tsv"
 exit
+
+### Missing: Demultiplex Final IGB & UMI Correct
+
+############### For umi Correction
 mkdir ${OUTFOLDER}/UMI_Correction
 mkdir ${OUTFOLDER}/UMI_Correction/UMI_CLUSTERING
 mkdir ${OUTFOLDER}/UMI_Correction/UMI_CORRECTED

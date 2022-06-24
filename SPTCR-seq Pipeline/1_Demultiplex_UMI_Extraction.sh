@@ -70,10 +70,10 @@ argparse "$@" <<EOF || exit 1
 
 parser.add_argument('-n','--NAME',help="Name of Output Folder",default="-")
 parser.add_argument('-i', '--INPUT_FASTQ', help="Specify the Path to the merged Input Fastq File",required=True)
-parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="PWD")
+parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="PWD/Demultiplexing")
 
 parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
-parser.add_argument('-mem','--MEMORY',help="RAM to user", default="8")
+parser.add_argument('-mem','--MEMORY',help="RAM to user", default="16")
 
 parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="../")
 parser.add_argument('-a', '--ADAPTER', default='CTACACGACGCTCTTCCGATCT', 
@@ -84,7 +84,8 @@ EOF
 
 #### Outdir ####
 if [ ${OUTFOLDER} = "PWD" ];then
-    OUTFOLDER=$PWD
+    mkdir ${PWD}/Demultiplexing
+    OUTFOLDER=${PWD}/Demultiplexing
 else
     OUTFOLDER=${OUTFOLDER}
 fi 
