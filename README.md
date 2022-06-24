@@ -26,7 +26,14 @@ For Installation:
         cd ./Tools
         git clone https://github.com/vpc-ccg/scTagger.git
         ```
-4. For Error Correction 
+4. For Error Correction, do:
+        ```
+        cd./Tools
+        git clone --recurse-submodules https://github.com/comprna/RATTLE
+        cd RATTLE
+        ./build.sh
+        ```
+
 5. Activate Environment to run the Pipeline
         ```
         conda activate -n SPTCR_ENV
@@ -36,12 +43,13 @@ For Installation:
 
 ### 1. Demultiplexing Reads
 
-    Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script als extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp.
+        Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script als extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp.
 
             ./1_Demultiplex_UMI_Extraction.sh
                 usage: 1_Demultiplex_UMI_Extraction.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER]
                                                     [-t THREADS] [-mem MEMORY] [-rep REPOSITORY]
                                                     [-a ADAPTER]
+                -i INPUT_FASTQ  Path to the Input Fastq
                 -rep REPOSITORY Path to the cloned Github Repository, default: ../
                 -n NAME         Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
                 -a ADAPTER      Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
@@ -70,3 +78,25 @@ For Installation:
         1c3e69d7-8858-43df-a329-f3f551fbf1e4,AACCAGACTCTTCGGT,AACCAGACTCTTCGGT,,
         b2e47859-226a-4446-9c86-3c1999fc90f7,AGTGATGACGCGTATA,AGTGATGACGCGTATA,,
         bba4f060-27ae-4eba-9566-cdc7a92a4d17,CGTAGCAGTAATGGAC,CGTAGCAGTAATGGAC,,
+
+### 2. Preprocess Reads
+        Preprocess the Reads for the Correction Pipeline. This script splits fusioned Reads, trims the Adapters from 10X & the aligns it for the TCR-sequences.
+
+        ```
+        ./2_Preprocess_Reads.sh
+        usage: 2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER] [-t THREADS]
+                                [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER]
+                                [-conf CONFIGURATION] [-chop PYCHOPPER] [-trim ADAPTER_TRIM]
+                                [-igb IGBLAST]
+                -rep REPOSITORY         Path to the cloned Github Repository, default: ../
+                -conf CONFIGURATION     Path to the Primer Configuration File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
+                                        10XPrimers_pychopper_configuration.txt
+                -pri PRIMER             Path to the Primer .fa File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
+                                        10XPrimers_pychopper.fa
+                -n NAME                 Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
+                -a ADAPTER              Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
+                -t THREADS              Number of Threads to use
+                -mem MEMORY             Maximum Memory to use for Barcode Matching
+                -chop PYCHOPPER         Specify if Reads should be made full length by Pychopper, default: True
+                -igb IGBLAST            If True, the preprocessed Fastq is aligned with IgBLAST Following Processing., default: True
+                -trim ADAPTER_TRIM      Specify if Reads should be from Adapters
