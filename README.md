@@ -45,16 +45,16 @@ For Installation:
 
         Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script als extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp.
 
-            ./1_Demultiplex_UMI_Extraction.sh
-                usage: 1_Demultiplex_UMI_Extraction.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER]
+        ./1_Demultiplex_UMI_Extraction.sh
+        usage: 1_Demultiplex_UMI_Extraction.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER]
                                                     [-t THREADS] [-mem MEMORY] [-rep REPOSITORY]
                                                     [-a ADAPTER]
-                -i INPUT_FASTQ  Path to the Input Fastq
-                -rep REPOSITORY Path to the cloned Github Repository, default: ../
-                -n NAME         Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
-                -a ADAPTER      Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
-                -t THREADS      Number of Threads to use
-                -mem MEMORY     Maximum Memory to use for Barcode Matching
+        -i INPUT_FASTQ          Path to the Input Fastq
+        -rep REPOSITORY         Path to the cloned Github Repository, default: ../
+        -n NAME                 Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
+        -a ADAPTER              Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
+        -t THREADS              Number of Threads to use
+        -mem MEMORY             Maximum Memory to use for Barcode Matching
 
         After Running the Pipeline you will get in the specified Outfolder following Table:
 
@@ -82,20 +82,38 @@ For Installation:
 ### 2. Preprocess Reads
         Preprocess the Reads for the Correction Pipeline. This script splits fusioned Reads, trims the Adapters from 10X & the aligns it for the TCR-sequences.
 
-                ./2_Preprocess_Reads.sh
-                usage: 2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER] [-t THREADS]
-                                        [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER]
-                                        [-conf CONFIGURATION] [-chop PYCHOPPER] [-trim ADAPTER_TRIM]
-                                        [-igb IGBLAST]
-                        -rep REPOSITORY         Path to the cloned Github Repository, default: ../
-                        -conf CONFIGURATION     Path to the Primer Configuration File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
-                                                10XPrimers_pychopper_configuration.txt
-                        -pri PRIMER             Path to the Primer .fa File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
-                                                10XPrimers_pychopper.fa
-                        -n NAME                 Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
-                        -a ADAPTER              Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
-                        -t THREADS              Number of Threads to use
-                        -mem MEMORY             Maximum Memory to use for Barcode Matching
-                        -chop PYCHOPPER         Specify if Reads should be made full length by Pychopper, default: True
-                        -igb IGBLAST            If True, the preprocessed Fastq is aligned with IgBLAST Following Processing., default: True
-                        -trim ADAPTER_TRIM      Specify if Reads should be from Adapters
+        ./2_Preprocess_Reads.sh
+        usage: 2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER] [-t THREADS]
+                                [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER]
+                                [-conf CONFIGURATION] [-chop PYCHOPPER] [-trim ADAPTER_TRIM]
+                                [-igb IGBLAST]
+
+        -i INPUT_FASTQ          Path to the Input Fastq
+        -o OUTFOLDER            Directory for the Outfolder, default: PWD
+        -rep REPOSITORY         Path to the cloned Github Repository, default: ../
+        -conf CONFIGURATION     Path to the Primer Configuration File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
+                                10XPrimers_pychopper_configuration.txt
+        -pri PRIMER             Path to the Primer .fa File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
+                                10XPrimers_pychopper.fa
+        -n NAME                 Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
+        -a ADAPTER              Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
+        -t THREADS              Number of Threads to use
+        -chop PYCHOPPER         Specify if Reads should be made full length by Pychopper, default: True
+        -igb IGBLAST            If True, the preprocessed Fastq is aligned with IgBLAST Following Processing., default: True
+        -trim ADAPTER_TRIM      Specify if Reads should be from Adapters
+
+### 2. Cluster and Correct Reads
+        Clusters Reads basd on their VJ Annotation generated by IgBlast Alignment, next Reads are corrected using Rattle Algorithm.
+        
+        ./3_Cluster_Correct.sh"
+        usage: 3_Cluster_Correct.sh [-h] [-n NAME] -i INPUT_FASTQ -b INPUT_IGB [-o OUTFOLDER]
+                                [-t THREADS] [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER]
+                                [-conf CONFIGURATION] [-igb IGBLAST]
+
+        -i INPUT_FASTQ          Path to the Input Fastq
+        -i INPUT_IGB            Path to the Input IgBlast Result generated by 2_Preprocess_Reads.sh
+        -n NAME                 Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
+        -o OUTFOLDER            Directory for the Outfolder, default: PWD
+        -t THREADS              Number of Threads to use
+        -igb IGBLAST            If True, the preprocessed Fastq is aligned with IgBLAST Following Processing., default: True
+        -rep REPOSITORY         Path to the cloned Github Repository, default: ../
