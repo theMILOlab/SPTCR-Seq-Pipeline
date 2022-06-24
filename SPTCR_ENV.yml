@@ -1,0 +1,27 @@
+name: SPTCR_ENV
+channels:
+  - anaconda 
+  - conda-forge
+  - bioconda
+  - intel
+dependencies:
+  - snakemake>=6
+  - python-edlib
+  - umi_tools
+  - numpy
+  - matplotlib
+  - scipy
+  - tqdm
+  - pandas
+  - modin
+  - hmmer>=3.0
+  - pychopper>=2.0
+  - cutadapt
+  - biopython
+  - joblib
+  - pyfastx
+  - dask
+  - parallel
+  - pip:
+      - crowelab_pyir
+
