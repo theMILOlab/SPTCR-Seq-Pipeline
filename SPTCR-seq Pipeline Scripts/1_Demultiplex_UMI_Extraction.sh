@@ -70,7 +70,9 @@ argparse "$@" <<EOF || exit 1
 
 parser.add_argument('-n','--NAME',help="Name of Output Folder",default="-")
 parser.add_argument('-i', '--INPUT_FASTQ', help="Specify the Path to the merged Input Fastq File",required=True)
-parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="PWD/Demultiplexing")
+parser.add_argument('-igb', '--INPUT_IGB', help="Specify the Path to IgBlast File to be demultiplexed with demultiplex_summarize.py. If not specified will only output table for later demultiplexing.",required=False)
+
+parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="PWD")
 
 parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
 parser.add_argument('-mem','--MEMORY',help="RAM to user", default="16")
@@ -81,26 +83,29 @@ parser.add_argument('-a', '--ADAPTER', default='CTACACGACGCTCTTCCGATCT',
 
 EOF
 
+################################################################
+###################### Variable BLOCK###########################
+################################################################
 
 #### Outdir ####
-if [ ${OUTFOLDER} = "PWD" ];then
-    mkdir ${PWD}/Demultiplexing
-    OUTFOLDER=${PWD}/Demultiplexing
+if [ "${OUTFOLDER}" = PWD ];then
+    #mkdir ${PWD}/Demultiplexing
+    OUTFOLDER=${PWD}
 else
-    OUTFOLDER=${OUTFOLDER}
+    OUTFOLDER="${OUTFOLDER}"
 fi 
 
 if [ ${NAME} = "-" ];then
-    SAMPLE_NAME="$(basename ${INPUT_FASTQ})"
-    SAMPLE_NAME="$(cut -d'.' -f1 <<<${SAMPLE_NAME})"_$(date +%d_%Y)
+    SAMPLE_NAME="$(basename "${INPUT_FASTQ}")"
+    SAMPLE_NAME="$(cut -d'.' -f1 <<<"${SAMPLE_NAME}")"_$(date +%d_%Y)
 else
     SAMPLE_NAME=${NAME}
 fi 
 
 
 ### Log Folder ####
-mkdir ${OUTFOLDER}/LOGS
-LOGS=${OUTFOLDER}/LOGS
+mkdir "${OUTFOLDER}"/LOGS
+LOGS="${OUTFOLDER}"/LOGS
 
 ### Timestamp Function
 
@@ -110,77 +115,95 @@ timestamp() {
 
 STARTTIME=$(date +%s)
 
-################################################################
-################## UMI Extraction BLOCK###########################
-################################################################
-BARCODE_LIST=${REPOSITORY}/REFERENCE/Barcodes/visium_bc.tsv
+
+BARCODE_LIST=${REPOSITORY}/Reference/Barcodes/visium_bc.tsv
 DEMUX_GENERATOR=${REPOSITORY}/SCRIPTS/generate_demux_umi_dfs.sh
 DEMUXXER=${REPOSITORY}/SCRIPTS/demultiplex_extract_umi_region.py
 SCTAGGER=${REPOSITORY}/TOOLS/scTagger/py
+DEMUX_SUMMARY=${REPOSITORY}/SCRIPTS/demultiplex_summarize.py
 
+################################################################
+################## UMI Extraction BLOCK###########################
+################################################################
 
 echo "$(timestamp)"
 echo " :::: Demultiplexing & Extracting UMIs with scTagger::::"
-mkdir ${OUTFOLDER}/Demultiplexing_${SAMPLE_NAME}
-OUTFOLDER=${OUTFOLDER}/Demultiplexing_${SAMPLE_NAME}
+mkdir "${OUTFOLDER}"/Demultiplexing_"${SAMPLE_NAME}"
+OUTFOLDER="${OUTFOLDER}"/Demultiplexing_"${SAMPLE_NAME}"
 
 echo ":::::Demultiplexing and UMI Extraction ${samplename}:::::"
-mkdir ${OUTFOLDER}/${SAMPLE_NAME}_UMI_Extraction
+mkdir "${OUTFOLDER}"/"${SAMPLE_NAME}"_UMI_Extraction
 
 echo "::: Extracting Adapter and Barcode :::"
-${SCTAGGER}/extract_lr_bc.py \
-    -r ${INPUT_FASTQ} \
+"${SCTAGGER}"/extract_lr_bc.py \
+    -r "${INPUT_FASTQ}" \
     -t ${THREADS} \
     -sa ${ADAPTER} \
     --num-bp-after 16 \
-    -o ${OUTFOLDER}/${SAMPLE_NAME}_UMI_Extraction/${SAMPLE_NAME}_Extracted_Adapter_Barcode.tsv.gz 2>> ${LOGS}/${SAMPLE_NAME}_Demux_stderr.txt
+    -o "${OUTFOLDER}"/"${SAMPLE_NAME}"_UMI_Extraction/"${SAMPLE_NAME}"_Extracted_Adapter_Barcode.tsv.gz 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
 
 
 echo "::: Extracting Adapter, Barcode and UMI:::"
-${SCTAGGER}/extract_lr_bc.py \
-    -r ${INPUT_FASTQ} \
+"${SCTAGGER}"/extract_lr_bc.py \
+    -r "${INPUT_FASTQ}" \
     -t ${THREADS} \
     -sa ${ADAPTER} \
     --num-bp-after 28 \
-    -o ${OUTFOLDER}/${SAMPLE_NAME}_UMI_Extraction/${SAMPLE_NAME}_Extracted_Adapter_Barcode_UMI.tsv.gz 2>> ${LOGS}/${SAMPLE_NAME}_Demux_stderr.txt
+    -o "${OUTFOLDER}"/"${SAMPLE_NAME}"_UMI_Extraction/"${SAMPLE_NAME}"_Extracted_Adapter_Barcode_UMI.tsv.gz 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
 
 ################################################################
 ##################Demultiplexing BLOCK###########################
 ################################################################
 echo "::::: Extracting Long Read Adapter Segments :::::"
-mkdir ${OUTFOLDER}/${SAMPLE_NAME}_DEMUX
+mkdir "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX
 
-${SCTAGGER}/extract_lr_bc.py \
-    -r ${INPUT_FASTQ} \
+"${SCTAGGER}"/extract_lr_bc.py \
+    -r "${INPUT_FASTQ}" \
     -t ${THREADS} \
     -sa ${ADAPTER} \
-    -o ${OUTFOLDER}/${SAMPLE_NAME}_DEMUX/${SAMPLE_NAME}_lr_bc.tsv.gz 2>> ${LOGS}/${SAMPLE_NAME}_Demux_stderr.txt
+    -o "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/"${SAMPLE_NAME}"_lr_bc.tsv.gz 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
 
 echo "::::: Matching Barcodes to Extracted Segments :::::"
-${SCTAGGER}/match_lr_bc-trie.py \
-    -lr ${OUTFOLDER}/${SAMPLE_NAME}_DEMUX/${SAMPLE_NAME}_lr_bc.tsv.gz \
-    -sr ${BARCODE_LIST}  \
-    -o ${OUTFOLDER}/${SAMPLE_NAME}_DEMUX/${SAMPLE_NAME}_scTagger_DEMUX.tsv.gz \
+"${SCTAGGER}"/match_lr_bc-trie.py \
+    -lr "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/"${SAMPLE_NAME}"_lr_bc.tsv.gz \
+    -sr "${BARCODE_LIST}"  \
+    -o "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/"${SAMPLE_NAME}"_scTagger_DEMUX.tsv.gz \
     -t ${THREADS} \
-    -m ${MEMORY} 2>> ${LOGS}/${SAMPLE_NAME}_Demux_stderr.txt
+    -m ${MEMORY} 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
 
 
 
-gunzip ${OUTFOLDER}/${SAMPLE_NAME}_DEMUX/*
-#${SAMPLE_NAME}_scTagger_DEMUX.tsv.gz
+gunzip "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/*
+#"${SAMPLE_NAME}"_scTagger_DEMUX.tsv.gz
 
-gunzip ${OUTFOLDER}/${SAMPLE_NAME}_UMI_Extraction/*
+gunzip "${OUTFOLDER}"/"${SAMPLE_NAME}"_UMI_Extraction/*
 
-DEMUXED=${OUTFOLDER}/${SAMPLE_NAME}_DEMUX/${SAMPLE_NAME}_scTagger_DEMUX.tsv 
-
+DEMUXED="${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/"${SAMPLE_NAME}"_scTagger_DEMUX.tsv 
+umi_folder="${OUTFOLDER}"/"${SAMPLE_NAME}"_UMI_Extraction
 
 ################################################################
 ##########Generate Demultiplexing Table, Extract UMIs#########
 ################################################################
+echo "::::: Generating Final Output Table :::::"
 
-python ${DEMUXXER} \
+python "${DEMUXXER}" \
     -i ${DEMUXED} \
-    -u ${OUTFOLDER}/${SAMPLE_NAME}_UMI_Extraction \
-    -o ${OUTFOLDER} \
-    -n ${SAMPLE_NAME} \
-    -b ${BARCODE_LIST} >> ${LOGS}/${SAMPLE_NAME}_Demux_stderr.txt 2>> ${LOGS}/${SAMPLE_NAME}_Demux_stderr.txt
+    -u ${umi_folder} \
+    -o "${OUTFOLDER}" \
+    -n "${SAMPLE_NAME}" \
+    -b "${BARCODE_LIST}" >> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
+
+echo ":::::: Removing Intermediate Folders :::::"
+rm -r ${umi_folder}
+rm -r "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX
+
+if [ -f "${INPUT_IGB}" ]; then
+    echo ":::::: Generating IGB with UMI :::::"
+
+    python "${DEMUX_SUMMARY}" \
+        -igb "${INPUT_IGB}" \
+        -bc "${OUTFOLDER}"/test_demux_barcode_umi.csv \
+        -o "${OUTFOLDER}"
+else
+    echo " Not Input IgBlast File given"
+fi

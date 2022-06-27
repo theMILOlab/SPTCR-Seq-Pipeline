@@ -1,9 +1,10 @@
 
-import pandas as pd 
-import modin.pandas as pmd
+import pandas as pmd 
+#import modin.pandas as pmd
 import os
 from collections import defaultdict
 from Bio.Seq import Seq
+#os.environ["MODIN_ENGINE"] = "ray"  
 
 import argparse
 from unicodedata import name
@@ -39,7 +40,8 @@ demux_frame_all=demux_frame
 demux_frame['Barcode']=demux_frame[0] ### Choose randomly first Barcode -> can be optimized to choose spatially closest
 demux_frame=demux_frame[['ReadID','Barcode']]
 
-out_name='{0}_DEMUX/{0}_all_barcode_matches.csv'.format(sample)
+#### Write All Barcode Matches to Outfolder
+out_name='{0}_all_barcode_matches.csv'.format(sample)
 write_path=os.path.join(output_directory,out_name)
 demux_frame_all.to_csv(write_path,index=False)
 print(demux_frame)
@@ -84,7 +86,7 @@ UMI_DF=Substract_Adapters[['ReadID','UMI']]
 #demux_df=Demux_Dict[sample]
 
 umi_barcode_df=pmd.merge(left=UMI_DF,right=demux_frame,on='ReadID')
-
+#umi_barcode_df.to_csv('umi_barcode_df_not_revcomp_corr.csv')
 
 #Demux_Dict[sample]=umi_barcode_df
 
@@ -94,7 +96,7 @@ print(umi_barcode_df.head(5))
 ############# Revcomp Correct Barcodes#############
 
 
-Visium_Bcs=pd.read_csv(BARCODES,sep='\t',names=['Spatial Barcode'])
+Visium_Bcs=pmd.read_csv(BARCODES,sep='\t',names=['Spatial Barcode'])
 
 ### Get All forms of Visium BC and concat to new Demultiplexing Frame
 Visium_Bcs['Forward Indicator']='Forward'
@@ -120,19 +122,25 @@ test_all_forms=pmd.concat([concat1,concat2,concat3,concat4],axis=0)
 
 ## Demultiplex by Merging Both Dataframes
 demux=pmd.merge(left=test_all_forms,left_on='Spatial Barcode',right=umi_barcode_df, right_on=['Barcode'],indicator=True)
-
+print(demux['UMI'])
 ## Split into Forward and Reverse Barcode Matches
-forward_barcodes=demux[demux['Indicator']=='Forward'][['Spatial Barcode','ReadID']]
+forward_barcodes=demux[demux['Indicator']=='Forward'][['Spatial Barcode','ReadID','UMI']]
+forward_barcodes['UMI']=forward_barcodes['UMI'].astype(str)  
 reverse_barcodes=demux[demux['Indicator']=='Reverse Complement'][['Spatial Barcode','ReadID','UMI']]
-print(reverse_barcodes)
+print(forward_barcodes)
 
 ## Reverse Complement the Reverse UMIs
 reverse_barcodes['UMI']=reverse_barcodes['UMI'].astype(str)                                          
-reverse_barcodes['UMI']=reverse_barcodes['UMI'].apply(lambda x: ''.join(list(Seq(x).reverse_complement())),axis=1)
+reverse_barcodes['UMI']=reverse_barcodes['UMI'].apply(lambda x: ''.join(list(Seq(x).reverse_complement())))
+reverse_barcodes['UMI']=reverse_barcodes['UMI'].astype(str)
+
+print(len(forward_barcodes['UMI'].dropna()))
+print(len(reverse_barcodes['UMI'].dropna()))
+forward_barcodes.reset_index(drop=True)
 
 
 ## Merge Both Dataframes Again
-demux_frame=pmd.concat([reverse_barcodes,forward_barcodes],axis=0)
+demux_frame=pmd.concat([forward_barcodes,reverse_barcodes],axis='index')
 print(demux_frame)
 
 ### Write Demultiplexed Dataframe

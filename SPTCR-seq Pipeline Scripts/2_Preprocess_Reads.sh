@@ -75,7 +75,7 @@ parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Out
 parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
 parser.add_argument('-mem','--MEMORY',help="RAM to user", default="8")
 
-parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="/mnt/681ABFBA1ABF839A/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/FINAL/Repository")
+parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="../")
 
 parser.add_argument('-pri', '--PRIMER', help="Specify Custom Primers if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper.",default="10X")
 parser.add_argument('-conf', '--CONFIGURATION', help="Specify the possible Configurations of the Custom Primers for Pychopper if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper.")
@@ -83,30 +83,31 @@ parser.add_argument('-conf', '--CONFIGURATION', help="Specify the possible Confi
 parser.add_argument('-chop', '--PYCHOPPER', help="Specify if Reads should be made full length by Pychopper",default="True")
 parser.add_argument('-trim', '--ADAPTER_TRIM', help="Specify if Reads should be from Adapters",default="True")
 parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing.",default="True")
-parser.add_argument('-demux', '--DEMULTIPLEX', help="If path to demultiplexing Table is given, the outpur IGBLAST will be demultiplexed",default="False")
+parser.add_argument('-demux', '--DEMULTIPLEX', help="If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes.",default="True")
 
 EOF
 
 ################################################################
 ################## Define Variables BLOCK###########################
 ################################################################
-if [ ${OUTFOLDER} = "PWD" ];then
-    OUTFOLDER=$PWD
+if [ "${OUTFOLDER}" = "PWD" ];then
+    mkdir ${PWD}/PreProcessing
+    OUTFOLDER=${PWD}/PreProcessing
 else
-    OUTFOLDER=${OUTFOLDER}
+    OUTFOLDER="${OUTFOLDER}"
 fi 
 
 if [ ${NAME} = "-" ];then
     SAMPLE_NAME="$(basename ${INPUT_FASTQ})"
-    SAMPLE_NAME="$(cut -d'.' -f1 <<<${SAMPLE_NAME})"_$(date +%d_%Y)
+    SAMPLE_NAME="$(cut -d'.' -f1 <<<"${SAMPLE_NAME}")"_$(date +%d_%Y)
 else
     SAMPLE_NAME=${NAME}
 fi 
 
 
 ### Log Folder ####
-mkdir ${OUTFOLDER}/LOGS
-LOGS=${OUTFOLDER}/LOGS
+mkdir "${OUTFOLDER}"/LOGS
+LOGS="${OUTFOLDER}"/LOGS
 
 ### Timestamp Function
 
@@ -142,22 +143,22 @@ DEMULTIPLEXER=${REPOSITORY}/SCRIPTS/demultiplex_summarize.py
 if [ ${PYCHOPPER} = True ]; then
     echo "$(timestamp)" 
     echo " :::: Pychopper ::::"
-    mkdir ${OUTFOLDER}/PYCHOPPER
-    pychop_dir=${OUTFOLDER}/PYCHOPPER
+    mkdir "${OUTFOLDER}"/PYCHOPPER
+    pychop_dir="${OUTFOLDER}"/PYCHOPPER
 
     cdna_classifier.py \
         -m edlib \
         -b ${PRIMERS} \
         -c ${PRIMER_CONFIGURATION} \
-        -r ${LOGS}/${SAMPLE_NAME}_Pychopper_report.pdf \
-        -S ${LOGS}/${SAMPLE_NAME}_Pychopper_report.tsv \
+        -r ${LOGS}/"${SAMPLE_NAME}"_Pychopper_report.pdf \
+        -S ${LOGS}/"${SAMPLE_NAME}"_Pychopper_report.tsv \
         -t ${THREADS} \
         -p \
         ${INPUT_FASTQ} \
-        ${pychop_dir}/${SAMPLE_NAME}_pychopped.fastq \
-        2> ${LOGS}/${SAMPLE_NAME}_Pychopper_stderr.txt
+        ${pychop_dir}/"${SAMPLE_NAME}"_pychopped.fastq \
+        2> ${LOGS}/"${SAMPLE_NAME}"_Pychopper_stderr.txt
 
-    PYCHOPPED=${pychop_dir}/${SAMPLE_NAME}_pychopped.fastq
+    PYCHOPPED=${pychop_dir}/"${SAMPLE_NAME}"_pychopped.fastq
 
 else echo " :::: Skipping Pychopper ::::"
     PYCHOPPED=${INPUT_FASTQ}
@@ -166,7 +167,7 @@ fi
 if [ ${ADAPTER_TRIM} = True ]; then
     echo "$(timestamp)"
     echo " :::: Trimming Adapters ::::"
-    mkdir ${OUTFOLDER}/CUTADAPT
+    mkdir "${OUTFOLDER}"/CUTADAPT
 
     echo "Extracting 10X Amplicon (R1,TSO) of Reads"
     cutadapt \
@@ -175,11 +176,11 @@ if [ ${ADAPTER_TRIM} = True ]; then
         -e 0.2 \
         --action trim \
         --match-read-wildcards \
-        -o ${OUTFOLDER}/CUTADAPT/${SAMPLE_NAME}_Cutadapt_dual_trim.fastq \
+        -o "${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_dual_trim.fastq \
         ${PYCHOPPED} \
-        > ${LOGS}/Cutadapt_Amplicon_report_${SAMPLE_NAME}.txt 
+        > ${LOGS}/Cutadapt_Amplicon_report_"${SAMPLE_NAME}".txt 
 
-    DUAL_TRIMMED=${OUTFOLDER}/CUTADAPT/${SAMPLE_NAME}_Cutadapt_dual_trim.fastq
+    DUAL_TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_dual_trim.fastq
 
     echo "Trimming remaining R1 or TSO on either Side Reads for chimeric Reads/PCR Artifacts"
     cutadapt \
@@ -187,11 +188,11 @@ if [ ${ADAPTER_TRIM} = True ]; then
         --cores=0 \
         --action trim \
         --match-read-wildcards \
-        -o ${OUTFOLDER}/CUTADAPT/${SAMPLE_NAME}_Cutadapt_trimmed.fastq \
+        -o "${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq \
         ${DUAL_TRIMMED} \
-        > ${LOGS}/Cutadapt_trimmed_${SAMPLE_NAME}.txt
+        > ${LOGS}/Cutadapt_trimmed_"${SAMPLE_NAME}".txt
 
-    TRIMMED=${OUTFOLDER}/CUTADAPT/${SAMPLE_NAME}_Cutadapt_trimmed.fastq
+    TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
 
 else echo " :::: Skipping Trimming Adapters ::::"
     TRIMMED=${INPUT_FASTQ}
@@ -203,9 +204,9 @@ fi
 
 if [ ${IGBLAST} = True ]; then
     echo " :::: Quering (trimmed) Input to IgBlast for vdj Clustering :::: "
-    mkdir ${OUTFOLDER}/IGB_Trimmed
-    mkdir ${OUTFOLDER}/IGB_Trimmed/TEMP_${SAMPLE_NAME}
-    cd ${OUTFOLDER}/IGB_Trimmed
+    mkdir "${OUTFOLDER}"/IGB_Trimmed
+    mkdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
+    cd "${OUTFOLDER}"/IGB_Trimmed
 
     pyir \
         -t fastq \
@@ -217,24 +218,45 @@ if [ ${IGBLAST} = True ]; then
         --numV 1 \
         --numD 1 \
         --numJ 1 \
-        --tmp_dir ${OUTFOLDER}/IGB_Trimmed/TEMP_${SAMPLE_NAME} \
-        -o ${SAMPLE_NAME}_preprocessed_IGB \
+        --tmp_dir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}" \
+        -o "${SAMPLE_NAME}"_preprocessed_IGB \
         ${TRIMMED}
 
-    gunzip ${SAMPLE_NAME}_preprocessed_IGB.tsv.gz
+    gunzip "${SAMPLE_NAME}"_preprocessed_IGB.tsv.gz
 
-    INPUT_IGB=${SAMPLE_NAME}_preprocessed_IGB.tsv
+    IGBLAST="${SAMPLE_NAME}"_preprocessed_IGB.tsv
 
-    rmdir ${OUTFOLDER}/IGB_Trimmed/TEMP_${SAMPLE_NAME}
+    
 else 
     echo " :::: Not quering IgBlast as indicated ::::"
 fi
 
-if [ ${DEMULTIPLEX} != False ]; then
+
+echo " ::::: Cleaning Up :::::"
+### Move Output Files to the Front
+mv ${TRIMMED} "${OUTFOLDER}"/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
+mv "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
+
+### Remove Created Working Directories
+rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
+rmdir "${OUTFOLDER}"/IGB_Trimmed
+rm -r "${OUTFOLDER}"/CUTADAPT
+rm -r "${OUTFOLDER}"/PYCHOPPER
+
+
+if [ ${DEMULTIPLEX} = True ]; then
     python "${DEMULTIPLEXER}" \
-        -igb ${INPUT_IGB} \
-        -n ${SAMPLE_NAME} \
+        -igb ${IGBLAST} \
+        -n "${SAMPLE_NAME}" \
         -bc ${DEMULTIPLEX}
 else
     echo ":::: No Demultiplexing Table given the Output will not be demultiplexed. ::::"
 fi
+
+"${demux}" \
+    -i /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/FINAL_21_2/Seq_Data/SPTCR12_Splits/01.SPTCR12_splits.fastq \
+    -igb "/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/FINAL_21_2/Repository/Pipeline/Test/PreProcessing/IGB_Trimmed/test_demux_preprocessed_IGB.tsv" \
+    -n test_demux \
+    -t 24 \
+    -mem 60 \
+    -rep "/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline"
