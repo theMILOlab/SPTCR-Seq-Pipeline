@@ -1,6 +1,8 @@
 # SPTCR-seq
 Pipeline to demultiplex, correct , annotate and UMI correct T-Cell Receptor Long Reads.
 
+![image](https://user-images.githubusercontent.com/70334482/175873404-d5ef14b1-5be4-4789-8ae9-5214b924a89e.png)
+
 
 ## Installation
 
