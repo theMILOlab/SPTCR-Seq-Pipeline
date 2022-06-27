@@ -49,7 +49,7 @@ For Installation:
 
         2_Preprocess_Reads.sh \
                 -n test_demux \
-                --INPUT_FASTQ \
+                --INPUT_FASTQ path/to/input \
                 --DEMULTIPLEX True
                 -rep "/Path/to/Repository"
 
@@ -210,6 +210,7 @@ For Installation:
         -t THREADS              Number of Threads to use
         -igb IGBLAST            If True, the corrected Fastq is aligned with IgBLAST following correction., default: True
         -rep REPOSITORY         Path to the cloned Github Repository, default: ../
+        
 
 ### Exemplary Pipeline
 ***
