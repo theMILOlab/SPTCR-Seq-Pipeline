@@ -83,6 +83,7 @@ parser.add_argument('-conf', '--CONFIGURATION', help="Specify the possible Confi
 parser.add_argument('-chop', '--PYCHOPPER', help="Specify if Reads should be made full length by Pychopper",default="True")
 parser.add_argument('-trim', '--ADAPTER_TRIM', help="Specify if Reads should be from Adapters",default="True")
 parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing.",default="True")
+parser.add_argument('-demux', '--DEMULTIPLEX', help="If path to demultiplexing Table is given, the outpur IGBLAST will be demultiplexed",default="False")
 
 EOF
 
@@ -128,6 +129,9 @@ fi
 ##Cutadapt
 DUAL_ADAPTER_10X=${REPOSITORY}/REFERENCE/Primer/Cutadapt/10X_Dual_Adapter.fa
 Adapter_5_3_10X=${REPOSITORY}/REFERENCE/Primer/Cutadapt/5_3_10X_Adapter.fa
+
+##Demultiplex
+DEMULTIPLEXER=${REPOSITORY}/SCRIPTS/demultiplex_summarize.py
 
 ################################################################
 ################## Trim & Reorient BLOCK #######################
@@ -224,4 +228,13 @@ if [ ${IGBLAST} = True ]; then
     rmdir ${OUTFOLDER}/IGB_Trimmed/TEMP_${SAMPLE_NAME}
 else 
     echo " :::: Not quering IgBlast as indicated ::::"
+fi
+
+if [ ${DEMULTIPLEX} != False ]; then
+    python "${DEMULTIPLEXER}" \
+        -igb ${INPUT_IGB} \
+        -n ${SAMPLE_NAME} \
+        -bc ${DEMULTIPLEX}
+else
+    echo ":::: No Demultiplexing Table given the Output will not be demultiplexed. ::::"
 fi
