@@ -53,4 +53,4 @@ umi_barcode_df=pd.read_csv(umi_bc)
 ## Demultiplex VDJ Annotation File with Barcode and UMI File
 demux_umi_df=pd.merge(left=vdj,right=umi_barcode_df,on='ReadID')
 print(demux_umi_df)
-demux_umi_df.to_csv('{0}/{1}_vdj_umi_barcode_uncorrected_df.csv'.format(OUT,sample_name))
+demux_umi_df.to_csv('{0}/{1}_vdj_umi_barcode_uncorrected_df.csv'.format(OUT,sample_name),index=False)
