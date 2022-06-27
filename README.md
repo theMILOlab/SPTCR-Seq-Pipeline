@@ -25,7 +25,7 @@ For Installation:
         ```
 3. To do Demultiplexing do:
         ```
-        cd ./Tools
+        cd ./SPTCR-seq/Tools
         git clone https://github.com/vpc-ccg/scTagger.git
         ```
 4. For Error Correction, do:
@@ -43,6 +43,63 @@ For Installation:
 
 ## Running Pipeline
 
+### 1. Combined Demultiplexing & Preprocessing of Reads
+***    
+        Preprocessing the Reads for Correction & matching the Barcodes to the raw sequencing Result as well as generate an table of demultiplexed, annotated T-Cell Receptor Sequences and their adjoining UMI Region you can do with.:
+
+        2_Preprocess_Reads.sh \
+                -n test_demux \
+                --INPUT_FASTQ \
+                --DEMULTIPLEX True
+                -rep "/Path/to/Repository"
+
+        #### Example Output
+        
+        ./Outfolder/Demultiplexing_sample/sample_vdj_umi_barcode_uncorrected_df.csv
+        Important Output Table used for downstream scripts or raw. Shows VDj Arrangement, spatial Barcode and UMI Region.
+
+        *ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI*
+        c2a37d19-be55-4976-bb8a-eb23d4056d54,TRA,TRBV11-3*01,,,,,GGCGGGTCTAGCCAGG,TGCCTACTTATG
+        a26264a7-94e0-40a0-b39e-e4c0cc3795ec,TRA,TRBV4-1*01,,,,,TTGTATCCCATGGTCT,CGGAACCCTATT
+        cdc8f537-7e95-41bf-befc-076810e148a1,TRG,TRBV21/OR9-2*01,,,,,GTGTCCGGAGAGCAGC,GACCGGCTGATC
+        cd8ab80f-fad8-417e-a8b7-052ebf783f34,TRG,TRBV9*01,,,,,GAAACCACGCGACCAT,GCACCGAATACT
+        43953ab9-6de4-4a95-bd4e-5b3bba50312b,TRB,TRBV6-2*01,TRBD1*01,TRBJ2-3*01,,,TATCCTATCTTAACTA,AGATTTAAGGCT
+        e9a448e2-4ceb-42c8-b390-a493ad5f67ad,TRB,TRBV28*01,TRBD2*01,TRBJ1-1*01,,,CGCAGGCGATCCAAAC,AACGCACTCACT
+        a0895494-d9e0-4e33-ab46-4bb16f63361f,,,,,,,GATTTCACGGCGGCTT,CCGACATCATTA
+        48bc4795-3660-4fd2-b5d2-bea672ca5dde,TRA,TRBV17*01,,,,,GTCAGACGCTGACGGG,CAGTGATCCGCT
+        50c59299-7df7-4b7b-a1b4-b96b048c7048,TRB,TRBV5-8*01,,TRBJ2-7*01,,,CGGTTACGACCATCCC,CTCATCGGCCCA
+        92082556-e90f-490c-9d04-fcef48c67412,TRB,TRBV6-5*01,,TRBJ2-4*01,,,GTAGCCCTGTACTTAG,GGCCACTCTGTA
+        5b0fc427-247c-4460-a7c8-b1640207d3f9,TRB,TRBV7-3*01,,TRBJ2-1*01,GCCAGCAGCTTAATGGCAGAAACAATGAGAGCAGTTC,PAA*WQKQ*EQF,GACGAACGGTAGATCC,ATCTAGCGCGGT
+        ...
+        
+        
+        ./Outfolder/Demultiplexing_sample/sample_demux_barcode_umi.csv
+        Holds a Table with the spatial Barcode for a Read, its ReadID as well as extracted UMI.
+
+        *Spatial Barcode,ReadID,UMI*
+        AAACAAGTATCTCCCA,2ce0b730-1620-44ec-aa34-baf3d73409a9,TCAGAGTAATAG
+        AAACAAGTATCTCCCA,a4d0c4bf-87a2-488a-bcf6-12dfcc94aef2,ATGCTGCTATAG
+        AAACAAGTATCTCCCA,0f53b8d7-cfcf-440f-a164-7f16627a40ba,ACGGTGCATATG
+        AAACAATCTACTAGCA,12a1e67b-6fc7-4c8a-ab35-d8656f141d04,ACGACCGAACAC
+        AAACAATCTACTAGCA,7e3656a5-8ca5-4daa-8f80-92e2ca478384,GTCAGTTTCAGT
+        AAACAATCTACTAGCA,8f04ac89-d118-4907-bcf7-2b81eeea2850,ACCTCCGGTTCC
+        AAACAATCTACTAGCA,dcc8192d-57e4-4da9-95d7-0fec363de285,AGTCCAGGATTG
+        AAACAATCTACTAGCA,3175222b-7325-4b41-9398-8cabb79e6d7b,TGAAACTGCTTT
+        AAACAATCTACTAGCA,0a620e60-0375-4dc1-8126-146c6688ebb0,AACCGTTGGTTC
+        AAACAATCTACTAGCA,ffbe151e-e3c5-4d7d-94e6-8c36bcb25676,ATATCTAAGAGC
+        AAACAATCTACTAGCA,c35e7676-5166-4fcf-b604-65d83cef5f27,ATTTTTGTAGTG
+
+
+        ./Outfolder/Demultiplexing_sample/sample_all_barcode_matches.csv
+        Table with all Barcode Matches per ReadID.
+
+        *ReadID,Barcode,0,1,2*
+        1e3bc9e7-6e55-4242-806d-d6eae46b621f,GGTGGGATTAGGTCCC,GGTGGGATTAGGTCCC,,
+        f8e40593-e913-4259-9a42-9266a7c14f09,TCCTTACGACGGTCCG,TCCTTACGACGGTCCG,,
+        1c3e69d7-8858-43df-a329-f3f551fbf1e4,AACCAGACTCTTCGGT,AACCAGACTCTTCGGT,,
+        b2e47859-226a-4446-9c86-3c1999fc90f7,AGTGATGACGCGTATA,AGTGATGACGCGTATA,,
+        bba4f060-27ae-4eba-9566-cdc7a92a4d17,CGTAGCAGTAATGGAC,CGTAGCAGTAATGGAC,,
+
 ### 1. Demultiplexing Reads
 ***
         Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script als extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp.
@@ -57,6 +114,7 @@ For Installation:
         -a ADAPTER              Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
         -t THREADS              Number of Threads to use
         -mem MEMORY             Maximum Memory to use for Barcode Matching
+        -igb, --INPUT_IGB       If Input IGB is given, it will be demultiplexed and the UMI added.
 
         #### Example:
 
@@ -84,22 +142,23 @@ For Installation:
                 bba4f060-27ae-4eba-9566-cdc7a92a4d17,CGTAGCAGTAATGGAC,CGTAGCAGTAATGGAC,,
 
 
+
 ### 2. Preprocess Reads
 ***
         Preprocess the Reads for the Correction Pipeline. This script splits fusioned Reads, trims the Adapters from 10X & aligns the Reads for the TCR Annotations. If the Barcode UMI csv from Step 1 will be used to demultiplex the annotated TCR sequences.
 
-        ./2_Preprocess_Reads.sh
-        usage: 2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER] [-t THREADS]
-                                [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER]
-                                [-conf CONFIGURATION] [-chop PYCHOPPER] [-trim ADAPTER_TRIM]
-                                [-igb IGBLAST]
+        2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER]
+                                [-t THREADS] [-mem MEMORY] [-rep REPOSITORY]
+                                [-pri PRIMER] [-conf CONFIGURATION]
+                                [-chop PYCHOPPER] [-trim ADAPTER_TRIM]
+                                [-igb IGBLAST] [-demux DEMULTIPLEX]
 
         -i INPUT_FASTQ          Path to the Input Fastq
         -o OUTFOLDER            Directory for the Outfolder, default: PWD
         -rep REPOSITORY         Path to the cloned Github Repository, default: ../
-        -conf CONFIGURATION     Path to the Primer Configuration File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
+        -conf CONFIGURATION     Path to the Primer Configuration File for PyChopper, default: ./Reference/Primer/Pychopper/                     
                                 10XPrimers_pychopper_configuration.txt
-        -pri PRIMER             Path to the Primer .fa File for PyChopper, default: ./REFERENCE/Primer/Pychopper/                     
+        -pri PRIMER             Path to the Primer .fa File for PyChopper, default: ./Reference/Primer/Pychopper/                     
                                 10XPrimers_pychopper.fa
         -n NAME                 Sample Name, if not specified it will default to the basename of the fastq_%d_%Y
         -a ADAPTER              Sequence of the R1 Adapter used for Library Preparation default: 'CTACACGACGCTCTTCCGATCT'
@@ -107,15 +166,32 @@ For Installation:
         -chop PYCHOPPER         Specify if Reads should be made full length by Pychopper, default: True
         -igb IGBLAST            If True, the preprocessed Fastq is aligned with IgBLAST Following Processing., default: True
         -trim ADAPTER_TRIM      Specify if Reads should be from Adapters
+        -demux DEMULTIPLEX      If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes. default=True
+
 
         #### Examplary Output:
-                                                        Locus	V	D	J	CDR3	CDR3_aa	Spatial Barcode	UMI
-        ReadID								
-        87f02d5d-5e89-4fc7-971f-2e5b2d77f196	TRB	TRBV3-1*01	NaN	TRBJ1-2*01	NaN	NaN	CGGTTCAAGTAGGTGT	NaN
-        c5e710cb-eefb-42b0-a02c-8f3a863bfac9	TRA	TRBV30*01	NaN	NaN	NaN	NaN	TTCGCACTGTACGACA	NaN
-        7cf5db8f-1794-4bdf-b3f0-bf9f9e8d9f72	TRB	TRBV6-8*01	TRBD1*01	TRBJ1-4*01	GCCAGTGTGTCCGTGCTGGGGACGCCTCTGTCCAGGTGGTGAGTGT...	ASVSVLGTPLSRW*VWNGVCVCLCACYQRKT	AGGCCTATCAGGTACG	AATCGTTGTGTT
-        c24fd351-a4ec-4156-85dd-69957d5b3d93	TRG	TRBV10-3*01	NaN	NaN	NaN	NaN	ACGGCCAACATGGACT	NaN
+        Outputs a modified fastq that was reoriented and adapters trimmed. If you want to use it be aware of the modified readnames.
 
+        *./Outfolder/sample_Cutadapt_trimmed.fastq*
+        @24:817|b2e47859-226a-4446-9c86-3c1999fc90f7 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=183614 ch=63 start_time=2021-10-02T01:08:59Z strand=+
+        TTTTTTTTTTTTGAAGTGGTTGTGCGTTCTTTTGTGTGATCAAAACTTCACACAATTGGAAAATAAATGTTTCTTCGAAAATAGAATAATCAAACAAAATTATCCAGGACCTTATAGGGTTTTCAGTATGTACCAAGAGCGTACATCTTAGAAGACCAGGACCTTGTTATCACTGGGATCATTAGGTGGCTTTGAATTGTTTCTTGGGTAGCTTCGTCAGCTTCTCCTTAAACTTGTCAAAGGAACCAAAGTCACGTTGATGGCTTCGTAACTCCCATCTGGAAGTTCTCCACCACCGTTAGGGCTAGGTTGTAAATGCTAAGTTGATACCGTACCACCATTCGGAACTTCGTTGGAGGCTGAAGCTATCTGGGCGTGTAACATCTCCCTTGGCCAACGCCTCCTGGTACTTCTCCTCGGTGACGTTCAGGGAGTTGTGTTCACGTAGGCCGCATTGGTCTTGCTGGTCGTACATGATCTGCGCGTTAGTGTAGAGTTCCAGGGCGCCGTAGTCGTAGGGCAGGTCGGGGGAGGCTGTTGCTTCTGCCTGGTAGGCCCCAGATACCCCAAAGCCGAACCGGCTACCTGCAAGTGCCGCACGCTGCCAGCTCAACATGCTGCTAGTGCTAGTGCCACCGCTGATGCTGTAGTCTGCTGAAGCCGCTGCCCGACCACCGATACGAGTC
+        +
+        889::;<;84/))'&&'())/.'%%%%%&&-,('('''''())+))**&&++.01126522=;?ABA?@BBC;;;3&&&&&&&&&&&()+/3311//--+))*1.,,.11ABB:9(('''55.2*)))*.221.(''()++(%&**-9:100056665/+''$###$%%&*&&'&&''(10/.+('$%%%%&&&&&'))%%$%$%%(&&''()*--,,++,-//495)))/9<CB@A@><101.,('&''),0((((*-,6(((():&%%$$(,-2''%%%%%$$$'-65/(''''()04-)))-./..()'&&%%%%'$$$$&*++-+&%%$$%%&+0)((&&&'*46.*(&&&&%%&&%%$$$&&(*/10.--((&%&))8=>?95'')4==;821111642--32,,,*)*-.59?AABBBA@@A0***),..&&&&&.,,,56,,47//*)((()+(((**))+*('&'''(235423.+)*+%&&&&&''%$$&%&')22@B?>>44444700/--)((+-('')*)''''((%$$%%%&&&%$$$#####'((*+-0344200((()()'&%%$$&%$$$&''%$%%%'63311(('&&'&%&%&'((%%%((''((',++,***+,(''(+2>?>>.-('&%%$%%)888999;8))'&'&%%&&''*,&$$%&(*,/1
+        @36:263|bba4f060-27ae-4eba-9566-cdc7a92a4d17 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=99091 ch=121 start_time=2021-10-02T01:11:00Z strand=-
+        TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTAGTGTGATTGAGGGTGGAGTAGATTAGGCGCAGGGGTAGAAGTAGAGGTTAAGGAGGTGATGGCTATGATG
+        +
+        >>>>>>>>>>>>=====>>??????@AAABAACCCCBBB@>542346677;;87-++-(*.,,**+966//((((((()8779=><::==<81000010.../-&&&&'55:20.-
+        @487:1018|92c04cea-5811-4b3a-87f8-0448f1ddd126 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=87480 ch=147 start_time=2021-10-02T01:10:21Z strand=+
+        TGTCACCCAGGCTGGAGTGCAGTGGCATGATCTCAGGCTCACTGCAACCTCCGCTTCCCGGGTTCAAGCAATTCTCCTTCCTCAGCCTCCCAAGTAACTAGGATTACAGGCACGAGCCCCCACGCCCAGCTAATCTTTGTATTTTTAGTAGAGATGGGGTTTCGCCATGTTGGCCAGGCTGGTCTCGAACTCCTGACCCCAGGTGATCTGCCTGCCTCGGCCTCCCAAAGTGCTGGGATTAGAGGCATGAGCCACCACGCCCGGCCAGTTTTCTGAGTTACTTACTGTCACTTAAGAGTTGTCCTCTTACCTTTTAGCCTGCTTTTTTTTTTTTTTCCATGCTGCCCTCCAGAGAGACGTCCTTTTTTTTTTTTTTTGAGATAGGTCAAACAGATTTTAATGTGAGGATAGTATGAAAGTTCAA
+        +
+        )))).0104=????>>@?<>A??@@@=:999<A<,,++,788535512333621113760////8:<<:/)((')*)))*(((4222230+*----)((&&(((4111/.-(%%%&(),2331**+,-@?>B?C2111*2<=@?CDMEBAEDDF=:8899@D>55555@DEDA?@>>>=??>>==<:9::;@<:::;60////0:@@AA>?=;;<;<>55546B?=<100019=<0.*(()*556688889>>AA=32222;:;;8.---.07.+*('''()+,/.(''&&%&&%##()++*++*012'&&&)(''&&%%%&&&,147899:985.,''&%&&%&11085,,+)(,))&'('(46<9=@@AAA>8+'&&%%&&&&&'''%$%&')11..,++++./))))***1/1.-./01,(
+
+        *./Outfolder/sample_preprocessed_IGB.tsv*
+        Holds the output table generated by IGBlast Alignment.
+
+        sequence_id	sequence	locus	stop_codon	vj_in_frame	v_frameshift	productive	rev_comp	complete_vdj	v_call	d_call	j_call	sequence_alignment	germline_alignment	sequence_alignment_aa	germline_alignment_aa	v_alignment_start	v_alignment_end	d_alignment_start	d_alignment_end	j_alignment_start	j_alignment_end	v_sequence_alignment	v_sequence_alignment_aa	v_germline_alignment	v_germline_alignment_aa	d_sequence_alignment	d_sequence_alignment_aa	d_germline_alignment	d_germline_alignment_aa	j_sequence_alignment	j_sequence_alignment_aa	j_germline_alignment	j_germline_alignment_aa	fwr1	fwr1_aa	cdr1	cdr1_aa	fwr2	fwr2_aa	cdr2	cdr2_aa	fwr3	fwr3_aa	fwr4	fwr4_aa	cdr3	cdr3_aa	junction	junction_length	junction_aa	junction_aa_length	v_score	d_score	j_score	v_cigar	d_cigar	j_cigar	v_support	d_support	j_support	v_identity	d_identity	j_identity	v_sequence_start	v_sequence_end	v_germline_start	v_germline_end	d_sequence_start	d_sequence_end	d_germline_start	d_germline_end	j_sequence_start	j_sequence_end	j_germline_start	j_germline_end	fwr1_start	fwr1_end	cdr1_start	cdr1_end	fwr2_start	fwr2_end	cdr2_start	cdr2_end	fwr3_start	fwr3_end	fwr4_start	fwr4_end	cdr3_start	cdr3_end	np1	np1_length	np2	np2_length	v_family	d_family	j_family	cdr3_aa_length
+        41:559|d9deb513-ed7a-4494-bb16-df2ab5adb397runid=bad19e6433e2af91b3d16445abff934b109b2e55sampleid=SPTCR12read=109140ch=417start_time=2021-10-02T01:07:29Zstrand=+	TGGGGCCAAACCCGTCACCCAGATCGTCAGCGCCGAGGCCCGGGGTAGAGCAGACTGTGGTTTTACCTCGGTGTCCTACCAGCAAGGGGTCCTGTCTGCCACCATCCTCTATGAGATCCTGCTAGGCTGCCACCCTGCATGTCAGCTGGCCAGCGCCCTTGTGTTGATGGCCATGGCCGCAGAAAGGATTTCTGAAGGCAGCCCTGAAGTGGAGTTAGGAGCTCTAACCCGTCATGGTTCTACACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTGCATCCCAACAGATATCCCCCCATGTGCATGCACACCTGCACACTCACGGCCGAAATCTCCCTAACCCAGGGGACCTTAGCATGCCTAAGTGACTAAACCAATAAAAATGAAACT	TRA	F				T	F	TRBV5-1*01			ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	HILLLPALLKSCSHLS	IKTRGQQVTLSCSPIS	1	50					ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	HILLLPALLKSCSHLS	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	IKTRGQQVTLSCSPIS																											20.534			243S32N50M114S204N			9.489e+00			40.000			244	293	33	82																											TRBV5-1			0
+        
 
 ### 3. Cluster and Correct Reads
 ***
@@ -160,3 +236,7 @@ For Installation:
         -b ./PreProcessing/IGB_Trimmed/test_demux_preprocessed_IGB.tsv
 
         ```
+
+
+### Citations
+        Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet j. 17, 10. doi:10.14806/ej.17.1.200

@@ -120,19 +120,19 @@ STARTTIME=$(date +%s)
 
 ### PYCHOPPER
 if [ ${PRIMER} = 10X ];then
-    PRIMERS=${REPOSITORY}/REFERENCE/Primer/Pychopper/10XPrimers_pychopper.fa
-    PRIMER_CONFIGURATION=${REPOSITORY}/REFERENCE/Primer/Pychopper/10XPrimers_pychopper_configuration.txt
+    PRIMERS=${REPOSITORY}/Reference/Primer/Pychopper/10XPrimers_pychopper.fa
+    PRIMER_CONFIGURATION=${REPOSITORY}/Reference/Primer/Pychopper/10XPrimers_pychopper_configuration.txt
 else
     PRIMER=${PRIMER}
     PRIMER_CONFIGURATION=${CONFIGURATION}
 fi
 
 ##Cutadapt
-DUAL_ADAPTER_10X=${REPOSITORY}/REFERENCE/Primer/Cutadapt/10X_Dual_Adapter.fa
-Adapter_5_3_10X=${REPOSITORY}/REFERENCE/Primer/Cutadapt/5_3_10X_Adapter.fa
+DUAL_ADAPTER_10X=${REPOSITORY}/Reference/Primer/Cutadapt/10X_Dual_Adapter.fa
+Adapter_5_3_10X=${REPOSITORY}/Reference/Primer/Cutadapt/5_3_10X_Adapter.fa
 
 ##Demultiplex
-DEMULTIPLEXER=${REPOSITORY}/SCRIPTS/demultiplex_summarize.py
+Demultiplex_UMI_Extraction="${REPOSITORY}/SPTCR-seq Pipeline Scripts/1_Demultiplex_UMI_Extraction.sh"
 
 ################################################################
 ################## Trim & Reorient BLOCK #######################
@@ -148,25 +148,25 @@ if [ ${PYCHOPPER} = True ]; then
 
     cdna_classifier.py \
         -m edlib \
-        -b ${PRIMERS} \
-        -c ${PRIMER_CONFIGURATION} \
-        -r ${LOGS}/"${SAMPLE_NAME}"_Pychopper_report.pdf \
-        -S ${LOGS}/"${SAMPLE_NAME}"_Pychopper_report.tsv \
+        -b "${PRIMERS}" \
+        -c "${PRIMER_CONFIGURATION}" \
+        -r "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_report.pdf \
+        -S "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_report.tsv \
         -t ${THREADS} \
         -p \
-        ${INPUT_FASTQ} \
+        "${INPUT_FASTQ}" \
         ${pychop_dir}/"${SAMPLE_NAME}"_pychopped.fastq \
-        2> ${LOGS}/"${SAMPLE_NAME}"_Pychopper_stderr.txt
+        2> "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_stderr.txt
 
     PYCHOPPED=${pychop_dir}/"${SAMPLE_NAME}"_pychopped.fastq
 
 else echo " :::: Skipping Pychopper ::::"
-    PYCHOPPED=${INPUT_FASTQ}
+    PYCHOPPED="${INPUT_FASTQ}"
 fi
 ##################
 if [ ${ADAPTER_TRIM} = True ]; then
     echo "$(timestamp)"
-    echo " :::: Trimming Adapters ::::"
+    echo " :::: Trimming Adapters with Cutadapt ::::"
     mkdir "${OUTFOLDER}"/CUTADAPT
 
     echo "Extracting 10X Amplicon (R1,TSO) of Reads"
@@ -178,7 +178,7 @@ if [ ${ADAPTER_TRIM} = True ]; then
         --match-read-wildcards \
         -o "${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_dual_trim.fastq \
         ${PYCHOPPED} \
-        > ${LOGS}/Cutadapt_Amplicon_report_"${SAMPLE_NAME}".txt 
+        > "${LOGS}"/Cutadapt_Amplicon_report_"${SAMPLE_NAME}".txt 
 
     DUAL_TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_dual_trim.fastq
 
@@ -190,12 +190,12 @@ if [ ${ADAPTER_TRIM} = True ]; then
         --match-read-wildcards \
         -o "${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq \
         ${DUAL_TRIMMED} \
-        > ${LOGS}/Cutadapt_trimmed_"${SAMPLE_NAME}".txt
+        > "${LOGS}"/Cutadapt_trimmed_"${SAMPLE_NAME}".txt
 
     TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
 
 else echo " :::: Skipping Trimming Adapters ::::"
-    TRIMMED=${INPUT_FASTQ}
+    TRIMMED="${INPUT_FASTQ}"
 fi
 
 ################################################################
@@ -222,10 +222,9 @@ if [ ${IGBLAST} = True ]; then
         -o "${SAMPLE_NAME}"_preprocessed_IGB \
         ${TRIMMED}
 
-    gunzip "${SAMPLE_NAME}"_preprocessed_IGB.tsv.gz
+    gunzip "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv.gz
 
-    IGBLAST="${SAMPLE_NAME}"_preprocessed_IGB.tsv
-
+    IGBLAST="${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
     
 else 
     echo " :::: Not quering IgBlast as indicated ::::"
@@ -236,6 +235,7 @@ echo " ::::: Cleaning Up :::::"
 ### Move Output Files to the Front
 mv ${TRIMMED} "${OUTFOLDER}"/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
 mv "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
+IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
 
 ### Remove Created Working Directories
 rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
@@ -244,19 +244,17 @@ rm -r "${OUTFOLDER}"/CUTADAPT
 rm -r "${OUTFOLDER}"/PYCHOPPER
 
 
+echo " ::::: Demultiplexing Output :::::"
 if [ ${DEMULTIPLEX} = True ]; then
-    python "${DEMULTIPLEXER}" \
-        -igb ${IGBLAST} \
+    cd "${OUTFOLDER}"
+    cd ..
+    "${Demultiplex_UMI_Extraction}" \
+        -i "${INPUT_FASTQ}" \
+        -igb "${IGBLAST}" \
         -n "${SAMPLE_NAME}" \
-        -bc ${DEMULTIPLEX}
+        -t ${THREADS} \
+        -mem ${MEMORY} \
+        -rep "${REPOSITORY}"
 else
-    echo ":::: No Demultiplexing Table given the Output will not be demultiplexed. ::::"
+    echo ":::: Demultiplexing set to False. If you use the Output for Downstream Applications, please match the Table Columns. ::::"
 fi
-
-"${demux}" \
-    -i /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/FINAL_21_2/Seq_Data/SPTCR12_Splits/01.SPTCR12_splits.fastq \
-    -igb "/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/FINAL_21_2/Repository/Pipeline/Test/PreProcessing/IGB_Trimmed/test_demux_preprocessed_IGB.tsv" \
-    -n test_demux \
-    -t 24 \
-    -mem 60 \
-    -rep "/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline"
