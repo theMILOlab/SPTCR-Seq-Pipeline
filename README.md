@@ -100,7 +100,7 @@ For Installation:
         b2e47859-226a-4446-9c86-3c1999fc90f7,AGTGATGACGCGTATA,AGTGATGACGCGTATA,,
         bba4f060-27ae-4eba-9566-cdc7a92a4d17,CGTAGCAGTAATGGAC,CGTAGCAGTAATGGAC,,
 
-### 1. Demultiplexing Reads
+### 1.1 Demultiplexing Reads
 ***
         Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script als extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp.
 
@@ -143,7 +143,7 @@ For Installation:
 
 
 
-### 2. Preprocess Reads
+### 1.2 Preprocess Reads
 ***
         Preprocess the Reads for the Correction Pipeline. This script splits fusioned Reads, trims the Adapters from 10X & aligns the Reads for the TCR Annotations. If the Barcode UMI csv from Step 1 will be used to demultiplex the annotated TCR sequences.
 
@@ -191,7 +191,8 @@ For Installation:
 
         sequence_id	sequence	locus	stop_codon	vj_in_frame	v_frameshift	productive	rev_comp	complete_vdj	v_call	d_call	j_call	sequence_alignment	germline_alignment	sequence_alignment_aa	germline_alignment_aa	v_alignment_start	v_alignment_end	d_alignment_start	d_alignment_end	j_alignment_start	j_alignment_end	v_sequence_alignment	v_sequence_alignment_aa	v_germline_alignment	v_germline_alignment_aa	d_sequence_alignment	d_sequence_alignment_aa	d_germline_alignment	d_germline_alignment_aa	j_sequence_alignment	j_sequence_alignment_aa	j_germline_alignment	j_germline_alignment_aa	fwr1	fwr1_aa	cdr1	cdr1_aa	fwr2	fwr2_aa	cdr2	cdr2_aa	fwr3	fwr3_aa	fwr4	fwr4_aa	cdr3	cdr3_aa	junction	junction_length	junction_aa	junction_aa_length	v_score	d_score	j_score	v_cigar	d_cigar	j_cigar	v_support	d_support	j_support	v_identity	d_identity	j_identity	v_sequence_start	v_sequence_end	v_germline_start	v_germline_end	d_sequence_start	d_sequence_end	d_germline_start	d_germline_end	j_sequence_start	j_sequence_end	j_germline_start	j_germline_end	fwr1_start	fwr1_end	cdr1_start	cdr1_end	fwr2_start	fwr2_end	cdr2_start	cdr2_end	fwr3_start	fwr3_end	fwr4_start	fwr4_end	cdr3_start	cdr3_end	np1	np1_length	np2	np2_length	v_family	d_family	j_family	cdr3_aa_length
         41:559|d9deb513-ed7a-4494-bb16-df2ab5adb397runid=bad19e6433e2af91b3d16445abff934b109b2e55sampleid=SPTCR12read=109140ch=417start_time=2021-10-02T01:07:29Zstrand=+	TGGGGCCAAACCCGTCACCCAGATCGTCAGCGCCGAGGCCCGGGGTAGAGCAGACTGTGGTTTTACCTCGGTGTCCTACCAGCAAGGGGTCCTGTCTGCCACCATCCTCTATGAGATCCTGCTAGGCTGCCACCCTGCATGTCAGCTGGCCAGCGCCCTTGTGTTGATGGCCATGGCCGCAGAAAGGATTTCTGAAGGCAGCCCTGAAGTGGAGTTAGGAGCTCTAACCCGTCATGGTTCTACACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTGCATCCCAACAGATATCCCCCCATGTGCATGCACACCTGCACACTCACGGCCGAAATCTCCCTAACCCAGGGGACCTTAGCATGCCTAAGTGACTAAACCAATAAAAATGAAACT	TRA	F				T	F	TRBV5-1*01			ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	HILLLPALLKSCSHLS	IKTRGQQVTLSCSPIS	1	50					ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	HILLLPALLKSCSHLS	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	IKTRGQQVTLSCSPIS																											20.534			243S32N50M114S204N			9.489e+00			40.000			244	293	33	82																											TRBV5-1			0
-        
+
+
 
 ### 3. Cluster and Correct Reads
 ***
