@@ -75,34 +75,36 @@ parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Out
 
 parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
 
-parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="../")
+parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="./")
 
 parser.add_argument('-igb', '--IGBLAST', help="If True, the corrected Fastq is aligned with IgBLAST Following Correction.",default="True")
+
+parser.add_argument('-cln', '--CLEANUP', help="If True, created intermediate Files and Folders will be deleted. For Debugging you can set this to False.",default="True")
 
 EOF
 
 ################################################################
 ################## Define Variables BLOCK###########################
 ################################################################
-if [ ${OUTFOLDER} = "PWD" ];then
+if [ "${OUTFOLDER}" = "PWD" ];then
     OUTFOLDER=$PWD
     mkdir ${PWD}/ClusterCorrect
     OUTFOLDER=${PWD}/ClusterCorrect
 else
-    OUTFOLDER=${OUTFOLDER}
+    OUTFOLDER="${OUTFOLDER}"
 fi 
 
-if [ ${NAME} = "-" ];then
-    SAMPLE_NAME="$(basename ${INPUT_FASTQ})"
-    SAMPLE_NAME="$(cut -d'.' -f1 <<<${SAMPLE_NAME})"_$(date +%d_%Y)
+if [ "${NAME}" = "-" ];then
+    SAMPLE_NAME="$(basename "${INPUT_FASTQ}")"
+    SAMPLE_NAME="$(cut -d'.' -f1 <<<"${SAMPLE_NAME}")"_$(date +%d_%Y)
 else
-    SAMPLE_NAME=${NAME}
+    SAMPLE_NAME="${NAME}"
 fi 
 
 
 ### Log Folder ####
-mkdir ${OUTFOLDER}/LOGS
-LOGS=${OUTFOLDER}/LOGS
+mkdir "${OUTFOLDER}"/LOGS
+LOGS="${OUTFOLDER}"/LOGS
 
 ### Timestamp Function
 
@@ -114,7 +116,7 @@ STARTTIME=$(date +%s)
 
 
 ### Rattle Path
-RATTLE_PATH=${REPOSITORY}/TOOLS/RATTLE
+RATTLE_PATH="${REPOSITORY}"/TOOLS/RATTLE
 
 ################################################################
 ################## Cluster BLOCK #######################
@@ -122,12 +124,17 @@ RATTLE_PATH=${REPOSITORY}/TOOLS/RATTLE
 
 echo " :::: Clustering Reads by VJ Arrangement ::::"
 
-mkdir "${OUTFOLDER}"/IGB_CLUSTERS
+mkdir ""${OUTFOLDER}""/IGB_CLUSTERS
 
-python ${REPOSITORY}/SCRIPTS/VDJ_CLUSTERING_no_exon_no_d.py \
-    --IGB ${INPUT_IGB} \
-    --INPUT_FASTQ ${INPUT_FASTQ} \
-    --OUT ${OUTFOLDER}/IGB_CLUSTERS 
+python "${REPOSITORY}"/SCRIPTS/TCR_GROUPING_IGB.py \
+    --IGB "${INPUT_IGB}" \
+    --INPUT_FASTQ "${INPUT_FASTQ}" \
+    --OUT "${OUTFOLDER}"/IGB_CLUSTERS 2> "${LOGS}"/tcr_clustering_log.txt
+
+#python "${REPOSITORY}"/SCRIPTS/VDJ_CLUSTERING_no_exon_no_d.py \
+#    --IGB "${INPUT_IGB}" \
+#    --INPUT_FASTQ "${INPUT_FASTQ}" \
+#    --OUT "${OUTFOLDER}"/IGB_CLUSTERS 
 
 IGB_CLUSTERS="${OUTFOLDER}"/IGB_CLUSTERS
 
@@ -139,95 +146,115 @@ IGB_CLUSTERS="${OUTFOLDER}"/IGB_CLUSTERS
 
 echo " :::: Parallel Correction of all Clusters ::::"
 
-mkdir ${OUTFOLDER}/CORRECTION
-mkdir ${OUTFOLDER}/CORRECTION/RATTLE_CLUSTERS
-RATTLE_CLUSTERS_OUT=${OUTFOLDER}/CORRECTION/RATTLE_CLUSTERS
+mkdir "${OUTFOLDER}"/CORRECTION
+mkdir "${OUTFOLDER}"/CORRECTION/RATTLE_CLUSTERS
+RATTLE_CLUSTERS_OUT="${OUTFOLDER}"/CORRECTION/RATTLE_CLUSTERS
 
-mkdir ${OUTFOLDER}/CORRECTION/RATTLE_CORRECT
-RATTLE_CORRECT_OUT=${OUTFOLDER}/CORRECTION/RATTLE_CORRECT
+mkdir "${OUTFOLDER}"/CORRECTION/RATTLE_CORRECT
+RATTLE_CORRECT_OUT="${OUTFOLDER}"/CORRECTION/RATTLE_CORRECT
 
-mkdir ${OUTFOLDER}/CORRECTION/CORRECTED_MERGE
-CORRECTED_MERGE=${OUTFOLDER}/CORRECTION/CORRECTED_MERGE
+mkdir "${OUTFOLDER}"/CORRECTION/CORRECTED_MERGE
+CORRECTED_MERGE="${OUTFOLDER}"/CORRECTION/CORRECTED_MERGE
 
-mkdir ${LOGS}/Rattle_Clustering 
-mkdir ${LOGS}/Rattle_Correction
+mkdir "${LOGS}"/Rattle_Clustering 
+mkdir "${LOGS}"/Rattle_Correction
+#--fastq \
 
-find ${IGB_CLUSTERS} -type f |parallel --jobs 0 \
+find "${IGB_CLUSTERS}" -type f |parallel --jobs 0 \
         "
-        mkdir ${RATTLE_CLUSTERS_OUT}/{/.}
-        ${RATTLE_PATH}/rattle cluster \
+        mkdir '${RATTLE_CLUSTERS_OUT}'/{/.}
+        '${RATTLE_PATH}'/rattle cluster \
             -i {} \
             -t ${THREADS} \
-            -o ${RATTLE_CLUSTERS_OUT}/{/.} \
+            -o '${RATTLE_CLUSTERS_OUT}'/{/.} \
             --iso \
-            --fastq \
-            2> ${LOGS}/Rattle_Clustering/{/.}_clust_stderr.txt
+            2> '${LOGS}'/Rattle_Clustering/{/.}_clust_stderr.txt
 
-        mkdir ${RATTLE_CORRECT_OUT}/{/.}
-        ${RATTLE_PATH}/rattle correct \
+        mkdir '${RATTLE_CORRECT_OUT}'/{/.}
+        '${RATTLE_PATH}'/rattle correct \
             -i {} \
-            -c ${RATTLE_CLUSTERS_OUT}/{/.}/clusters.out \
+            -c '${RATTLE_CLUSTERS_OUT}'/{/.}/clusters.out \
             -t ${THREADS} \
-            -o ${RATTLE_CORRECT_OUT}/{/.} \
-            2> ${LOGS}/Rattle_Correction/{/.}_corr_stderr.txt
+            -o '${RATTLE_CORRECT_OUT}'/{/.} \
+            2> '${LOGS}'/Rattle_Correction/{/.}_corr_stderr.txt
         "
 echo " :::: Parallel Merge Corrected Fastqs ::::"
-find ${RATTLE_CORRECT_OUT} -type f -name "corrected.fq"|parallel --jobs 0 "cat {} >> ${CORRECTED_MERGE}/${SAMPLE_NAME}_corrected_merged.fastq"
+find "${RATTLE_CORRECT_OUT}" -type f -name "corrected.fq"|parallel --jobs 0 "cat {} >> "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq"
 
-CORRECTED_MERGED_FASTQ=${CORRECTED_MERGE}/${SAMPLE_NAME}_corrected_merged.fastq
-
-if [ ${CLEANUP} = "True" ]; then
-    echo " :::: Removing Intermediate Files ::::"
-    rm -r ${IGB_CLUSTERS}
-    rm -r ${OUTFOLDER}/CORRECTION/RATTLE_CORRECT
-    rm -r ${OUTFOLDER}/CORRECTION/RATTLE_CLUSTERS
-
-else echo " :::: Keeping all Intermediate Files Intermediate Files ::::"
-fi
+CORRECTED_MERGED_FASTQ="${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq
 
 ################################################################
 ################## Final IGB Query BLOCK #######################
 ################################################################
 
 if [ ${IGBLAST} = True ]; then
-    echo " :::: Quering correcter Fastq to IGB :::: "
-    mkdir ${OUTFOLDER}/IGB_Corrected
-    mkdir ${OUTFOLDER}/IGB_Corrected/TEMP_${SAMPLE_NAME}
-    cd ${OUTFOLDER}/IGB_Corrected
+    echo " :::: Quering corrected Fastq to IGB :::: "
+    mkdir "${OUTFOLDER}"/IGB_Corrected
+    mkdir "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}"
+    cd "${OUTFOLDER}"/IGB_Corrected
 
+    # 
+    OUTFOLDER="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/Testing_Zone/28.7/ClusterCorrect"
+    SAMPLE_NAME=test_demux
+    CORRECTED_MERGED_FASTQ="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/Testing_Zone/28.7/ClusterCorrect/CORRECTION/CORRECTED_MERGE/test_demux_corrected_merged.fastq"
+    #
+        --tmp_dir "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}" \
     pyir \
         -t fastq \
-        -m ${THREADS} \
         --outfmt tsv \
+        -m ${THREADS} \
         --pretty \
+        --debug \
         -r TCR \
         -s human \
         --numV 1 \
         --numD 1 \
         --numJ 1 \
-        --tmp_dir ${OUTFOLDER}/IGB_Corrected/TEMP_${SAMPLE_NAME} \
-        -o ${SAMPLE_NAME}_corrected_IGB \
+        -o "${SAMPLE_NAME}"_corrected_IGB \
         ${CORRECTED_MERGED_FASTQ}
 
-    gunzip ${SAMPLE_NAME}_corrected_IGB.tsv.gz
+    gunzip "${SAMPLE_NAME}"_corrected_IGB.tsv.gz
 
-    OUTPUT_IGB=${OUTFOLDER}/IGB_Corrected/${SAMPLE_NAME}_corrected_IGB.tsv
+    OUTPUT_IGB="${OUTFOLDER}"/IGB_Corrected/"${SAMPLE_NAME}"_corrected_IGB.tsv
 
-    rmdir ${OUTFOLDER}/IGB_Corrected/TEMP_${SAMPLE_NAME}
+    rmdir "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}"
 else 
     echo " :::: Not quering IgBlast as indicated ::::"
 fi
-echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast File is in ${OUTDIR}/IGB/${SAMPLE_NAME}_Final_Blast.tsv"
+
+
+if [ ${CLEANUP} = True ]; then
+    echo " :::: Removing Intermediate Files ::::"
+    ### Move Output Files to the Front
+    mv "${CORRECTED_MERGED_FASTQ}" "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_merged.fastq
+    mv "${OUTFOLDER}"/IGB_Corrected/"${SAMPLE_NAME}"_corrected_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
+    IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
+
+    ### Remove Created Working Directories
+    rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
+    rmdir "${OUTFOLDER}"/IGB_Trimmed
+    rm -r "${OUTFOLDER}"/CUTADAPT
+    rm -r "${OUTFOLDER}"/PYCHOPPER
+
+    rm -r "${IGB_CLUSTERS}"
+    rm -r "${OUTFOLDER}"/CORRECTION/RATTLE_CORRECT
+    rm -r "${OUTFOLDER}"/CORRECTION/RATTLE_CLUSTERS
+
+else echo " :::: Keeping all Intermediate Files Intermediate Files ::::"
+fi
+
+echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast File is in ${OUTDIR}/"${SAMPLE_NAME}"_corrected_IGB.tsv"
+
 exit
 
 ### Missing: Demultiplex Final IGB & UMI Correct
 
 ############### For umi Correction
-mkdir ${OUTFOLDER}/UMI_Correction
-mkdir ${OUTFOLDER}/UMI_Correction/UMI_CLUSTERING
-mkdir ${OUTFOLDER}/UMI_Correction/UMI_CORRECTED
+mkdir "${OUTFOLDER}"/UMI_Correction
+mkdir "${OUTFOLDER}"/UMI_Correction/UMI_CLUSTERING
+mkdir "${OUTFOLDER}"/UMI_Correction/UMI_CORRECTED
 
 /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/FINAL_21_2/Repository/SCRIPTS/umi_correction.py \
-    -igb ${OUTPUT_IGB} \
-    -n ${SAMPLE_NAME} \
-    -O ${OUTFOLDER}/UMI_Correction
+    -igb "${OUTPUT_IGB} "\
+    -n "${SAMPLE_NAME}" \
+    -O "${OUTFOLDER}"/UMI_Correction

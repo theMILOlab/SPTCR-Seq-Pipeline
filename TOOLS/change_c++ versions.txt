@@ -1,0 +1,16 @@
+## Install gcc  and g++ compiler version 9 alternatives
+sudo apt -y install gcc-9 g++-9
+
+## Configure the Alternatives (11 as current version)
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
+
+## switch compiler from 11 to 9 
+sudo update-alternatives --config gcc
+
+## Compile Rattle
+cd Rattle
+./build.sh

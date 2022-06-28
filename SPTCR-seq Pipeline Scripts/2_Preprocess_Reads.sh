@@ -75,7 +75,7 @@ parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Out
 parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
 parser.add_argument('-mem','--MEMORY',help="RAM to user", default="8")
 
-parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="../")
+parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="./")
 
 parser.add_argument('-pri', '--PRIMER', help="Specify Custom Primers if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper.",default="10X")
 parser.add_argument('-conf', '--CONFIGURATION', help="Specify the possible Configurations of the Custom Primers for Pychopper if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper.")
