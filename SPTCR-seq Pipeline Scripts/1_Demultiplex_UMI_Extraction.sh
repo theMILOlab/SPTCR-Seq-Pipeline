@@ -116,11 +116,11 @@ timestamp() {
 STARTTIME=$(date +%s)
 
 
-BARCODE_LIST=${REPOSITORY}/Reference/Barcodes/visium_bc.tsv
-DEMUX_GENERATOR=${REPOSITORY}/SCRIPTS/generate_demux_umi_dfs.sh
-DEMUXXER=${REPOSITORY}/SCRIPTS/demultiplex_extract_umi_region.py
-SCTAGGER=${REPOSITORY}/TOOLS/scTagger/py
-DEMUX_SUMMARY=${REPOSITORY}/SCRIPTS/demultiplex_summarize.py
+BARCODE_LIST="${REPOSITORY}"/Reference/Barcodes/visium_bc.tsv
+DEMUX_GENERATOR="${REPOSITORY}"/SCRIPTS/generate_demux_umi_dfs.sh
+DEMUXXER="${REPOSITORY}"/SCRIPTS/demultiplex_extract_umi_region.py
+SCTAGGER="${REPOSITORY}"/TOOLS/scTagger/py
+DEMUX_SUMMARY="${REPOSITORY}"/SCRIPTS/demultiplex_summarize.py
 
 ################################################################
 ################## UMI Extraction BLOCK###########################

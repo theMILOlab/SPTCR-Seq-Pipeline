@@ -7,7 +7,6 @@ channels:
 dependencies:
   - snakemake>=6
   - python-edlib
-  - umi_tools
   - numpy
   - matplotlib
   - scipy
@@ -22,6 +21,8 @@ dependencies:
   - pyfastx
   - dask
   - parallel
+  - scikit-learn
   - pip:
       - crowelab_pyir
+      - umi_tools
 

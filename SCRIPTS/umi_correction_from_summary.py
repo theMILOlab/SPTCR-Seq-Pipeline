@@ -2,14 +2,12 @@
 import argparse
 parser = argparse.ArgumentParser(description='Pipeline to summarize and UMI Correct the Output of the SPTCR-seq Pipeline')
 
-parser.add_argument('-O','--OUT',help= "Path to Outfolder", required=True, default='./' )
+parser.add_argument('-O','--OUT',help= "Path to Outfolder", required=False, default='./' )
 parser.add_argument('-igb','--IGB',help="Path to IgBlast csv that should be UMI-corrected",default="")
 parser.add_argument('-bc','--BCOL',help="Name of the Barcode Column in the Input csv", required=False,default="Spatial Barcode" )
 parser.add_argument('-n','--NAME',help="Name of the Pipeline. Defaults to fastq basename_date", required=False,default="" )
-parser.add_argument('-u','--UNCORR',help="Path to uncorrected IGB", required=True )
 parser.add_argument('-d','--STRDIST',help="String Distance to use for UMI Clustering", default=2 )
 parser.add_argument('-m','--NO_CLUST',help="If True skips UMI Clustering step and only reads in given path as UMI per BC Dataframe.", default='' )
-parser.add_argument('-d','--STRDIST',help="String Distance to use for UMI Clustering", default=2 )
 
 args = parser.parse_args()
 
@@ -38,7 +36,6 @@ if sample_name == '':
 else:
     sample_name=arg_vars["NAME"]
 read_dir=arg_vars["IGB"]
-uncorr=arg_vars["UNCORR"]
 string_dist=arg_vars["STRDIST"]
 barcode_col=arg_vars["BCOL"]
 UMI_CLUST=arg_vars["NO_CLUST"]
@@ -67,29 +64,43 @@ if UMI_CLUST == '':
     all_clustered_umis=defaultdict(list)
     distance=string_dist
     ####
-
+    print(sample_df)
     for count, barcode in enumerate(barcodes):
-        #if count < 10:
-        print('Clustering UMIs:',sample_name,count)
         selected_BC=sample_df[sample_df[barcode_col]==barcode]
         umi_col=selected_BC['UMI'].str.encode(encoding='utf-8')
-        umis=umi_col.groupby('UMI').size().to_dict()
-        clustered_umis = clusterer(umis, threshold=distance)
-        all_clustered_umis[barcode].append(clustered_umis)
+        if len(umi_col) > 1:
+            print('Clustering UMIs:',sample_name,count)
+            umis=selected_BC.groupby('UMI').size().reset_index(name='UMI Count')
+            UMAY=umis['UMI'].to_list()
+            UMAY_COUNT=umis['UMI Count'].to_list()
+            umis={}
+            for umi, count in zip(UMAY, UMAY_COUNT):
+                umi=str.encode(umi)    
+                umis[umi]=count
+            clustered_umis = clusterer(umis, threshold=distance)
+            all_clustered_umis[barcode].append(clustered_umis)
+        else:
+            all_clustered_umis[barcode].append(umi_col.to_list())
         
     construc_dict={}
     for barcode in all_clustered_umis.keys():
-        a=list(chain.from_iterable(all_clustered_umis[barcode]))
-        umi_series=pd.Series(a)
-        umi_series=umi_series.apply(lambda x: [thing.decode("utf-8") for thing in x])
-        construc_dict[barcode]=umi_series
+        #a=list(chain.from_iterable(all_clustered_umis[barcode]))
+        for a in all_clustered_umis[barcode]:
+            a=list(chain.from_iterable(a))
+            NEW_LIST=[x.decode('utf-8') for x in a]
+            print(NEW_LIST)
+        #umi_series=pd.Series(a)
+        #print(umi_series)
+        #umi_series=umi_series.apply(lambda x: [thing.decode("utf-8") for thing in x])
+        #construc_dict[barcode]=umi_series
     umis_per_BC=pd.DataFrame.from_dict(construc_dict)
+    
     print(umis_per_BC.head(5))
     print(umis_per_BC)
     umis_per_BC.to_csv('{0}/{1}_clustered_umis_edit_{2}.csv'.format(OUT,sample_name,string_dist),index=False)
 
 else:
-    umis_per_BC=pd.read_csv(UMI_CLUST,,low_memory=False)
+    umis_per_BC=pd.read_csv(UMI_CLUST,low_memory=False)
     
 #######################################################
 ################ Modify Counts for TCRs in IGB ##########
@@ -219,8 +230,8 @@ def umi_correct(TCR, BC,clustered_umis_dict=clustered_umis_dict):
     return umi_sum
 
 ## Apply Function across count table and add UMI Corrected column
-UMI_uncorrected_count_table['UMI Corrected']=UMI_uncorrected_count_table.apply(lambda x: umi_correct(TCR=x['TCR'],BC=x['Visium Barcode']),axis='columns')
+UMI_uncorrected_count_table['UMI Corrected']=UMI_uncorrected_count_table.apply(lambda x: umi_correct(TCR=x['TCR'],BC=x[barcode_col]),axis='columns')
 
 ### Write DF to disk
 print(UMI_uncorrected_count_table)   
-UMI_uncorrected_count_table.to_csv('/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Spatial_Data/SPTCR_Demultiplexed/scTagger/UMI_Extraction/UMI_Correction/UMI_CORRECTED/{0}_UMI_corrected_count_table.csv'.format(sample_name),index=False)
+UMI_uncorrected_count_table.to_csv('{0}/{1}_UMI_corrected_count_table.csv'.format(OUT,sample_name),index=False)
