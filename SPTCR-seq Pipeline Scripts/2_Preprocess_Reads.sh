@@ -120,16 +120,16 @@ STARTTIME=$(date +%s)
 
 ### PYCHOPPER
 if [ ${PRIMER} = 10X ];then
-    PRIMERS=${REPOSITORY}/Reference/Primer/Pychopper/10XPrimers_pychopper.fa
-    PRIMER_CONFIGURATION=${REPOSITORY}/Reference/Primer/Pychopper/10XPrimers_pychopper_configuration.txt
+    PRIMERS="${REPOSITORY}"/Reference/Primer/Pychopper/10XPrimers_pychopper.fa
+    PRIMER_CONFIGURATION="${REPOSITORY}"/Reference/Primer/Pychopper/10XPrimers_pychopper_configuration.txt
 else
     PRIMER=${PRIMER}
     PRIMER_CONFIGURATION=${CONFIGURATION}
 fi
 
 ##Cutadapt
-DUAL_ADAPTER_10X=${REPOSITORY}/Reference/Primer/Cutadapt/10X_Dual_Adapter.fa
-Adapter_5_3_10X=${REPOSITORY}/Reference/Primer/Cutadapt/5_3_10X_Adapter.fa
+DUAL_ADAPTER_10X="${REPOSITORY}"/Reference/Primer/Cutadapt/10X_Dual_Adapter.fa
+Adapter_5_3_10X="${REPOSITORY}"/Reference/Primer/Cutadapt/5_3_10X_Adapter.fa
 
 ##Demultiplex
 Demultiplex_UMI_Extraction="${REPOSITORY}/SPTCR-seq Pipeline Scripts/1_Demultiplex_UMI_Extraction.sh"
@@ -155,10 +155,10 @@ if [ ${PYCHOPPER} = True ]; then
         -t ${THREADS} \
         -p \
         "${INPUT_FASTQ}" \
-        ${pychop_dir}/"${SAMPLE_NAME}"_pychopped.fastq \
+        "${pychop_dir}"/"${SAMPLE_NAME}"_pychopped.fastq \
         2> "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_stderr.txt
 
-    PYCHOPPED=${pychop_dir}/"${SAMPLE_NAME}"_pychopped.fastq
+    PYCHOPPED="${pychop_dir}"/"${SAMPLE_NAME}"_pychopped.fastq
 
 else echo " :::: Skipping Pychopper ::::"
     PYCHOPPED="${INPUT_FASTQ}"
@@ -177,7 +177,7 @@ if [ ${ADAPTER_TRIM} = True ]; then
         --action trim \
         --match-read-wildcards \
         -o "${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_dual_trim.fastq \
-        ${PYCHOPPED} \
+        "${PYCHOPPED}" \
         > "${LOGS}"/Cutadapt_Amplicon_report_"${SAMPLE_NAME}".txt 
 
     DUAL_TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_dual_trim.fastq
@@ -189,7 +189,7 @@ if [ ${ADAPTER_TRIM} = True ]; then
         --action trim \
         --match-read-wildcards \
         -o "${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq \
-        ${DUAL_TRIMMED} \
+        "${DUAL_TRIMMED}" \
         > "${LOGS}"/Cutadapt_trimmed_"${SAMPLE_NAME}".txt
 
     TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
@@ -220,7 +220,7 @@ if [ ${IGBLAST} = True ]; then
         --numJ 1 \
         --tmp_dir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}" \
         -o "${SAMPLE_NAME}"_preprocessed_IGB \
-        ${TRIMMED}
+        "${TRIMMED}"
 
     gunzip "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv.gz
 
@@ -233,7 +233,7 @@ fi
 
 echo " ::::: Cleaning Up :::::"
 ### Move Output Files to the Front
-mv ${TRIMMED} "${OUTFOLDER}"/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
+mv "${TRIMMED}" "${OUTFOLDER}"/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
 mv "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
 IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
 
@@ -254,7 +254,7 @@ if [ ${DEMULTIPLEX} = True ]; then
         -n "${SAMPLE_NAME}" \
         -t ${THREADS} \
         -mem ${MEMORY} \
-        -rep "${REPOSITORY}"
+        -rep ""${REPOSITORY}""
 else
     echo ":::: Demultiplexing set to False. If you use the Output for Downstream Applications, please match the Table Columns. ::::"
 fi
