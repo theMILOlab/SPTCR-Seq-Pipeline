@@ -187,24 +187,24 @@ For Installation:
         Outputs a modified fastq that was reoriented and adapters trimmed. If you want to use it be aware of the modified readnames.
 
         *./Outfolder/sample_Cutadapt_trimmed.fastq*
-        @24:817|b2e47859-226a-4446-9c86-3c1999fc90f7 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=183614 ch=63 start_time=2021-10-02T01:08:59Z strand=+
-        TTTTTTTTTTTTGAAGTGGTTGTGCGTTCTTTTGTGTGATCAAAACTTCACACAATTGGAAAATAAATGTTTCTTCGAAAATAGAATAATCAAACAAAATTATCCAGGACCTTATAGGGTTTTCAGTATGTACCAAGAGCGTACATCTTAGAAGACCAGGACCTTGTTATCACTGGGATCATTAGGTGGCTTTGAATTGTTTCTTGGGTAGCTTCGTCAGCTTCTCCTTAAACTTGTCAAAGGAACCAAAGTCACGTTGATGGCTTCGTAACTCCCATCTGGAAGTTCTCCACCACCGTTAGGGCTAGGTTGTAAATGCTAAGTTGATACCGTACCACCATTCGGAACTTCGTTGGAGGCTGAAGCTATCTGGGCGTGTAACATCTCCCTTGGCCAACGCCTCCTGGTACTTCTCCTCGGTGACGTTCAGGGAGTTGTGTTCACGTAGGCCGCATTGGTCTTGCTGGTCGTACATGATCTGCGCGTTAGTGTAGAGTTCCAGGGCGCCGTAGTCGTAGGGCAGGTCGGGGGAGGCTGTTGCTTCTGCCTGGTAGGCCCCAGATACCCCAAAGCCGAACCGGCTACCTGCAAGTGCCGCACGCTGCCAGCTCAACATGCTGCTAGTGCTAGTGCCACCGCTGATGCTGTAGTCTGCTGAAGCCGCTGCCCGACCACCGATACGAGTC
-        +
-        889::;<;84/))'&&'())/.'%%%%%&&-,('('''''())+))**&&++.01126522=;?ABA?@BBC;;;3&&&&&&&&&&&()+/3311//--+))*1.,,.11ABB:9(('''55.2*)))*.221.(''()++(%&**-9:100056665/+''$###$%%&*&&'&&''(10/.+('$%%%%&&&&&'))%%$%$%%(&&''()*--,,++,-//495)))/9<CB@A@><101.,('&''),0((((*-,6(((():&%%$$(,-2''%%%%%$$$'-65/(''''()04-)))-./..()'&&%%%%'$$$$&*++-+&%%$$%%&+0)((&&&'*46.*(&&&&%%&&%%$$$&&(*/10.--((&%&))8=>?95'')4==;821111642--32,,,*)*-.59?AABBBA@@A0***),..&&&&&.,,,56,,47//*)((()+(((**))+*('&'''(235423.+)*+%&&&&&''%$$&%&')22@B?>>44444700/--)((+-('')*)''''((%$$%%%&&&%$$$#####'((*+-0344200((()()'&%%$$&%$$$&''%$%%%'63311(('&&'&%&%&'((%%%((''((',++,***+,(''(+2>?>>.-('&%%$%%)888999;8))'&'&%%&&''*,&$$%&(*,/1
-        @36:263|bba4f060-27ae-4eba-9566-cdc7a92a4d17 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=99091 ch=121 start_time=2021-10-02T01:11:00Z strand=-
-        TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTAGTGTGATTGAGGGTGGAGTAGATTAGGCGCAGGGGTAGAAGTAGAGGTTAAGGAGGTGATGGCTATGATG
-        +
-        >>>>>>>>>>>>=====>>??????@AAABAACCCCBBB@>542346677;;87-++-(*.,,**+966//((((((()8779=><::==<81000010.../-&&&&'55:20.-
-        @487:1018|92c04cea-5811-4b3a-87f8-0448f1ddd126 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=87480 ch=147 start_time=2021-10-02T01:10:21Z strand=+
-        TGTCACCCAGGCTGGAGTGCAGTGGCATGATCTCAGGCTCACTGCAACCTCCGCTTCCCGGGTTCAAGCAATTCTCCTTCCTCAGCCTCCCAAGTAACTAGGATTACAGGCACGAGCCCCCACGCCCAGCTAATCTTTGTATTTTTAGTAGAGATGGGGTTTCGCCATGTTGGCCAGGCTGGTCTCGAACTCCTGACCCCAGGTGATCTGCCTGCCTCGGCCTCCCAAAGTGCTGGGATTAGAGGCATGAGCCACCACGCCCGGCCAGTTTTCTGAGTTACTTACTGTCACTTAAGAGTTGTCCTCTTACCTTTTAGCCTGCTTTTTTTTTTTTTTCCATGCTGCCCTCCAGAGAGACGTCCTTTTTTTTTTTTTTTGAGATAGGTCAAACAGATTTTAATGTGAGGATAGTATGAAAGTTCAA
-        +
-        )))).0104=????>>@?<>A??@@@=:999<A<,,++,788535512333621113760////8:<<:/)((')*)))*(((4222230+*----)((&&(((4111/.-(%%%&(),2331**+,-@?>B?C2111*2<=@?CDMEBAEDDF=:8899@D>55555@DEDA?@>>>=??>>==<:9::;@<:::;60////0:@@AA>?=;;<;<>55546B?=<100019=<0.*(()*556688889>>AA=32222;:;;8.---.07.+*('''()+,/.(''&&%&&%##()++*++*012'&&&)(''&&%%%&&&,147899:985.,''&%&&%&11085,,+)(,))&'('(46<9=@@AAA>8+'&&%%&&&&&'''%$%&')11..,++++./))))***1/1.-./01,(
+                @24:817|b2e47859-226a-4446-9c86-3c1999fc90f7 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=183614 ch=63 start_time=2021-10-02T01:08:59Z strand=+
+                TTTTTTTTTTTTGAAGTGGTTGTGCGTTCTTTTGTGTGATCAAAACTTCACACAATTGGAAAATAAATGTTTCTTCGAAAATAGAATAATCAAACAAAATTATCCAGGACCTTATAGGGTTTTCAGTATGTACCAAGAGCGTACATCTTAGAAGACCAGGACCTTGTTATCACTGGGATCATTAGGTGGCTTTGAATTGTTTCTTGGGTAGCTTCGTCAGCTTCTCCTTAAACTTGTCAAAGGAACCAAAGTCACGTTGATGGCTTCGTAACTCCCATCTGGAAGTTCTCCACCACCGTTAGGGCTAGGTTGTAAATGCTAAGTTGATACCGTACCACCATTCGGAACTTCGTTGGAGGCTGAAGCTATCTGGGCGTGTAACATCTCCCTTGGCCAACGCCTCCTGGTACTTCTCCTCGGTGACGTTCAGGGAGTTGTGTTCACGTAGGCCGCATTGGTCTTGCTGGTCGTACATGATCTGCGCGTTAGTGTAGAGTTCCAGGGCGCCGTAGTCGTAGGGCAGGTCGGGGGAGGCTGTTGCTTCTGCCTGGTAGGCCCCAGATACCCCAAAGCCGAACCGGCTACCTGCAAGTGCCGCACGCTGCCAGCTCAACATGCTGCTAGTGCTAGTGCCACCGCTGATGCTGTAGTCTGCTGAAGCCGCTGCCCGACCACCGATACGAGTC
+                +
+                889::;<;84/))'&&'())/.'%%%%%&&-,('('''''())+))**&&++.01126522=;?ABA?@BBC;;;3&&&&&&&&&&&()+/3311//--+))*1.,,.11ABB:9(('''55.2*)))*.221.(''()++(%&**-9:100056665/+''$###$%%&*&&'&&''(10/.+('$%%%%&&&&&'))%%$%$%%(&&''()*--,,++,-//495)))/9<CB@A@><101.,('&''),0((((*-,6(((():&%%$$(,-2''%%%%%$$$'-65/(''''()04-)))-./..()'&&%%%%'$$$$&*++-+&%%$$%%&+0)((&&&'*46.*(&&&&%%&&%%$$$&&(*/10.--((&%&))8=>?95'')4==;821111642--32,,,*)*-.59?AABBBA@@A0***),..&&&&&.,,,56,,47//*)((()+(((**))+*('&'''(235423.+)*+%&&&&&''%$$&%&')22@B?>>44444700/--)((+-('')*)''''((%$$%%%&&&%$$$#####'((*+-0344200((()()'&%%$$&%$$$&''%$%%%'63311(('&&'&%&%&'((%%%((''((',++,***+,(''(+2>?>>.-('&%%$%%)888999;8))'&'&%%&&''*,&$$%&(*,/1
+                @36:263|bba4f060-27ae-4eba-9566-cdc7a92a4d17 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=99091 ch=121 start_time=2021-10-02T01:11:00Z strand=-
+                TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTAGTGTGATTGAGGGTGGAGTAGATTAGGCGCAGGGGTAGAAGTAGAGGTTAAGGAGGTGATGGCTATGATG
+                +
+                >>>>>>>>>>>>=====>>??????@AAABAACCCCBBB@>542346677;;87-++-(*.,,**+966//((((((()8779=><::==<81000010.../-&&&&'55:20.-
+                @487:1018|92c04cea-5811-4b3a-87f8-0448f1ddd126 runid=bad19e6433e2af91b3d16445abff934b109b2e55 sampleid=SPTCR12 read=87480 ch=147 start_time=2021-10-02T01:10:21Z strand=+
+                TGTCACCCAGGCTGGAGTGCAGTGGCATGATCTCAGGCTCACTGCAACCTCCGCTTCCCGGGTTCAAGCAATTCTCCTTCCTCAGCCTCCCAAGTAACTAGGATTACAGGCACGAGCCCCCACGCCCAGCTAATCTTTGTATTTTTAGTAGAGATGGGGTTTCGCCATGTTGGCCAGGCTGGTCTCGAACTCCTGACCCCAGGTGATCTGCCTGCCTCGGCCTCCCAAAGTGCTGGGATTAGAGGCATGAGCCACCACGCCCGGCCAGTTTTCTGAGTTACTTACTGTCACTTAAGAGTTGTCCTCTTACCTTTTAGCCTGCTTTTTTTTTTTTTTCCATGCTGCCCTCCAGAGAGACGTCCTTTTTTTTTTTTTTTGAGATAGGTCAAACAGATTTTAATGTGAGGATAGTATGAAAGTTCAA
+                +
+                )))).0104=????>>@?<>A??@@@=:999<A<,,++,788535512333621113760////8:<<:/)((')*)))*(((4222230+*----)((&&(((4111/.-(%%%&(),2331**+,-@?>B?C2111*2<=@?CDMEBAEDDF=:8899@D>55555@DEDA?@>>>=??>>==<:9::;@<:::;60////0:@@AA>?=;;<;<>55546B?=<100019=<0.*(()*556688889>>AA=32222;:;;8.---.07.+*('''()+,/.(''&&%&&%##()++*++*012'&&&)(''&&%%%&&&,147899:985.,''&%&&%&11085,,+)(,))&'('(46<9=@@AAA>8+'&&%%&&&&&'''%$%&')11..,++++./))))***1/1.-./01,(
 
         *./Outfolder/sample_preprocessed_IGB.tsv*
         Holds the output table generated by IGBlast Alignment.
 
-        sequence_id	sequence	locus	stop_codon	vj_in_frame	v_frameshift	productive	rev_comp	complete_vdj	v_call	d_call	j_call	sequence_alignment	germline_alignment	sequence_alignment_aa	germline_alignment_aa	v_alignment_start	v_alignment_end	d_alignment_start	d_alignment_end	j_alignment_start	j_alignment_end	v_sequence_alignment	v_sequence_alignment_aa	v_germline_alignment	v_germline_alignment_aa	d_sequence_alignment	d_sequence_alignment_aa	d_germline_alignment	d_germline_alignment_aa	j_sequence_alignment	j_sequence_alignment_aa	j_germline_alignment	j_germline_alignment_aa	fwr1	fwr1_aa	cdr1	cdr1_aa	fwr2	fwr2_aa	cdr2	cdr2_aa	fwr3	fwr3_aa	fwr4	fwr4_aa	cdr3	cdr3_aa	junction	junction_length	junction_aa	junction_aa_length	v_score	d_score	j_score	v_cigar	d_cigar	j_cigar	v_support	d_support	j_support	v_identity	d_identity	j_identity	v_sequence_start	v_sequence_end	v_germline_start	v_germline_end	d_sequence_start	d_sequence_end	d_germline_start	d_germline_end	j_sequence_start	j_sequence_end	j_germline_start	j_germline_end	fwr1_start	fwr1_end	cdr1_start	cdr1_end	fwr2_start	fwr2_end	cdr2_start	cdr2_end	fwr3_start	fwr3_end	fwr4_start	fwr4_end	cdr3_start	cdr3_end	np1	np1_length	np2	np2_length	v_family	d_family	j_family	cdr3_aa_length
-        41:559|d9deb513-ed7a-4494-bb16-df2ab5adb397runid=bad19e6433e2af91b3d16445abff934b109b2e55sampleid=SPTCR12read=109140ch=417start_time=2021-10-02T01:07:29Zstrand=+	TGGGGCCAAACCCGTCACCCAGATCGTCAGCGCCGAGGCCCGGGGTAGAGCAGACTGTGGTTTTACCTCGGTGTCCTACCAGCAAGGGGTCCTGTCTGCCACCATCCTCTATGAGATCCTGCTAGGCTGCCACCCTGCATGTCAGCTGGCCAGCGCCCTTGTGTTGATGGCCATGGCCGCAGAAAGGATTTCTGAAGGCAGCCCTGAAGTGGAGTTAGGAGCTCTAACCCGTCATGGTTCTACACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTGCATCCCAACAGATATCCCCCCATGTGCATGCACACCTGCACACTCACGGCCGAAATCTCCCTAACCCAGGGGACCTTAGCATGCCTAAGTGACTAAACCAATAAAAATGAAACT	TRA	F				T	F	TRBV5-1*01			ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	HILLLPALLKSCSHLS	IKTRGQQVTLSCSPIS	1	50					ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	HILLLPALLKSCSHLS	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	IKTRGQQVTLSCSPIS																											20.534			243S32N50M114S204N			9.489e+00			40.000			244	293	33	82																											TRBV5-1			0
+                sequence_id	sequence	locus	stop_codon	vj_in_frame	v_frameshift	productive	rev_comp	complete_vdj	v_call	d_call	j_call	sequence_alignment	germline_alignment	sequence_alignment_aa	germline_alignment_aa	v_alignment_start	v_alignment_end	d_alignment_start	d_alignment_end	j_alignment_start	j_alignment_end	v_sequence_alignment	v_sequence_alignment_aa	v_germline_alignment	v_germline_alignment_aa	d_sequence_alignment	d_sequence_alignment_aa	d_germline_alignment	d_germline_alignment_aa	j_sequence_alignment	j_sequence_alignment_aa	j_germline_alignment	j_germline_alignment_aa	fwr1	fwr1_aa	cdr1	cdr1_aa	fwr2	fwr2_aa	cdr2	cdr2_aa	fwr3	fwr3_aa	fwr4	fwr4_aa	cdr3	cdr3_aa	junction	junction_length	junction_aa	junction_aa_length	v_score	d_score	j_score	v_cigar	d_cigar	j_cigar	v_support	d_support	j_support	v_identity	d_identity	j_identity	v_sequence_start	v_sequence_end	v_germline_start	v_germline_end	d_sequence_start	d_sequence_end	d_germline_start	d_germline_end	j_sequence_start	j_sequence_end	j_germline_start	j_germline_end	fwr1_start	fwr1_end	cdr1_start	cdr1_end	fwr2_start	fwr2_end	cdr2_start	cdr2_end	fwr3_start	fwr3_end	fwr4_start	fwr4_end	cdr3_start	cdr3_end	np1	np1_length	np2	np2_length	v_family	d_family	j_family	cdr3_aa_length
+                41:559|d9deb513-ed7a-4494-bb16-df2ab5adb397runid=bad19e6433e2af91b3d16445abff934b109b2e55sampleid=SPTCR12read=109140ch=417start_time=2021-10-02T01:07:29Zstrand=+	TGGGGCCAAACCCGTCACCCAGATCGTCAGCGCCGAGGCCCGGGGTAGAGCAGACTGTGGTTTTACCTCGGTGTCCTACCAGCAAGGGGTCCTGTCTGCCACCATCCTCTATGAGATCCTGCTAGGCTGCCACCCTGCATGTCAGCTGGCCAGCGCCCTTGTGTTGATGGCCATGGCCGCAGAAAGGATTTCTGAAGGCAGCCCTGAAGTGGAGTTAGGAGCTCTAACCCGTCATGGTTCTACACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTGCATCCCAACAGATATCCCCCCATGTGCATGCACACCTGCACACTCACGGCCGAAATCTCCCTAACCCAGGGGACCTTAGCATGCCTAAGTGACTAAACCAATAAAAATGAAACT	TRA	F				T	F	TRBV5-1*01			ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	HILLLPALLKSCSHLS	IKTRGQQVTLSCSPIS	1	50					ACACATTCTTCTTTTGCCAGCGCTTCTGAAGAGCTGCTCTCACCTCTCTG	HILLLPALLKSCSHLS	GATCAAAACGAGAGGACAGCAAGTGACACTGAGCTGCTCCCCTATCTCTG	IKTRGQQVTLSCSPIS																											20.534			243S32N50M114S204N			9.489e+00			40.000			244	293	33	82																											TRBV5-1			0
 
 
 
@@ -239,19 +239,18 @@ For Installation:
 ***
         An Exemplary minimal Usage Pipeline to demultiplex, preprocess and correct an Input Fastq.
 
-        ```
         #! /usr/bin/env bash
         
         ## Command into Github Repository
 
         preproc=./2_Preprocess_Reads.sh
-        clusco=./3_Cluster_Correct.sh
+        cluscorr=./3_Cluster_Correct.sh
         input=PATH/TO/INPUT/FASTQ
         MEMORY=32
         THREADS=12
         SAMPLE_NAME=SAMPLE_XY
         OUT=PATH/TO/OUTFOLDER
-        
+
         ##############################
 
         bash "${preproc}" \
@@ -261,33 +260,32 @@ For Installation:
                 -mem ${MEMORY} \
                 -o ${OUT} \
 
-        bash "${clusco}" \
+        bash "${cluscorr}" \
                 -i "${input}" \
                 -b "${OUT}/PreProcessing/${SAMPLE_NAME}_preprocessed_IGB.tsv" \
                 -n ${SAMPLE_NAME} \
                 -t ${THREADS} \
 
-        ```
 
 
 ### Citations
 
-        Ravi, V.M., Will, P., Kueckelhaus, J., Sun, N., Joseph, K., Salié, H., Vollmer, L., Kuliesiute, U., von Ehr, J., Benotmane, J.K., Neidert, N., Follo, M., Scherer, F., Goeldner, J.M., Behringer, S.P., Franco, P., Khiat, M., Zhang, J., Hofmann, U.G., Fung, C., Ricklefs, F.L., Lamszus, K., Boerries, M., Ku, M., Beck, J., Sankowski, R., Schwabenland, M., Prinz, M., Schüller, U., Killmer, S., Bengsch, B., Walch, A.K., Delev, D., Schnell, O., Heiland, D.H., 2022. Spatially resolved multi-omics deciphers bidirectional tumor-host interdependence in glioblastoma. Cancer Cell 40, 639-655.e13. doi:10.1016/j.ccell.2022.05.009
+Ravi, V.M., Will, P., Kueckelhaus, J., Sun, N., Joseph, K., Salié, H., Vollmer, L., Kuliesiute, U., von Ehr, J., Benotmane, J.K., Neidert, N., Follo, M., Scherer, F., Goeldner, J.M., Behringer, S.P., Franco, P., Khiat, M., Zhang, J., Hofmann, U.G., Fung, C., Ricklefs, F.L., Lamszus, K., Boerries, M., Ku, M., Beck, J., Sankowski, R., Schwabenland, M., Prinz, M., Schüller, U., Killmer, S., Bengsch, B., Walch, A.K., Delev, D., Schnell, O., Heiland, D.H., 2022. Spatially resolved multi-omics deciphers bidirectional tumor-host interdependence in glioblastoma. Cancer Cell 40, 639-655.e13. doi:10.1016/j.ccell.2022.05.009
 
-        Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet j. 17, 10. doi:10.14806/ej.17.1.200
+Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet j. 17, 10. doi:10.14806/ej.17.1.200
 
-        de la Rubia, I., Indi, J.A., Carbonell, S., Lagarde, J., Albà, M.M., Eyras, E., 2020. Reference-free reconstruction and quantification of transcriptomes from long-read sequencing. BioRxiv. doi:10.1101/2020.02.08.939942
+de la Rubia, I., Indi, J.A., Carbonell, S., Lagarde, J., Albà, M.M., Eyras, E., 2020. Reference-free reconstruction and quantification of transcriptomes from long-read sequencing. BioRxiv. doi:10.1101/2020.02.08.939942
 
-        Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet j. 17, 10. doi:10.14806/ej.17.1.200
+Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet j. 17, 10. doi:10.14806/ej.17.1.200
 
-        tange_2022_6570228,
-                author       = {Tange, Ole},
-                title        = {GNU Parallel 20220522 ('NATO')},
-                month        = May,
-                year         = 2022,
-                note         = {{GNU Parallel is a general parallelizer to run
-                                multiple serial command line programs in parallel
-                                without changing them.}},
-                publisher    = {Zenodo},
-                doi          = {10.5281/zenodo.6570228},
-                url          = {https://doi.org/10.5281/zenodo.6570228
+tange_2022_6570228,
+        author       = {Tange, Ole},
+        title        = {GNU Parallel 20220522 ('NATO')},
+        month        = May,
+        year         = 2022,
+        note         = {{GNU Parallel is a general parallelizer to run
+                        multiple serial command line programs in parallel
+                        without changing them.}},
+        publisher    = {Zenodo},
+        doi          = {10.5281/zenodo.6570228},
+        url          = {https://doi.org/10.5281/zenodo.6570228
