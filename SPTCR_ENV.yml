@@ -22,6 +22,7 @@ dependencies:
   - dask
   - parallel
   - scikit-learn
+  - seqkit
   - pip:
       - crowelab_pyir
       - umi_tools
