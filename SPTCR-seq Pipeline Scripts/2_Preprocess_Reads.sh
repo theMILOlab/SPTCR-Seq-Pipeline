@@ -137,10 +137,9 @@ Demultiplex_UMI_Extraction="${REPOSITORY}/SPTCR-seq Pipeline Scripts/1_Demultipl
 ################################################################
 ################## Trim & Reorient BLOCK #######################
 ################################################################
-echo " :::: Repairing possibly broken Merge Corrected Fastqs ::::"
-
+echo " :::: Checking Fastq Integrity ::::"
 seqkit sana "${INPUT_FASTQ}" -o "${INPUT_FASTQ}_sana" 2> "${LOGS}"/seqkit_sana.txt
-
+INPUT_FASTQ="${INPUT_FASTQ}_sana"
 
 if [ ${PYCHOPPER} = True ]; then
     echo "$(timestamp)" 
@@ -156,14 +155,14 @@ if [ ${PYCHOPPER} = True ]; then
         -S "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_report.tsv \
         -t ${THREADS} \
         -p \
-        "${INPUT_FASTQ}_sana"  \
+        "${INPUT_FASTQ}"  \
         "${pychop_dir}"/"${SAMPLE_NAME}"_pychopped.fastq \
         2> "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_stderr.txt
 
     PYCHOPPED="${pychop_dir}"/"${SAMPLE_NAME}"_pychopped.fastq
 
 else echo " :::: Skipping Pychopper ::::"
-    PYCHOPPED="${INPUT_FASTQ}_sana" 
+    PYCHOPPED="${INPUT_FASTQ}" 
 fi
 ##################
 if [ ${ADAPTER_TRIM} = True ]; then
@@ -196,8 +195,8 @@ if [ ${ADAPTER_TRIM} = True ]; then
     
     TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
 
+    echo " :::: Checking Fastq Integrity ::::"
     seqkit sana "${TRIMMED}" -o "${TRIMMED}_sana" 2> "${LOGS}"/seqkit_sana_trimmed.txt
-
     TRIMMED="${TRIMMED}_sana"
 
 else echo " :::: Skipping Trimming Adapters ::::"
@@ -253,14 +252,14 @@ rm -r "${OUTFOLDER}"/PYCHOPPER
 echo " ::::: Demultiplexing Output :::::"
 if [ ${DEMULTIPLEX} = True ]; then
     cd "${OUTFOLDER}"
-    cd ..
+    
     "${Demultiplex_UMI_Extraction}" \
         -i "${INPUT_FASTQ}" \
         -igb "${IGBLAST}" \
         -n "${SAMPLE_NAME}" \
         -t ${THREADS} \
         -mem ${MEMORY} \
-        -rep ""${REPOSITORY}""
+        -rep "${REPOSITORY}"
 else
     echo ":::: Demultiplexing set to False. If you use the Output for Downstream Applications, please match the Table Columns. ::::"
 fi
