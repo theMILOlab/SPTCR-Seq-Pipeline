@@ -202,7 +202,7 @@ if [ -f "${INPUT_IGB}" ]; then
 
     python "${DEMUX_SUMMARY}" \
         -igb "${INPUT_IGB}" \
-        -bc "${OUTFOLDER}"/test_demux_barcode_umi.csv \
+        -bc "${OUTFOLDER}"/"${SAMPLE_NAME}"_barcode_umi.csv \
         -o "${OUTFOLDER}"
 else
     echo " Not Input IgBlast File given"
