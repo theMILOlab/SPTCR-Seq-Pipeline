@@ -137,7 +137,9 @@ Demultiplex_UMI_Extraction="${REPOSITORY}/SPTCR-seq Pipeline Scripts/1_Demultipl
 ################################################################
 ################## Trim & Reorient BLOCK #######################
 ################################################################
+echo " :::: Repairing possibly broken Merge Corrected Fastqs ::::"
 
+seqkit sana "${INPUT_FASTQ}" -o "${INPUT_FASTQ}_sana" 2> "${LOGS}"/seqkit_sana.txt
 
 
 if [ ${PYCHOPPER} = True ]; then
@@ -154,14 +156,14 @@ if [ ${PYCHOPPER} = True ]; then
         -S "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_report.tsv \
         -t ${THREADS} \
         -p \
-        "${INPUT_FASTQ}" \
+        "${INPUT_FASTQ}_sana"  \
         "${pychop_dir}"/"${SAMPLE_NAME}"_pychopped.fastq \
         2> "${LOGS}"/"${SAMPLE_NAME}"_Pychopper_stderr.txt
 
     PYCHOPPED="${pychop_dir}"/"${SAMPLE_NAME}"_pychopped.fastq
 
 else echo " :::: Skipping Pychopper ::::"
-    PYCHOPPED="${INPUT_FASTQ}"
+    PYCHOPPED="${INPUT_FASTQ}_sana" 
 fi
 ##################
 if [ ${ADAPTER_TRIM} = True ]; then
@@ -191,8 +193,12 @@ if [ ${ADAPTER_TRIM} = True ]; then
         -o "${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq \
         "${DUAL_TRIMMED}" \
         > "${LOGS}"/Cutadapt_trimmed_"${SAMPLE_NAME}".txt
-
+    
     TRIMMED="${OUTFOLDER}"/CUTADAPT/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
+
+    seqkit sana "${TRIMMED}" -o "${TRIMMED}_sana" 2> "${LOGS}"/seqkit_sana_trimmed.txt
+
+    TRIMMED="${TRIMMED}_sana"
 
 else echo " :::: Skipping Trimming Adapters ::::"
     TRIMMED="${INPUT_FASTQ}"
@@ -233,7 +239,7 @@ fi
 
 echo " ::::: Cleaning Up :::::"
 ### Move Output Files to the Front
-mv "${TRIMMED}" "${OUTFOLDER}"/"${SAMPLE_NAME}"_Cutadapt_trimmed.fastq
+mv "${TRIMMED}" "${OUTFOLDER}"/"${SAMPLE_NAME}_Cutadapt_trimmed_sana.fastq"
 mv "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
 IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
 
