@@ -40,7 +40,7 @@ col_names=col_names.split(',')
 print('Reading only columns with names:',col_names)
 
 MOD_READ_ID=arg_vars['MOD']
-print(MOD_READ_ID, type(MOD_READ_ID))
+#print(MOD_READ_ID, type(MOD_READ_ID))
 #############################################
 ## Read in VDJ Annotation File
 vdj=pd.read_csv(read_dir,sep='\t',usecols=col_names)
@@ -57,12 +57,12 @@ else:
 ### Modifying Column Names
 vdj=vdj.rename(columns={col_names[0]:'ReadID',col_names[1]:'Locus',col_names[2]:'V',col_names[3]:'D',col_names[4]:'J',col_names[5]:'CDR3',col_names[6]:'CDR3_aa'})
 
-print(vdj)  
+#print(vdj)  
 ### Read in umi barcode dataframe
 umi_barcode_df=pd.read_csv(umi_bc)
 
-print(umi_barcode_df)
+#print(umi_barcode_df)
 ## Demultiplex VDJ Annotation File with Barcode and UMI File
 demux_umi_df=pd.merge(left=vdj,right=umi_barcode_df,on='ReadID')
-print("VDJ Dataframe with UMIs:",demux_umi_df)
+print("VDJ Dataframe with UMIs: \n",demux_umi_df)
 demux_umi_df.to_csv('{0}/{1}_{2}.csv'.format(OUT,sample_name,ending),index=False)

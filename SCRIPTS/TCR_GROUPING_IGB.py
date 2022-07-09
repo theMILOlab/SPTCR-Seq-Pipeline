@@ -21,6 +21,7 @@ from datetime import datetime
 
 ############### Define Input Variables #####################
 GROUPER=str(arg_vars["GROUPER"]).split(',')
+GROUPER=[groupie.strip() for groupie in GROUPER]
 print(GROUPER)
 #GROUPER=ast.literal_eval(GROUPER)
 
