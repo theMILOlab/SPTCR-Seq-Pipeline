@@ -125,15 +125,20 @@ RATTLE_PATH="${REPOSITORY}"/TOOLS/RATTLE
 
 ### For TCR Annotation Summay
 DEMUX_SUMMARY="${REPOSITORY}"/SCRIPTS/demultiplex_summarize.py
-BARCODE_UMI_FILE="${out}"/PreProcessing/"${SAMPLE_NAME}"_barcode_umi.csv
+BARCODE_UMI_FILE="${out}"/PreProcessing/Demultiplexing_"${SAMPLE_NAME}"/"${SAMPLE_NAME}"_barcode_umi.csv
+
 
 ################################################################
 ################## Cluster BLOCK #######################
 ################################################################
+echo " :::: Checking Fastq Integrity ::::"
+seqkit sana "${INPUT_FASTQ}" -o "${INPUT_FASTQ}_sana" 2> "${LOGS}"/input_sana.txt
+TRIMMED="${INPUT_FASTQ}_sana"
+
 
 echo " :::: Clustering Reads by VJ Arrangement ::::"
 
-mkdir ""${OUTFOLDER}""/IGB_CLUSTERS
+mkdir "${OUTFOLDER}"/IGB_CLUSTERS
 
 python "${REPOSITORY}"/SCRIPTS/TCR_GROUPING_IGB.py \
     --IGB "${INPUT_IGB}" \
@@ -141,7 +146,6 @@ python "${REPOSITORY}"/SCRIPTS/TCR_GROUPING_IGB.py \
     --OUT "${OUTFOLDER}"/IGB_CLUSTERS 2> "${LOGS}"/tcr_clustering_log.txt
 
 IGB_CLUSTERS="${OUTFOLDER}"/IGB_CLUSTERS
-
 
 
 ################################################################
@@ -189,6 +193,9 @@ echo " :::: Repairing possibly broken Merge Corrected Fastqs ::::"
 
 seqkit sana "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq -o "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged_sana.fastq 2> "${LOGS}"/seqkit_sana.txt
 
+echo " :::: Checking Fastq Integrity ::::"
+seqkit sana "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq -o "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged_sana.fastq 2> "${LOGS}"/seqkit_sana.txt
+
 rm "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq
 mv "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged_sana.fastq "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq
 
@@ -217,7 +224,7 @@ if [ ${IGBLAST} = True ]; then
         --numJ 1 \
         --tmp_dir "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}" \
         -o "${SAMPLE_NAME}"_corrected_IGB \
-        ${CORRECTED_MERGED_FASTQ} 2> "${LOGS}"/IGB_Annotation.txt
+        ${CORRECTED_MERGED_FASTQ}
 
     gunzip "${SAMPLE_NAME}"_corrected_IGB.tsv.gz
 
@@ -227,13 +234,14 @@ else
     echo " :::: Not quering IgBlast as indicated ::::"
 fi
 
+### Move Output Files to the Front
+mv "${CORRECTED_MERGED_FASTQ}" "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_merged.fastq
+mv "${OUTFOLDER}"/IGB_Corrected/"${SAMPLE_NAME}"_corrected_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
+IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
 
 if [ ${CLEANUP} = True ]; then
     echo " :::: Removing Intermediate Files ::::"
-    ### Move Output Files to the Front
-    mv "${CORRECTED_MERGED_FASTQ}" "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_merged.fastq
-    mv "${OUTFOLDER}"/IGB_Corrected/"${SAMPLE_NAME}"_corrected_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
-    IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
+
 
     ### Remove Created Working Directories
     rm -r "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}"
@@ -248,20 +256,16 @@ fi
 
 echo " :::: Generate the VDj Annotation Summary ::::"
 
-DEMUX_SUMMARY="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/SCRIPTS/demultiplex_summarize.py"
-OUTFOLDER="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/Testing_Zone/28.7/ClusterCorrect"
-IGBLAST="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/Testing_Zone/28.7/ClusterCorrect/test_demux_corrected_IGB.tsv"
-BARCODE_UMI_FILE="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/LONG_TCR/Testing_Zone/27.07/Demultiplexing_test_demux/test_demux_barcode_umi.csv"
-
 python "${DEMUX_SUMMARY}" \
     -igb "${IGBLAST}" \
     -bc  "${BARCODE_UMI_FILE}" \
-    --MOD False \
-    --OUTN _corr_igb \
+    --MOD "True" \
+    --OUTN "_corr_igb" \
     -n "${SAMPLE_NAME}" \
     -o "${OUTFOLDER}" 
     
 echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast File is in ${OUTDIR}/"${SAMPLE_NAME}"_corrected_IGB.tsv"
+
 
 exit
 

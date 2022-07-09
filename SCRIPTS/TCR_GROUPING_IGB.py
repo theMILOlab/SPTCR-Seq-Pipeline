@@ -45,16 +45,26 @@ if arg_vars["IGB"] not in "":
     print(cdr3_assigned.head(10))
 
 ############# Define parallelized Writing Functions #############  
+mod_read_ids=list(FASTQ.keys())
+true_read_ids=[str(id.name).split('|')[1] for id in FASTQ]
+FASTQ_ROSETTA=dict(zip(true_read_ids,mod_read_ids))
+#print(FASTQ_ROSETTA)
 
-def write_Arrang_Fastq_from_IGB(GROUP,GROUPNAME,INPUT_FASTQ, OUTPATH):
+def write_Arrang_Fastq_from_IGB(GROUP,GROUPNAME,INPUT_FASTQ, OUTPATH,FASTQ_ROSETTA=FASTQ_ROSETTA):
     ### Group By VJ Arrangements
     LOCUS=GROUPNAME[0]
     name="_".join(GROUPNAME)
     name=name.replace("/","__")
     name=name.replace("*","+")
-    READ_LIST=list(GROUP.index)
+    
+    ## Translate Read IDs modified by PyChopper
+    READ_LIST=[]
+    READ_LIST_true=list(GROUP.index)
+    for read in READ_LIST_true:
+        READ_LIST.append(FASTQ_ROSETTA[read])
 
     FILENAME=OUTPATH+'/{0}.fastq'.format(name)
+    
     with open(FILENAME,'a') as f:
         for read in READ_LIST:
             try:
@@ -64,8 +74,6 @@ def write_Arrang_Fastq_from_IGB(GROUP,GROUPNAME,INPUT_FASTQ, OUTPATH):
                     p.write(read)
                     p.write("\n")
     return None
-
-
 
 #### Execution Block ####
 
