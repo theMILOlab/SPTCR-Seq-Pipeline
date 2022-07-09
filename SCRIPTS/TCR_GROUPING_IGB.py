@@ -5,6 +5,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-I','--INPUT_FASTQ',help="Path to Input Fastq File", required=True )
 parser.add_argument('-O','--OUT',help= "Path to Outfolder", required=True )
 parser.add_argument('-igb','--IGB',help="Path to IgBlast Tsv",default="")
+parser.add_argument('-grp','--GROUPER',help="Grouper to use for grouping the TCR Reads into Fastqs",default=["Locus","V","J"])
 
 args = parser.parse_args()
 
@@ -18,11 +19,15 @@ from collections import defaultdict
 import os
 from datetime import datetime
 
-#######################################################
+############### Define Input Variables #####################
+GROUPER=str(arg_vars["GROUPER"]).split(',')
+print(GROUPER)
+#GROUPER=ast.literal_eval(GROUPER)
 
 OUT=str(arg_vars["OUT"])
 IGB_PATH=arg_vars["IGB"]
 
+print("Grouping TCRs by:",GROUPER)
 ############# Read in Fastq ############# 
 FASTQ=pyfastx.Fastq(arg_vars["INPUT_FASTQ"])
 
@@ -85,7 +90,7 @@ if arg_vars["IGB"] not in "":
     
     TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRB"]
     #print(TR.head())
-    grouper=TR.groupby(by=["Locus","V","J"])
+    grouper=TR.groupby(by=GROUPER)
     print('Process based parallel writing of TRB VDJ Clusters', now)
     #dropna=False,
     Parallel(verbose=5,backend='multiprocessing')(delayed(write_Arrang_Fastq_from_IGB)(GROUP=group, GROUPNAME=groupname ,INPUT_FASTQ=FASTQ, OUTPATH=OUT) for (groupname, group) in grouper)
@@ -96,7 +101,7 @@ if arg_vars["IGB"] not in "":
     
     TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRD"]
     #print(TR.head())
-    grouper=TR.groupby(by=["Locus","V","J"])
+    grouper=TR.groupby(by=GROUPER)
     print('Process based parallel writing of TRD VDJ Clusters', now)
     #dropna=False,
     Parallel(verbose=5,backend='multiprocessing')(delayed(write_Arrang_Fastq_from_IGB)(GROUP=group, GROUPNAME=groupname ,INPUT_FASTQ=FASTQ, OUTPATH=OUT) for (groupname, group) in grouper)
@@ -109,7 +114,7 @@ if arg_vars["IGB"] not in "":
     
     TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRA"]
     #print(TR.head())
-    grouper=TR.groupby(by=["Locus","V","J"])
+    grouper=TR.groupby(by=GROUPER)
     #dropna=False,
     Parallel(verbose=5,backend='multiprocessing')(delayed(write_Arrang_Fastq_from_IGB)(GROUP=group, GROUPNAME=groupname ,INPUT_FASTQ=FASTQ, OUTPATH=OUT) for (groupname, group) in grouper)
     finished=datetime.now().time()
@@ -120,7 +125,7 @@ if arg_vars["IGB"] not in "":
     
     TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRG"]
     #print(TR.head())
-    grouper=TR.groupby(by=["Locus","V","J"])
+    grouper=TR.groupby(by=GROUPER)
     #dropna=False,
     Parallel(verbose=5,backend='multiprocessing')(delayed(write_Arrang_Fastq_from_IGB)(GROUP=group, GROUPNAME=groupname ,INPUT_FASTQ=FASTQ, OUTPATH=OUT) for (groupname, group) in grouper)
 
