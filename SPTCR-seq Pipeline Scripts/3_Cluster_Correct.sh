@@ -217,7 +217,7 @@ then
                 2> '${LOGS}'/Rattle_Correction/{/.}_corr_stderr.txt
             "
     echo "$(timestamp)"
-    
+
 else
     echo "$(timestamp)"
     echo " :::: Sequentially Correcting Fastq. Less Memory Intensive. ::::"
@@ -247,7 +247,7 @@ else
 fi
 
 echo " :::: Parallel Merge Corrected Fastqs ::::"
-find "${RATTLE_CORRECT_OUT}" -type f -name "corrected.fq"|parallel --jobs 0 "cat {} >> "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq"
+find "${RATTLE_CORRECT_OUT}" -type f -name "corrected.fq"|parallel --jobs 0 --bar "cat {} >> "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq"
 
 echo " :::: Checking Fastq Integrity & renaming Corr Fastq ::::"
 seqkit sana "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq -o "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged_sana.fastq 2> "${LOGS}"/seqkit_sana.txt
