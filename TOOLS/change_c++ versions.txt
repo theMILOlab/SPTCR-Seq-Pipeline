@@ -8,9 +8,12 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 
-## switch compiler from 11 to 9 
+## switch compiler from 11 to 9, execute as sudo 
 sudo update-alternatives --config gcc
 sudo update-alternatives --config g++
+
+### Also make sure you have the development support files for zlb, execute as sudo:
+sudo apt-get install libz-dev
 
 ## Compile Rattle
 cd Rattle
