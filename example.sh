@@ -11,12 +11,12 @@ MEMORY=16
 
 full="/PATH/TO/GITHUB/REPOSITORY/SPTCR-seq Pipeline Scripts/SPTCR_FULL_Pipeline.sh"
 
-for sample in "/YOUR/SAMPLE/FOLDER/WITH/*.fastq"
+for sample in "/YOUR/SAMPLE/FOLDER/WITH/"*.fastq
 do  
     SAMPLE_NAME="$(basename "${sample}")"
     SAMPLE_NAME="$(cut -d'_' -f1 <<<${SAMPLE_NAME})"
 
-    OUT="/YOUR/DESIRED/OUTPAH/${SAMPLE_NAME}"
+    OUT="/YOUR/DESIRED/OUTPATH/${SAMPLE_NAME}"
     echo "$SAMPLE_NAME"
     mkdir "${OUT}"
     cd "${OUT}"
@@ -27,7 +27,7 @@ do
     -i"${sample}" \
     -t ${THREADS} \
     -mem ${MEMORY} \
-    -rep "/PATH/TO/GITHUB/REPOSITORY/SPTCR-Seq-Pipeline" \
+    -rep "/PATH/TO/GITHUB/REPOSITORY" \
     -cln False 
     
     
