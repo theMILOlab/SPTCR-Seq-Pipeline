@@ -4,9 +4,10 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-I','--INPUT_FASTQ',help="Path to Input Fastq File", required=True )
 parser.add_argument('-O','--OUT',help= "Path to Outfolder", required=True )
-parser.add_argument('-igb','--IGB',help="Path to IgBlast Tsv",default="")
-parser.add_argument('-grp','--GROUPER',help="Grouper to use for grouping the TCR Reads into Fastqs",default=["Locus","V","J"])
-
+parser.add_argument('-igb','--IGB',help="Path to IgBlast Tsv. Use Full IgBlast Output from PreProcessed Reads",default="")
+parser.add_argument('-grp','--GROUPER',help="Grouper to use for grouping the TCR Reads into Fastqs. Pick one or a combination of: locus,v_family, d_family, j_family",default=["locus,v_family"])
+parser.add_argument('-ids','--READID_COL',help="Column for ReadIds",default="sequence_id")
+parser.add_argument('-loc','--LOCUS_COL',help="Column for TCR Loci",default="locus")
 args = parser.parse_args()
 
 arg_vars = vars(args)
@@ -21,34 +22,52 @@ from datetime import datetime
 
 ############### Define Input Variables #####################
 GROUPER=str(arg_vars["GROUPER"]).split(',')
-GROUPER=[groupie.strip() for groupie in GROUPER]
-print(GROUPER)
-#GROUPER=ast.literal_eval(GROUPER)
+GROUPER=[str(groupie).strip() for groupie in GROUPER]
+READID_COL=str(arg_vars["READID_COL"])
+LOCUS_COL=str(arg_vars["LOCUS_COL"])
 
 OUT=str(arg_vars["OUT"])
 IGB_PATH=arg_vars["IGB"]
 
-print("Grouping TCRs by:",GROUPER)
+print("Grouping TCRs by:",GROUPER, "Using ReadIds from Column:",READID_COL)
+
 ############# Read in Fastq ############# 
 FASTQ=pyfastx.Fastq(arg_vars["INPUT_FASTQ"])
 
 ############# Splitting by IgBlast VJ-Family Arrangement ############# 
+print("Reading in IgBlast Result")
 
-if arg_vars["IGB"] not in "":
-    print("Reading in IgBlast Result")
-    
-    ### Read in IgBlast Result
-    IGB=pd.read_csv(IGB_PATH,low_memory=False,index_col=0)
-    cdr3_assigned=IGB[(~IGB["V"].isna()) & (~IGB["J"].isna())]
+### Read in IgBlast Result
+if IGB_PATH.endswith('.tsv'):
+    ending='\t'
+elif IGB_PATH.endswith('.csv'):
+    ending=','
 
-    ### Only VJ Family
-    cdr3_assigned["V Exon"]=cdr3_assigned['V'].str.split(pat="*",expand=False, n=1).str[1]
-    cdr3_assigned["V"]=cdr3_assigned['V'].str.split(pat="*",expand=False, n=1).str[0]
+########
+cols=GROUPER.copy()
+cols.append(READID_COL)
+print('Only Reading:',cols)
+IGB=pd.read_csv(IGB_PATH,sep=ending,low_memory=False,usecols=cols,index_col=READID_COL)
 
-    cdr3_assigned["J Exon"]=cdr3_assigned['J'].str.split(pat="*",expand=False, n=1).str[1]
-    cdr3_assigned["J"]=cdr3_assigned['J'].str.split(pat="*",expand=False, n=1).str[0]
+## Modify Read ID
+#IGB[READID_COL]=IGB[READID_COL].str.split('|').str[1]
+IGB.index=IGB.index.str.split('runid').str[0]
 
-    print(cdr3_assigned.head(10))
+### Drop Rows with Na in Grouper
+cdr3_assigned=IGB[~IGB[GROUPER[0]].isna()]
+for count,grouper in enumerate(GROUPER[1:]):
+    count+=1
+    cdr3_assigned=cdr3_assigned[~cdr3_assigned[GROUPER[count]].isna()]
+print(cdr3_assigned)
+
+### Only VJ Family
+#cdr3_assigned["V Exon"]=cdr3_assigned['V'].str.split(pat="*",expand=False, n=1).str[1]
+#cdr3_assigned["V"]=cdr3_assigned['V'].str.split(pat="*",expand=False, n=1).str[0]
+
+#cdr3_assigned["J Exon"]=cdr3_assigned['J'].str.split(pat="*",expand=False, n=1).str[1]
+#cdr3_assigned["J"]=cdr3_assigned['J'].str.split(pat="*",expand=False, n=1).str[0]
+
+print(cdr3_assigned.head(10))
 
 ############# Define parallelized Writing Functions #############  
 mod_read_ids=list(FASTQ.keys())
@@ -66,13 +85,14 @@ def write_Arrang_Fastq_from_IGB(GROUP,GROUPNAME,INPUT_FASTQ, OUTPATH,FASTQ_ROSET
     ## Translate Read IDs modified by PyChopper
     READ_LIST=[]
     READ_LIST_true=list(GROUP.index)
-    for read in READ_LIST_true:
-        READ_LIST.append(FASTQ_ROSETTA[read])
+    #for read in READ_LIST_true:
+    #    READ_LIST.append(FASTQ_ROSETTA[read])
 
     FILENAME=OUTPATH+'/{0}.fastq'.format(name)
     
     with open(FILENAME,'a') as f:
-        for read in READ_LIST:
+        for read in READ_LIST_true:
+            #READ_LIST_true
             try:
                 f.write(INPUT_FASTQ[read].raw)
             except:
@@ -89,7 +109,7 @@ now = datetime.now().time()
 if arg_vars["IGB"] not in "":
     now = datetime.now().time()
     
-    TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRB"]
+    TR=cdr3_assigned[cdr3_assigned[LOCUS_COL]=="TRB"]
     #print(TR.head())
     grouper=TR.groupby(by=GROUPER)
     print('Process based parallel writing of TRB VDJ Clusters', now)
@@ -100,7 +120,7 @@ if arg_vars["IGB"] not in "":
     
     now = datetime.now().time()
     
-    TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRD"]
+    TR=cdr3_assigned[cdr3_assigned[LOCUS_COL]=="TRD"]
     #print(TR.head())
     grouper=TR.groupby(by=GROUPER)
     print('Process based parallel writing of TRD VDJ Clusters', now)
@@ -113,7 +133,7 @@ if arg_vars["IGB"] not in "":
     
     print('Process based parallel writing of VJ Clusters', now)
     
-    TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRA"]
+    TR=cdr3_assigned[cdr3_assigned[LOCUS_COL]=="TRA"]
     #print(TR.head())
     grouper=TR.groupby(by=GROUPER)
     #dropna=False,
@@ -124,7 +144,7 @@ if arg_vars["IGB"] not in "":
     
     print('Process based parallel writing of VJ Clusters', now)
     
-    TR=cdr3_assigned[cdr3_assigned["Locus"]=="TRG"]
+    TR=cdr3_assigned[cdr3_assigned[LOCUS_COL]=="TRG"]
     #print(TR.head())
     grouper=TR.groupby(by=GROUPER)
     #dropna=False,

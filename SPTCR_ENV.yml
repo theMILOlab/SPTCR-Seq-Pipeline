@@ -23,6 +23,7 @@ dependencies:
   - parallel
   - scikit-learn
   - seqkit
+  - tqdm
   - pip:
       - crowelab_pyir
       - umi_tools

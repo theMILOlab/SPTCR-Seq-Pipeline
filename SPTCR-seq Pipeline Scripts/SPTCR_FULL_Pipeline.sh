@@ -93,21 +93,23 @@ mkdir "${OUT}"
 ################################################################
 
 echo "################## PreProcessing $NAME ########################"
-cd "${OUT}"
-
-bash "${preproc}" \
-        -n ${NAME} \
-        -i "${INPUT_FASTQ}" \
-        -t ${THREADS} \
-        -mem ${MEMORY} \
-        -rep "${REPOSITORY}"
+#cd "${OUT}"
+#
+#bash "${preproc}" \
+#        -n ${NAME} \
+#        -i "${INPUT_FASTQ}" \
+#        -t ${THREADS} \
+#        -mem ${MEMORY} \
+#        -rep "${REPOSITORY}"
 
 echo "################## Correcting $NAME ########################"
 cd "${OUT}"
 bash "${cluscorr}" \
         -i "./PreProcessing/${NAME}_Cutadapt_trimmed_sana.fastq" \
-        -b "./PreProcessing/Demultiplexing_${NAME}/${NAME}_vdj_umi_barcode_uncorrected_df.csv" \
+        -b "./PreProcessing/${NAME}_preprocessed_IGB.tsv" \
         -n ${NAME} \
         -t ${THREADS} \
+        --GROUPER "locus,v_family" \
         -rep "${REPOSITORY}"
-        
+
+        #-b "./PreProcessing/Demultiplexing_${NAME}/${NAME}_vdj_umi_barcode_uncorrected_df.csv" \
