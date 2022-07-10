@@ -1,7 +1,7 @@
 ## Install gcc  and g++ compiler version 9 alternatives
 sudo apt -y install gcc-9 g++-9
 
-## Configure the Alternatives (11 as current version)
+## Configure the Alternatives (suppose you have gcc/g++ 11 as current version)
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 
@@ -18,3 +18,7 @@ sudo apt-get install libz-dev
 ## Compile Rattle
 cd Rattle
 ./build.sh
+
+## after compiling / if you are done using SPTCR-seq Pipeline, you can switch you gcc/g++ compiler again by doing 
+sudo update-alternatives --config gcc
+sudo update-alternatives --config g++
