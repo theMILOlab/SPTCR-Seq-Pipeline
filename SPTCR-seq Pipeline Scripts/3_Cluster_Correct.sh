@@ -316,23 +316,15 @@ python "${DEMUX_SUMMARY}" \
     -igb "${IGBLAST}" \
     -bc  "${BARCODE_UMI_FILE}" \
     --MOD "True" \
-    --OUTN "_corr_igb" \
+    --OUTN "corr_igb_overview_igb" \
     -n "${SAMPLE_NAME}" \
     -o "${OUTFOLDER}" 
-    
-echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast Overview File is in ${OUTDIR}/"${SAMPLE_NAME}"_corr_igb.csv"
 
+echo " :::: Performing UMI Correction on Summary ::::"
 
-exit
-
-### Missing: UMI Correct Final IGB
-
-############### For umi Correction
-mkdir "${OUTFOLDER}"/UMI_Correction
-mkdir "${OUTFOLDER}"/UMI_Correction/UMI_CLUSTERING
-mkdir "${OUTFOLDER}"/UMI_Correction/UMI_CORRECTED
-
-/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/SCRIPTS/umi_correct_output.py \
-    -igb "${OUTPUT_IGB} "\
+"${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
+    -igb "${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv" \
     -n "${SAMPLE_NAME}" \
-    -O "${OUTFOLDER}"/UMI_Correction
+    -O "${OUTFOLDER}" 2> "${LOGS}"/umi_correction.txt 
+    
+echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast Overview File is in ${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv, UMI Corrected Summary Counts are in ${OUTFOLDER}/${SAMPLE_NAME}_igb_corr_umi_corrected.csv"

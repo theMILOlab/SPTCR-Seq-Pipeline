@@ -104,8 +104,14 @@ fi
 
 
 ### Log Folder ####
-mkdir "${OUTFOLDER}"/LOGS
 LOGS="${OUTFOLDER}"/LOGS
+
+if [ -d "${LOGS}" ]; then
+    echo "Using ${LOGS} as Log Folder"
+else
+    mkdir "${LOGS}"
+    echo "Using ${LOGS} as Log Folder"
+fi
 
 ### Timestamp Function
 

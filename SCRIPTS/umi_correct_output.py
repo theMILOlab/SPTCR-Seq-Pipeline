@@ -41,13 +41,13 @@ igb=pd.read_csv(read_dir)
 vdj=igb[igb['Locus'].isin(['TRB','TRD'])]
 vdj=vdj.dropna(subset=['Locus','V','D','J','CDR3_aa'])
 vdj[['Locus','V','D','J','CDR3_aa']]=vdj[['Locus','V','D','J','CDR3_aa']].astype(str)
-vdj['TCR']=vdj[['Locus','V','D','J','CDR3_aa']].agg('_'.join,axis=1)
+vdj['TCR']=vdj[['Locus','V','D','J','CDR3_aa']].agg('___'.join,axis=1)
 vdj=vdj[['TCR',barcode_col,umi_col]]
 
 vj=igb[igb['Locus'].isin(['TRA','TRG'])]
 vj=vj.dropna(subset=['Locus','V','J','CDR3_aa'])
 vj[['Locus','V','J','CDR3_aa']]=vj[['Locus','V','J','CDR3_aa']].astype(str)
-vj['TCR']=vj[['Locus','V','J','CDR3_aa']].agg('_'.join,axis=1)
+vj['TCR']=vj[['Locus','V','J','CDR3_aa']].agg('___'.join,axis=1)
 vj=vj[['TCR',barcode_col,umi_col]]
 
 ## Grouping TCR Columns to one
@@ -57,7 +57,6 @@ vdj=vdj.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=Tru
 
 
 vj=vj.groupby(['TCR','Spatial Barcode'])['UMI'].apply(list).reset_index(name='UMI List')
-print(vj)
 vj['Uncorrected Count']=""
 vj['Uncorrected Count']=vj.apply(lambda x: len(x['UMI List']),axis='columns')
 vj=vj.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=True)
@@ -81,8 +80,21 @@ for index, row in tqdm(tcrs.iterrows()):
 
 
 #######################################################
-##################### Write File Out ##################
+##################### Revert Changes of TCR Col ##################
 
+vdj=tcrs[(tcrs['TCR'].str.startswith('TRB'))|(tcrs['TCR'].str.startswith('TRD'))]
+vdj[['Locus','V','D','J','CDR3_aa']]=vdj['TCR'].str.split('___',expand=True)
+vdj=vdj.drop(columns=['TCR','UMI List'])
+
+vj=tcrs[(tcrs['TCR'].str.startswith('TRA'))|(tcrs['TCR'].str.startswith('TRG'))]
+vj[['Locus','V','J','CDR3_aa']]=vj['TCR'].str.split('___',expand=True)
+vj=vj.drop(columns=['TCR','UMI List'])
+vj['D']=''
+#print(vdj,vj)
+tcrs=pd.concat([vdj,vj])
+print(tcrs)
+#######################################################
+##################### Write File Out ##################
 #out_path=os.path(OUT)
 write_name=sample_name+"_igb_corr_umi_corrected.csv"
 outpath=os.path.join(OUT,write_name)

@@ -70,12 +70,13 @@ argparse "$@" <<EOF || exit 1
 
 parser.add_argument('-n','--NAME',help="Sample Name/Name of Output Folder",default="-")
 parser.add_argument('-i', '--INPUT_FASTQ', help="Specify the Path (preprocessed) Fastq File",required=True)
-parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="./")
+parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default=".")
 
 parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
 parser.add_argument('-mem','--MEMORY',help="RAM to user", default="8")
 
 parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Github Repository Folder for SPTCR Seq",default="./Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline")
+parser.add_argument('-cln', '--CLEANUP', help="If True, created intermediate Files and Folders will be deleted. For Debugging you can set this to False.",default="True")
 
 EOF
 ################################################################
@@ -93,23 +94,22 @@ mkdir "${OUT}"
 ################################################################
 
 echo "################## PreProcessing $NAME ########################"
-#cd "${OUT}"
-#
-#bash "${preproc}" \
-#        -n ${NAME} \
-#        -i "${INPUT_FASTQ}" \
-#        -t ${THREADS} \
-#        -mem ${MEMORY} \
-#        -rep "${REPOSITORY}"
+cd "${OUT}"
+bash "${preproc}" \
+        -n ${NAME} \
+        -i "${INPUT_FASTQ}" \
+        -t ${THREADS} \
+        -mem ${MEMORY} \
+        -rep "${REPOSITORY}"
 
 echo "################## Correcting $NAME ########################"
-cd "${OUT}"
 bash "${cluscorr}" \
         -i "./PreProcessing/${NAME}_Cutadapt_trimmed_sana.fastq" \
         -b "./PreProcessing/${NAME}_preprocessed_IGB.tsv" \
         -n ${NAME} \
         -t ${THREADS} \
         --GROUPER "locus,v_family" \
-        -rep "${REPOSITORY}"
+        -rep "${REPOSITORY}" \
+        -cln ${CLEANUP}
 
         #-b "./PreProcessing/Demultiplexing_${NAME}/${NAME}_vdj_umi_barcode_uncorrected_df.csv" \

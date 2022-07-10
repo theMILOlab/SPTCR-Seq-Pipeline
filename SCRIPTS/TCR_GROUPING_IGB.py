@@ -35,7 +35,7 @@ print("Grouping TCRs by:",GROUPER, "Using ReadIds from Column:",READID_COL)
 FASTQ=pyfastx.Fastq(arg_vars["INPUT_FASTQ"])
 
 ############# Splitting by IgBlast VJ-Family Arrangement ############# 
-print("Reading in IgBlast Result")
+print("Reading in IgBlast Result and preparing it")
 
 ### Read in IgBlast Result
 if IGB_PATH.endswith('.tsv'):
@@ -66,8 +66,6 @@ print(cdr3_assigned)
 
 #cdr3_assigned["J Exon"]=cdr3_assigned['J'].str.split(pat="*",expand=False, n=1).str[1]
 #cdr3_assigned["J"]=cdr3_assigned['J'].str.split(pat="*",expand=False, n=1).str[0]
-
-print(cdr3_assigned.head(10))
 
 ############# Define parallelized Writing Functions #############  
 mod_read_ids=list(FASTQ.keys())
