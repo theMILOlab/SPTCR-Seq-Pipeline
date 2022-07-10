@@ -10,6 +10,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 
 ## switch compiler from 11 to 9 
 sudo update-alternatives --config gcc
+sudo update-alternatives --config g++
 
 ## Compile Rattle
 cd Rattle
