@@ -10,7 +10,9 @@ Visualize spatially highly resolved T-Cell Infiltration with Oxford Nanopore Thi
 ![image](https://user-images.githubusercontent.com/70334482/175873404-d5ef14b1-5be4-4789-8ae9-5214b924a89e.png)
 
 #### TCR Infiltration Analysis in spatial Context
+##### Sample 275 TRA/TRB Infiltration Plottet
 <img src="https://user-images.githubusercontent.com/70334482/176155991-3dde846a-71f9-4297-a5e9-2c0b3c305c0c.png" width="300" height=300>
+![alt text](https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/TCR_Expression.png?raw=true)
 
 ## Installation
 
@@ -19,46 +21,28 @@ We recommend using the Conda C++ Drop-In package manager mamba to resolve all th
 ```
 conda install mamba -n base -c conda-forge
 ```
-
+/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline
 For Installation:
 1. Clone this Repository with
-        ```
-        git clone https://github.com/jkbenotmane/SPTCR-seq.git
-        ```
+   
+        git clone https://github.com/theMILOlab/SPTCR-Seq-Pipeline.git
 
-2. Install Requirements with
-        ```
-        cd ./SPTCR-seq
-        conda env create -f SPTCR_ENV.yml
-        ```
+2. Setup an Environment called "SPTCR_ENV" with all Dependencies and build Tools from Source:
+3. 
+        cd ./SPTCR-Seq-Pipeline
+        ./setup.sh
 
-3. For parallel processing do:
-        ```
-        sudo apt-get install parallel
-        ```
-        
-4. To do Demultiplexing do:
-        ```
-        cd ./Tools
-        git clone https://github.com/vpc-ccg/scTagger.git
-        ```
+!! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE.!!
 
-5. For Error Correction, do:
-        ```
-        cd./Tools
-        git clone --recurse-submodules https://github.com/comprna/RATTLE
-        ### Compile from Source
-        cd RATTLE
-        ./build.sh
-        ```
-        !! If you have problems compiling contained spoa from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer for compilation.!!
+3. For parallel processing in correction step do:
+        sudo apt-get install parallel        
 
-6. Activate Environment to run the Pipeline
-        ```
+
+
+4. Activate Environment to run the Pipeline
         conda activate -n SPTCR_ENV
-        ```
 
-7. For minimal Pipeline see Exemplary Pipeline
+5. For minimal Pipeline see Exemplary Pipeline
 
 
 ## Running Pipeline
