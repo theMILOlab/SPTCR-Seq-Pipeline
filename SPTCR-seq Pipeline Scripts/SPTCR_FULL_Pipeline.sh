@@ -77,6 +77,7 @@ parser.add_argument('-mem','--MEMORY',help="RAM to user", default="8")
 
 parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Github Repository Folder for SPTCR Seq",default="./Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline")
 parser.add_argument('-cln', '--CLEANUP', help="If True, created intermediate Files and Folders will be deleted. For Debugging you can set this to False.",default="True")
+parser.add_argument('-lm','--LOWMEM',help="Set to True if Memory & Compute Intensive Parallel-Correction Step should be done sequentially", default="False")
 
 EOF
 ################################################################
@@ -110,6 +111,7 @@ bash "${cluscorr}" \
         -t ${THREADS} \
         --GROUPER "locus,v_family" \
         -rep "${REPOSITORY}" \
-        -cln ${CLEANUP}
+        -cln ${CLEANUP} \
+        -lm ${LOWMEM}
 
         #-b "./PreProcessing/Demultiplexing_${NAME}/${NAME}_vdj_umi_barcode_uncorrected_df.csv" \

@@ -278,11 +278,12 @@ if [ ${IGBLAST} = True ]; then
         --numV 1 \
         --numD 1 \
         --numJ 1 \
+        --gzip False \
         --tmp_dir "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}" \
         -o "${SAMPLE_NAME}"_corrected_IGB \
         ${CORRECTED_MERGED_FASTQ} >"${LOGS}"/final_igb.txt
 
-    gunzip "${SAMPLE_NAME}"_corrected_IGB.tsv.gz
+    #gunzip "${SAMPLE_NAME}"_corrected_IGB.tsv.gz
 
     OUTPUT_IGB="${OUTFOLDER}"/IGB_Corrected/"${SAMPLE_NAME}"_corrected_IGB.tsv
 

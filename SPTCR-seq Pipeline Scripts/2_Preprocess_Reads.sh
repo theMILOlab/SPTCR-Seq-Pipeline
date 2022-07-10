@@ -85,6 +85,7 @@ parser.add_argument('-trim', '--ADAPTER_TRIM', help="Specify if Reads should be 
 parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing.",default="True")
 parser.add_argument('-demux', '--DEMULTIPLEX', help="If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes.",default="True")
 
+
 EOF
 
 ################################################################
@@ -223,11 +224,12 @@ if [ ${IGBLAST} = True ]; then
         --numV 1 \
         --numD 1 \
         --numJ 1 \
+        --gzip False \
         --tmp_dir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}" \
         -o "${SAMPLE_NAME}"_preprocessed_IGB \
         "${TRIMMED}"
 
-    gunzip "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv.gz
+    #gunzip "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv.gz
 
     IGBLAST="${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
     
