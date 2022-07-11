@@ -9,7 +9,7 @@ Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Na
 
 #### TCR Infiltration Analysis in spatial Context
 ##### Sample 275 TRA/TRB Spatial T-Cell Deconvolution
-<img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/TCR_Expression.png" width="300">
+<img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/TCR_Expression.png">
 
 ##### Sample 275 Spatial TRD/TRG Infiltration
 <img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/GBM275_TRD_TRG_Infiltration.png" width="300">
