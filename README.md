@@ -24,7 +24,7 @@ If you want to do installation by hand, just install as followed and subsequentl
 conda install mamba -n base -c conda-forge
 ```
 
-For Installation:
+**For Installation:**
 1. Clone this Repository with
    
         git clone https://github.com/theMILOlab/SPTCR-Seq-Pipeline.git
@@ -33,7 +33,7 @@ For Installation:
         cd ./SPTCR-Seq-Pipeline
         ./setup.sh
 
-        !! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
+> !! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
 
 3. For parallel processing in correction step do:
         sudo apt-get install parallel        
@@ -43,7 +43,7 @@ For Installation:
 
 5. For minimal Pipeline see Exemplary Pipeline: example.sh 
 
-
+---
 ## Running Pipeline
 
 ### Overview: 
