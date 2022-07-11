@@ -299,7 +299,8 @@ if [ ${CLEANUP} = "True" ]; then
 
 
     ### Remove Created Working Directories
-    rm -r "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}"
+    rm -r "${OUTFOLDER}"/IGB_Corrected
+    #/TEMP_"${SAMPLE_NAME}"
     rm -r "${OUTFOLDER}"/CORRECTION
     
     rm -r "${IGB_CLUSTERS}"

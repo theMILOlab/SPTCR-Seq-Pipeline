@@ -291,58 +291,61 @@ prepared for 10X Genomics
 see Example/ClusterCorrect for exemplary output of the PreProcessing Pipeline.
 
 **Explanation of Output**
-see Example/Example/ClusterCorrect for exemplary output of the Clustering and Correction Pipeline.
-        Following Correction you will find the corrected TCR Reads .fastq in the defined Outfolder:
+see Example/Example/ClusterCorrect for exemplary output of the Clustering and Correction Pipeline. Output for CLEANUP=False:
 
-                OUTFOLDER/YOUR_SAMPLE_NAME_corrected_merged.fastq
+*Example_corr_igb_overview_igb.csv*
+Overview Table generated for Convenience. Holds VDJ Information as well as Barcode, Umi per ReadID. Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI
 
-        The Final Fully Annotated IgBlast File can be found in:
+*Example_corrected_IGB.tsv*
+Raw IgBlast Output of corrected Fastq.
 
-                OUTFOLDER/YOUR_SAMPLE_NAME_corrected_IGB.tsv
-        
-        For a VDj-Annotation Summary:
+*Example_corrected_merged.fastq*
 
-                OUTFOLDER/YOUR_SAMPLE_NAME_corrected_IGB_summary.csv
-                
-                ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI
-                7017f836-e631-407b-a236-e0e9f2f4fef3,TRB,TRBV14*01,TRBD2*01,TRBJ1-6*01,GGGGTTCTGCCAGAAGGTGGCCGAGACCCTCAGGCGGCTGCTCAGGCAGTATCTGGAGTCATTGAGGGCGGGCTGCTCCTTGAGGGGCTGCGGGTCTGTGCTGACCCCACTGTGCACCTCCTTCCCATTCACCC,GVLPEGGRDPQAAAQAVSGVIEGGLLLEGLRVCADPTVHLLPIHP,ACACCTGACACTAGGG,AAGATCAGTTAA
-                311a0300-de74-41e9-83d8-91841700a79f,TRB,TRBV14*01,TRBD2*01,TRBJ1-6*01,GGGGTTCTGCCAGAAGGTGGCCGAGACCCTCAGGCGGCTGCTCAGGCAGTATCTGGAGTCATTGAGGGCGGGCTGCTCCTTGAGGGGCTGCGGGTCTGTGCTGACCCCACTGTGCACCTCCTTCCCATTCACCC,GVLPEGGRDPQAAAQAVSGVIEGGLLLEGLRVCADPTVHLLPIHP,ATTGATGAGGAGCGCC,ATGACACTGAGT
-                f1ab263f-76ce-48a6-9ec0-51b7b29cef78,TRB,TRBV14*01,TRBD2*01,TRBJ1-6*01,
+Corrected Fastq.
 
+*Example_igb_corr_umi_corrected.csv*
 
+Overview Table of the corrected IGB Output Count summarized and UMI COrrected. Hold Columns: Spatial Barcode,Uncorrected Count,UMI Corrected,Locus,V,D,J,CDR3_aa
+
+***ClusterCorrect/LOGS/***
+Holds the Logs for each Step of the Pipeline
+
+***ClusterCorrect/IGB_CLUSTERS/***
+Holds the by their Arrangement split Fastqs of the Input Fastq.
+
+***ClusterCorrect/CORRECTION/***
+
+*RATTLE_CLUSTERS*
+Holds all Folders with Output of RATTLE Clustering of each grouped Fastq.
+
+*RATTLE_CORRECT*
+Holds the Folders for each corrected Fastq Group.
 
 
 ### Exemplary Pipeline
 ***
         An Exemplary minimal Usage Pipeline to demultiplex, preprocess and correct an Input Fastq.
 
-        #! /usr/bin/env bash
-        
-        ## Command into Github Repository
+        #! /usr/bin/env bash 
 
-        preproc=./2_Preprocess_Reads.sh
-        cluscorr=./3_Cluster_Correct.sh
-        input=PATH/TO/INPUT/FASTQ
-        MEMORY=32
-        THREADS=12
-        SAMPLE_NAME=SAMPLE_XY
-        OUT=PATH/TO/OUTFOLDER
+        full="../SPTCR-seq Pipeline Scripts/SPTCR_FULL_Pipeline.sh"
 
-        ##############################
+        sample="./Example_TCR.fastq"
 
-        bash "${preproc}" \
-                -n ${SAMPLE_NAME} \
-                -i "${input}" \
-                -t ${THREADS} \
-                -mem ${MEMORY} \
-                -o ${OUT} \
+        SAMPLE_NAME="$(basename "${sample}")"
+        SAMPLE_NAME="$(cut -d'_' -f1 <<<${SAMPLE_NAME})"
 
-        bash "${cluscorr}" \
-                -i "${input}" \
-                -b "${OUT}/PreProcessing/${SAMPLE_NAME}_preprocessed_IGB.tsv" \
-                -n ${SAMPLE_NAME} \
-                -t ${THREADS} \
+        OUT="../Example/${SAMPLE_NAME}"
+        echo "$SAMPLE_NAME"
 
+        ############################
+        "${full}" \
+        -n "$SAMPLE_NAME" \
+        -i"${sample}" \
+        -t 8 \
+        -mem 16 \
+        -rep ".." \
+        -cln False 
 
 
 ### Citations
