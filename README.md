@@ -30,12 +30,14 @@ conda install mamba -n base -c conda-forge
         git clone https://github.com/theMILOlab/SPTCR-Seq-Pipeline.git
 
 2. Execute setup.sh to setup an Environment "SPTCR_ENV" with all Dependencies and build Tools from Source:
+
         cd ./SPTCR-Seq-Pipeline
         ./setup.sh
 
 > !! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
 
 3. For parallel processing in correction step do:
+   
         sudo apt-get install parallel        
 
 4. Activate Environment to run the Pipeline
@@ -51,9 +53,9 @@ The Computational Workflow is compromised of two major steps:
 
         1. Preprocessing Reads (2_Preprocess_Reads.sh)
         2. Cluster & Correct Reads (3_Cluster_Correct.sh)
-        
+
 When Calling SPTCR_Full_Pipeline.sh with the indicated args, these scripts will be called sequentially with standard args. This is the recommended form to call SPTCR_Pipeline.
-If you want more control of the intermediate steps or reuse already calculated output, then you have to call the scripts sequentially.
+If you want more control of the intermediate steps or reuse already calculated preprocessed reads, then you have to call the scripts sequentially.
 
 ### 1. Combined Demultiplexing & Preprocessing of Reads
 ***    
