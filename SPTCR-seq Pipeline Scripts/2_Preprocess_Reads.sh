@@ -247,7 +247,6 @@ fi
 echo " ::::: Cleaning Up :::::"
 ### Move Output Files to the Front
 mv "${TRIMMED}" "${OUTFOLDER}"/"${SAMPLE_NAME}_Cutadapt_trimmed_sana.fastq"
-rm "${TRIMMED}"
 
 ### Remove Created Working Directories
 rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"

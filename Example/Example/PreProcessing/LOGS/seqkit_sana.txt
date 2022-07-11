@@ -1,0 +1,1 @@
+[INFO][0m File: /media/jkbuntu/JKB_500GB/Raw_Nanopore/Example_TCR.fastq	Pass records: 20000	Discarded lines: 0

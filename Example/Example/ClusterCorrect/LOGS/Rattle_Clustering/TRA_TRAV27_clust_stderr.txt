@@ -1,0 +1,4 @@
+RNA mode: false
+Reading fasta file... Done
+Gene clustering done
+38 gene clusters found

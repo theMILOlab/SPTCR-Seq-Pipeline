@@ -1,0 +1,133 @@
+This is cutadapt 4.1 with Python 3.9.13
+Command line parameters: -g file:/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Reference/Primer/Cutadapt/10X_Dual_Adapter.fa --cores=0 -e 0.2 --action trim --match-read-wildcards -o /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/CUTADAPT/Example_Cutadapt_dual_trim.fastq /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/PYCHOPPER/Example_pychopped.fastq
+Processing single-end reads on 12 cores ...
+Finished in 0.54 s (80 µs/read; 0.75 M reads/minute).
+
+=== Summary ===
+
+Total reads processed:                   6,770
+Reads with adapters:                     6,127 (90.5%)
+Reads written (passing filters):         6,770 (100.0%)
+
+Total basepairs processed:     5,151,906 bp
+Total written (filtered):      4,647,759 bp (90.2%)
+
+=== Adapter Read1_TSO_5_3 ===
+
+Sequence: CTACACGACGCTCTTCCGATCTNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN...CCCATGTACTCTGCGTTGATACCACTGCTT; Type: linked; Length: 52+30; 5' trimmed: 6067 times; 3' trimmed: 6067 times
+
+Minimum overlap: 3+3
+No. of allowed errors:
+1-4 bp: 0; 5-9 bp: 1; 10-14 bp: 2; 15-19 bp: 3; 20-22 bp: 4
+
+No. of allowed errors:
+1-4 bp: 0; 5-9 bp: 1; 10-14 bp: 2; 15-19 bp: 3; 20-24 bp: 4; 25-29 bp: 5; 30 bp: 6
+
+Overview of removed sequences at 5' end
+length	count	expect	max.err	error counts
+30	21	0.0	4	21
+31	22	0.0	4	22
+32	138	0.0	4	138
+33	1	0.0	4	0 1
+35	2	0.0	4	0 0 2
+38	4	0.0	4	0 0 0 4
+39	4	0.0	4	0 0 0 4
+40	7	0.0	4	0 0 0 5 2
+41	51	0.0	4	36 0 2 11 2
+42	84	0.0	4	45 18 0 5 16
+43	68	0.0	4	38 12 2 1 15
+44	54	0.0	4	20 20 4 1 9
+45	109	0.0	4	45 34 18 8 4
+46	224	0.0	4	97 42 68 8 9
+47	292	0.0	4	162 58 47 14 11
+48	265	0.0	4	86 50 54 32 43
+49	304	0.0	4	96 51 51 70 36
+50	422	0.0	4	112 58 115 76 61
+51	840	0.0	4	103 342 190 100 105
+52	2652	0.0	4	1879 204 372 122 75
+53	380	0.0	4	0 179 79 74 48
+54	94	0.0	4	0 0 50 28 16
+55	28	0.0	4	0 0 0 20 8
+56	1	0.0	4	0 0 0 0 1
+
+
+
+Overview of removed sequences at 3' end
+length	count	expect	max.err	error counts
+5	1	6.6	1	0 1
+6	5	1.7	1	1 4
+7	2	0.4	1	0 2
+17	1	0.0	3	0 0 1
+18	3	0.0	3	0 0 3
+19	13	0.0	3	11 1 0 1
+20	27	0.0	4	12 1 6 6 1 1
+21	41	0.0	4	20 8 8 2 2 1
+22	73	0.0	4	28 19 5 10 6 5
+23	98	0.0	4	37 16 17 12 12 4
+24	103	0.0	4	33 15 5 21 17 10 2
+25	205	0.0	5	52 29 35 34 23 21 11
+26	246	0.0	5	36 30 52 27 47 36 18
+27	639	0.0	5	310 77 39 81 56 51 25
+28	580	0.0	5	66 38 160 116 94 65 41
+29	728	0.0	5	88 155 128 129 94 87 47
+30	2662	0.0	6	1730 357 204 131 126 80 34
+31	360	0.0	6	0 49 90 69 71 45 36
+32	178	0.0	6	0 0 42 45 39 32 20
+33	55	0.0	6	0 0 0 12 16 19 8
+34	13	0.0	6	0 0 0 0 2 4 7
+35	4	0.0	6	0 0 0 0 0 3 1
+36	1	0.0	6	0 0 0 0 0 0 1
+397	1	0.0	6	0 1
+457	1	0.0	6	0 0 0 0 0 0 1
+486	1	0.0	6	0 0 1
+502	1	0.0	6	0 0 0 0 0 0 1
+507	1	0.0	6	0 0 0 0 1
+556	1	0.0	6	0 0 0 1
+595	1	0.0	6	0 0 0 0 1
+605	1	0.0	6	0 0 0 0 0 0 1
+628	1	0.0	6	0 0 0 1
+666	1	0.0	6	0 0 0 0 0 0 1
+726	1	0.0	6	0 0 0 0 0 0 1
+755	1	0.0	6	0 0 1
+782	1	0.0	6	0 0 0 0 0 1
+834	1	0.0	6	0 1
+848	1	0.0	6	0 0 0 0 1
+858	1	0.0	6	0 0 1
+965	1	0.0	6	0 0 0 0 0 1
+987	1	0.0	6	0 0 0 0 1
+1007	1	0.0	6	0 0 0 0 0 0 1
+1065	1	0.0	6	0 0 0 1
+1094	1	0.0	6	0 0 0 0 0 1
+1103	1	0.0	6	0 0 0 1
+1111	1	0.0	6	0 0 0 0 1
+1183	1	0.0	6	0 0 0 0 1
+1233	1	0.0	6	0 0 0 0 0 1
+1300	2	0.0	6	0 0 0 1 1
+1308	1	0.0	6	0 0 0 0 1
+2210	1	0.0	6	0 0 0 0 1
+
+
+=== Adapter TSO_rev_Read1_rev ===
+
+Sequence: TTCGTCACCATAGTTGCGTCTCATGTACCC...NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNTCTAGCCTTCTCGCAGCACATC; Type: linked; Length: 30+52; 5' trimmed: 60 times; 3' trimmed: 60 times
+
+Minimum overlap: 3+3
+No. of allowed errors:
+1-4 bp: 0; 5-9 bp: 1; 10-14 bp: 2; 15-19 bp: 3; 20-24 bp: 4; 25-29 bp: 5; 30 bp: 6
+
+No. of allowed errors:
+1-4 bp: 0; 5-9 bp: 1; 10-14 bp: 2; 15-19 bp: 3; 20-22 bp: 4
+
+Overview of removed sequences at 5' end
+length	count	expect	max.err	error counts
+5	58	6.6	1	0 58
+6	1	1.7	1	0 1
+10	1	0.0	2	0 0 1
+
+
+
+Overview of removed sequences at 3' end
+length	count	expect	max.err	error counts
+30	10	0.0	4	10
+31	49	0.0	4	49
+36	1	0.0	4	0 1

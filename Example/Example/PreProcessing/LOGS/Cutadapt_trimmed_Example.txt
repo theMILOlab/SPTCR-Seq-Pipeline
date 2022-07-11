@@ -1,0 +1,77 @@
+This is cutadapt 4.1 with Python 3.9.13
+Command line parameters: -b file:/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Reference/Primer/Cutadapt/5_3_10X_Adapter.fa --cores=0 --action trim --match-read-wildcards -o /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/CUTADAPT/Example_Cutadapt_trimmed.fastq /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/CUTADAPT/Example_Cutadapt_dual_trim.fastq
+Processing single-end reads on 12 cores ...
+Finished in 0.24 s (36 µs/read; 1.68 M reads/minute).
+
+=== Summary ===
+
+Total reads processed:                   6,770
+Reads with adapters:                     6,770 (100.0%)
+Reads written (passing filters):         6,770 (100.0%)
+
+Total basepairs processed:     4,647,759 bp
+Total written (filtered):      4,428,891 bp (95.3%)
+
+=== Adapter TSO ===
+
+Sequence: AAGCAGTGGTATCAACGCAGAG; Type: variable 5'/3'; Length: 22; Trimmed: 0 times
+
+=== Adapter Read1 ===
+
+Sequence: CTACACGACGCTCTTCCGATCTNNNNNNNNNNNNNNNNNNNNNNNNNNNN; Type: variable 5'/3'; Length: 50; Trimmed: 6770 times
+6754 times, it overlapped the 5' end of a read
+16 times, it overlapped the 3' end or was within the read
+
+Minimum overlap: 3
+No. of allowed errors:
+1-9 bp: 0; 10-19 bp: 1; 20-22 bp: 2
+
+Overview of removed sequences (5')
+length	count	expect	max.err	error counts
+14	1	0.0	1	1
+28	214	0.0	2	214
+29	5643	0.0	2	5643
+30	192	0.0	2	192
+31	47	0.0	2	21 26
+32	58	0.0	2	2 56
+33	80	0.0	2	0 9 71
+34	26	0.0	2	0 3 23
+35	13	0.0	2	0 0 13
+36	2	0.0	2	0 0 2
+37	1	0.0	2	0 0 1
+38	1	0.0	2	0 1
+39	3	0.0	2	2 1
+40	9	0.0	2	8 1
+41	9	0.0	2	7 1 1
+42	8	0.0	2	2 3 3
+43	16	0.0	2	5 8 3
+44	53	0.0	2	28 9 16
+45	27	0.0	2	12 12 3
+46	38	0.0	2	18 12 8
+47	25	0.0	2	9 9 7
+48	28	0.0	2	11 1 16
+49	40	0.0	2	0 27 13
+50	201	0.0	2	149 23 29
+51	13	0.0	2	0 7 6
+52	6	0.0	2	0 0 6
+
+
+
+Overview of removed sequences (3' or within)
+length	count	expect	max.err	error counts
+455	1	0.0	2	0 1
+579	1	0.0	2	0 0 1
+587	1	0.0	2	0 0 1
+670	1	0.0	2	0 0 1
+673	1	0.0	2	0 0 1
+728	1	0.0	2	0 0 1
+756	1	0.0	2	0 0 1
+769	1	0.0	2	0 0 1
+848	1	0.0	2	0 0 1
+884	1	0.0	2	0 1
+889	1	0.0	2	0 0 1
+896	1	0.0	2	0 0 1
+957	1	0.0	2	0 1
+981	1	0.0	2	0 1
+1030	1	0.0	2	0 0 1
+1645	1	0.0	2	0 1
