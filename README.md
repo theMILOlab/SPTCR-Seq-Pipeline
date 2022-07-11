@@ -10,7 +10,9 @@ Visualize spatially highly resolved T-Cell Infiltration with Oxford Nanopore Thi
 #### TCR Infiltration Analysis in spatial Context
 ##### Sample 275 TRA/TRB Infiltration Plottet
 <img src="https://user-images.githubusercontent.com/70334482/176155991-3dde846a-71f9-4297-a5e9-2c0b3c305c0c.png" width="300" height=300>
+
 ![Alt text](/Images/GBM275_TRD_TRG Infiltration.png?raw=true title="Spatial TRD/TRG Infiltration")
+
 ![Alt text](/Images/TCR_Expression.png?raw=true title="Spatial T-Cell Deconvolution")
 
 ## Installation
