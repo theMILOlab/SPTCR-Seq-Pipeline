@@ -166,24 +166,24 @@ Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script 
 Pipeline to barcode and extract UMI regions of ONT Reads for Libraries prepared for 10X Genomics
 
 **Arguments**
-  -h, --help            show this help message and exit
-  -n NAME, --NAME NAME  Name of Output Folder
-  -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
+        -h, --help            show this help message and exit
+        -n NAME, --NAME NAME  Name of Output Folder
+        -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
                         Specify the Path to the Raw unmodified Input Fastq File
-  -igb INPUT_IGB, --INPUT_IGB INPUT_IGB
+        -igb INPUT_IGB, --INPUT_IGB INPUT_IGB
                         Specify the Path to IgBlast File to be demultiplexed with
                         demultiplex_summarize.py. If not specified will only output table for later
                         demultiplexing.
-  -o OUTFOLDER, --OUTFOLDER OUTFOLDER
+        -o OUTFOLDER, --OUTFOLDER OUTFOLDER
                         Specify the Directory for the Outputfolder
-  -t THREADS, --THREADS THREADS
+        -t THREADS, --THREADS THREADS
                         Number of Threads
-  -mem MEMORY, --MEMORY MEMORY
+        -mem MEMORY, --MEMORY MEMORY
                         RAM to user
-  -rep REPOSITORY, --REPOSITORY REPOSITORY
+        -rep REPOSITORY, --REPOSITORY REPOSITORY
                         Specify the Location of the Repositroy Folder holding all References and
                         scripts for SPTCR Seq
-  -a ADAPTER, --ADAPTER ADAPTER
+        -a ADAPTER, --ADAPTER ADAPTER
                         Specify Illumina Read 1 Sequence. Adapter is matched as Anchor, to
                         demultiplex and extract the UMI Region..
 
