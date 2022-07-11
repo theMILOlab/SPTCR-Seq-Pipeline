@@ -46,6 +46,13 @@ For Installation:
 
 ## Running Pipeline
 
+### Overview: 
+The Computational Workflow is compromised of two major steps: 
+        1. Preprocessing Reads (2_Preprocess_Reads.sh)
+        2. Cluster & Correct Reads (3_Cluster_Correct.sh)
+When Calling SPTCR_Full_Pipeline.sh with the indicated args, these scripts will be called sequentially with standard args. This is the recommended form to call SPTCR_Pipeline.
+If you want more control of the intermediate steps or reuse already calculated output, then you have to call the scripts sequentially.
+
 ### 1. Combined Demultiplexing & Preprocessing of Reads
 ***    
         Preprocessing the Reads for Correction & matching the Barcodes to the raw sequencing Result as well as generate an table of demultiplexed, annotated T-Cell Receptor Sequences and their adjoining UMI Region you can do with.:
