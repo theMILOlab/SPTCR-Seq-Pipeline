@@ -166,6 +166,7 @@ Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script 
 Pipeline to barcode and extract UMI regions of ONT Reads for Libraries prepared for 10X Genomics
 
 **Arguments**
+
         -h, --help            show this help message and exit
         -n NAME, --NAME NAME  Name of Output Folder
         -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
