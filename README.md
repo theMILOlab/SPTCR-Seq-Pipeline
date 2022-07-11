@@ -60,7 +60,7 @@ If you want more control of the intermediate steps or reuse already calculated p
 
 ### 1. Combined Demultiplexing & Preprocessing of Reads
 ***    
-        Performs preprocessing of the Reads for Correction & matching the Barcodes to the raw sequencing Result as well as generate a table of demultiplexed, annotated T-Cell Receptor Sequences and their adjoining UMI Region you can do with.:
+Performs preprocessing of the Reads for Correction & matching the Barcodes to the raw sequencing Result as well as generate a table of demultiplexed, annotated T-Cell Receptor Sequences and their adjoining UMI Region you can do with.:
 
 #### Usage
 
@@ -68,7 +68,7 @@ If you want more control of the intermediate steps or reuse already calculated p
                                 [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER] [-conf CONFIGURATION]
                                 [-chop PYCHOPPER] [-trim ADAPTER_TRIM] [-igb IGBLAST]
                                 [-demux DEMULTIPLEX]
-                                
+
         Pipeline to preprocess, demultiplex and extract UMI regions of Nanopore Reads for Libraries
         prepared for 10X Genomics
 
