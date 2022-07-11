@@ -14,33 +14,32 @@ Visualize spatially highly resolved T-Cell Infiltration with Oxford Nanopore Thi
 
 ## Installation
 
-We recommend using the Conda C++ Drop-In package manager mamba to resolve all the Dependencies faster. Just install as followed and subsequently, simply change installation commands from 'conda install ...' to 'mamba install ...'.
+We recommend using the Conda C++ Drop-In package manager mamba (https://github.com/mamba-org/mamba) to resolve all the Dependencies faster. 
+Execute the following Installation steps from conda base environment to automatically install the package manager. 
+If you want to do installation by hand, just install as followed and subsequently, simply change your installation commands from 'conda install ...' to 'mamba install ...'.
 
 ```
 conda install mamba -n base -c conda-forge
 ```
-/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline
+
 For Installation:
 1. Clone this Repository with
    
         git clone https://github.com/theMILOlab/SPTCR-Seq-Pipeline.git
 
-2. Setup an Environment called "SPTCR_ENV" with all Dependencies and build Tools from Source:
-3. 
+2. Execute setup.sh to setup an Environment "SPTCR_ENV" with all Dependencies and build Tools from Source:
         cd ./SPTCR-Seq-Pipeline
         ./setup.sh
 
-!! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE.!!
+!! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
 
-3. For parallel processing in correction step do:
+1. For parallel processing in correction step do:
         sudo apt-get install parallel        
 
-
-
-4. Activate Environment to run the Pipeline
+2. Activate Environment to run the Pipeline
         conda activate -n SPTCR_ENV
 
-5. For minimal Pipeline see Exemplary Pipeline
+3. For minimal Pipeline see Exemplary Pipeline: example.sh 
 
 
 ## Running Pipeline
