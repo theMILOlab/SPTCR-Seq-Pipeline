@@ -128,7 +128,7 @@ Performs preprocessing of the Reads for Correction & matching the Barcodes to th
                 -rep "${REPOSITORY}"
 
 #### Example Output
-        
+        ./LOGS/
         ./Outfolder/Demultiplexing_sample/sample_vdj_umi_barcode_uncorrected_df.csv
         Important Output Table used for downstream scripts or raw. Shows VDj Arrangement, spatial Barcode and UMI Region.
 
