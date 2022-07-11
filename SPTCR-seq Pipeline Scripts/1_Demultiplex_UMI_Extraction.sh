@@ -65,11 +65,11 @@ EOF
 }
 ##########################################
 ##### Argparse Options #####
-ARGPARSE_DESCRIPTION="Pipeline to barcode and extract umir regions of Nanopore Reads for Libraries prepared for 10X Genomics"
+ARGPARSE_DESCRIPTION="Pipeline to barcode and extract UMI regions of ONT Reads for Libraries prepared for 10X Genomics"
 argparse "$@" <<EOF || exit 1
 
 parser.add_argument('-n','--NAME',help="Name of Output Folder",default="-")
-parser.add_argument('-i', '--INPUT_FASTQ', help="Specify the Path to the merged Input Fastq File",required=True)
+parser.add_argument('-i', '--INPUT_FASTQ', help="Specify the Path to the Raw unmodified Input Fastq File",required=True)
 parser.add_argument('-igb', '--INPUT_IGB', help="Specify the Path to IgBlast File to be demultiplexed with demultiplex_summarize.py. If not specified will only output table for later demultiplexing.",required=False)
 
 parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="PWD")
@@ -79,7 +79,7 @@ parser.add_argument('-mem','--MEMORY',help="RAM to user", default="16")
 
 parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="../")
 parser.add_argument('-a', '--ADAPTER', default='CTACACGACGCTCTTCCGATCT', 
-                    help='Specify Read 1 Sequence')
+                    help='Specify Illumina Read 1 Sequence. Adapter is matched as Anchor, to demultiplex and extract the UMI Region.')
 
 EOF
 
@@ -192,14 +192,14 @@ umi_folder="${OUTFOLDER}"/"${SAMPLE_NAME}"_UMI_Extraction
 echo "::::: Generating Final Output Table :::::"
 
 python "${DEMUXXER}" \
-    -i ${DEMUXED} \
-    -u ${umi_folder} \
+    -i "${DEMUXED}" \
+    -u "${umi_folder}" \
     -o "${OUTFOLDER}" \
     -n "${SAMPLE_NAME}" \
     -b "${BARCODE_LIST}" >> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
 
 echo ":::::: Removing Intermediate Folders :::::"
-rm -r ${umi_folder}
+rm -r "${umi_folder}"
 rm -r "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX
 
 if [ -f "${INPUT_IGB}" ]; then

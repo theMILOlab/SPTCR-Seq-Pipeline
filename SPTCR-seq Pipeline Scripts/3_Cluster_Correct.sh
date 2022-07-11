@@ -93,10 +93,10 @@ EOF
 ################## Define Variables BLOCK###########################
 ################################################################
 if [ "${OUTFOLDER}" = "PWD" ];then
-    OUTFOLDER=$PWD
-    mkdir ${PWD}/ClusterCorrect
+    OUTFOLDER="${PWD}"
+    mkdir "${PWD}"/ClusterCorrect
     out="${OUTFOLDER}"
-    OUTFOLDER=${PWD}/ClusterCorrect
+    OUTFOLDER="${PWD}"/ClusterCorrect
 else
     mkdir "${OUTFOLDER}"/ClusterCorrect
     out="${OUTFOLDER}"
@@ -248,7 +248,7 @@ else
 fi
 
 echo " :::: Parallel Merge Corrected Fastqs ::::"
-find "${RATTLE_CORRECT_OUT}" -type f -name "corrected.fq"|parallel --jobs 0 --bar "cat {} >> "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq"
+find "${RATTLE_CORRECT_OUT}" -type f -name "corrected.fq"|parallel --jobs 0 --bar "cat {} >> '${CORRECTED_MERGE}'/${SAMPLE_NAME}_corrected_merged.fastq"
 
 echo " :::: Checking Fastq Integrity & renaming Corr Fastq ::::"
 seqkit sana "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq -o "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged_sana.fastq 2> "${LOGS}"/seqkit_sana.txt
@@ -256,7 +256,8 @@ seqkit sana "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq -o "${C
 rm "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq
 mv "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged_sana.fastq "${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq
 
-CORRECTED_MERGED_FASTQ="${CORRECTED_MERGE}"/"${SAMPLE_NAME}"_corrected_merged.fastq
+mv "${CORRECTED_MERGE}/${SAMPLE_NAME}_corrected_merged.fastq" "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_merged.fastq
+CORRECTED_MERGED_FASTQ="${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_merged.fastq
 
 ################################################################
 ################## Final IGB Query BLOCK #######################
@@ -282,7 +283,7 @@ if [ ${IGBLAST} = True ]; then
         --gzip False \
         --tmp_dir "${OUTFOLDER}"/IGB_Corrected/TEMP_"${SAMPLE_NAME}" \
         -o "${SAMPLE_NAME}"_corrected_IGB \
-        ${CORRECTED_MERGED_FASTQ} >"${LOGS}"/final_igb.txt
+        "${CORRECTED_MERGED_FASTQ}" >"${LOGS}"/final_igb.txt
 
     #gunzip "${SAMPLE_NAME}"_corrected_IGB.tsv.gz
 
@@ -293,7 +294,7 @@ else
 fi
 
 echo " :::: Moving Output Files to the Front ::::"
-mv "${CORRECTED_MERGED_FASTQ}" "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_merged.fastq
+
 mv "${OUTFOLDER}"/IGB_Corrected/"${SAMPLE_NAME}"_corrected_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
 IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_corrected_IGB.tsv
 

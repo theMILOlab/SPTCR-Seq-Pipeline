@@ -82,7 +82,7 @@ parser.add_argument('-conf', '--CONFIGURATION', help="Specify the possible Confi
 
 parser.add_argument('-chop', '--PYCHOPPER', help="Specify if Pychopper should be performed on Input. Will use Input Fastq as Pychopped File.",default="True")
 parser.add_argument('-trim', '--ADAPTER_TRIM', help="Specify if Reads should be trimmed from Adapters. If set to False will use PyChopper Output",default="True")
-parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing. If already done, use the Path to the IgBlast Output and skip",default="")
+parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing. If already done, use the Path to the IgBlast Output and skip",default="YES")
 parser.add_argument('-demux', '--DEMULTIPLEX', help="If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes, it is recommended to leave as default if you intend to correct the SPTCR-seq reads as well.",default="True")
 
 
@@ -92,8 +92,8 @@ EOF
 ################## Define Variables BLOCK###########################
 ################################################################
 if [ "${OUTFOLDER}" = "PWD" ];then
-    mkdir ${PWD}/PreProcessing
-    OUTFOLDER=${PWD}/PreProcessing
+    mkdir "${PWD}"/PreProcessing
+    OUTFOLDER="${PWD}"/PreProcessing
 else
     OUTFOLDER="${OUTFOLDER}"
 fi 
@@ -208,7 +208,7 @@ fi
 ################## IgBlast BLOCK #######################
 ################################################################
 
-if [ ${IGBLAST} = "" ]; then
+if [ ${IGBLAST} = YES ]; then
     echo " :::: Quering (trimmed) Input to IgBlast for vdj Clustering :::: "
     mkdir "${OUTFOLDER}"/IGB_Trimmed
     mkdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
@@ -247,6 +247,7 @@ fi
 echo " ::::: Cleaning Up :::::"
 ### Move Output Files to the Front
 mv "${TRIMMED}" "${OUTFOLDER}"/"${SAMPLE_NAME}_Cutadapt_trimmed_sana.fastq"
+rm "${TRIMMED}"
 
 ### Remove Created Working Directories
 rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
