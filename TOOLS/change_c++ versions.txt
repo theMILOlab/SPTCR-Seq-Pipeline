@@ -1,24 +1,27 @@
-## Install gcc  and g++ compiler version 9 alternatives
+### Make sure you have the needed build tools with:
+sudo apt-get update
+sudo apt-get install cmake libz-dev build-essential
+
+## Install gcc and g++ compiler version 9 alternatives
 sudo apt -y install gcc-9 g++-9
 
-## Configure the Alternatives (suppose you have gcc/g++ 11 as current version)
+## Configure the Alternatives (assuming you have gcc/g++ 11 as current version, check with gcc -v, g++ -v )
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 
-## switch compiler from 11 to 9, execute as sudo 
+## switch compiler from 11 to 9, execute as sudo and choose appropriate
 sudo update-alternatives --config gcc
 sudo update-alternatives --config g++
 
-### Also make sure you have the development support files for zlb, execute as sudo:
-sudo apt-get install libz-dev
-
 ## Compile Rattle
-cd Rattle
+cd TOOLS/RATTLE
 ./build.sh
 
-## after compiling / if you are done using SPTCR-seq Pipeline, you can switch you gcc/g++ compiler again by doing 
+## DONE! If Installation/Compiling had zero exit status, you are ready to use SPTCR-seq Pipeline
+
+## after compiling / if you are done using SPTCR-seq Pipeline, you can switch your gcc/g++ compiler again by doing. Keep in mind, that for the pipeline execution you have to update-alternatives again! 
 sudo update-alternatives --config gcc
 sudo update-alternatives --config g++
