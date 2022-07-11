@@ -2,7 +2,7 @@
 sudo apt-get update
 sudo apt-get install cmake libz-dev build-essential
 
-## Install gcc and g++ compiler version 9 alternatives
+## Install gcc and g++ compiler version 9 alternatives needed for RATTLE Compilation
 sudo apt -y install gcc-9 g++-9
 
 ## Configure the Alternatives (assuming you have gcc/g++ 11 as current version, check with gcc -v, g++ -v )
