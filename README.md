@@ -29,21 +29,22 @@ conda install mamba -n base -c conda-forge
    
         git clone https://github.com/theMILOlab/SPTCR-Seq-Pipeline.git
 
-2. Execute setup.sh to setup an Environment "SPTCR_ENV" with all Dependencies and build Tools from Source:
+2. For parallel processing in correction step do:
+   
+        sudo apt-get install parallel   
+
+3. Execute setup.sh to setup an Environment "SPTCR_ENV" with all Dependencies and build Tools from Source:
 
         cd ./SPTCR-Seq-Pipeline
         ./setup.sh
 
-> !! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
-
-3. For parallel processing in correction step do:
-   
-        sudo apt-get install parallel        
+> !! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on Installation. RATTLE needs GCC/ G++ 9 to compile, see guide on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
+     
 
 4. Activate Environment to run the Pipeline
         conda activate -n SPTCR_ENV
 
-5. For minimal Pipeline see Exemplary Pipeline: example.sh 
+5. For minimal user intervention Pipeline see Exemplary Pipeline: example.sh 
 
 ---
 ## Running Pipeline
@@ -59,15 +60,73 @@ If you want more control of the intermediate steps or reuse already calculated p
 
 ### 1. Combined Demultiplexing & Preprocessing of Reads
 ***    
-        Preprocessing the Reads for Correction & matching the Barcodes to the raw sequencing Result as well as generate an table of demultiplexed, annotated T-Cell Receptor Sequences and their adjoining UMI Region you can do with.:
+        Performs preprocessing of the Reads for Correction & matching the Barcodes to the raw sequencing Result as well as generate a table of demultiplexed, annotated T-Cell Receptor Sequences and their adjoining UMI Region you can do with.:
 
-        2_Preprocess_Reads.sh \
-                -n test_demux \
-                --INPUT_FASTQ path/to/input \
-                --DEMULTIPLEX True
-                -rep "/Path/to/Repository"
+#### Usage
 
-        #### Example Output
+        usage: 2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER] [-t THREADS]
+                                [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER] [-conf CONFIGURATION]
+                                [-chop PYCHOPPER] [-trim ADAPTER_TRIM] [-igb IGBLAST]
+                                [-demux DEMULTIPLEX]
+                                
+        Pipeline to preprocess, demultiplex and extract UMI regions of Nanopore Reads for Libraries
+        prepared for 10X Genomics
+
+**Arguments**
+        -h, --help            show this help message and exit
+        -n NAME, --NAME NAME  Chosen Name for the Pipeline. Will Be Used as Name for the Pipelines
+                                Outfolder.
+        -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
+                                Specify the Path to the raw Input Fastq File
+        -o OUTFOLDER, --OUTFOLDER OUTFOLDER
+                                Specify the Directory for the Output Folder. If not specified, will use
+                                current working Directory.
+        -t THREADS, --THREADS THREADS
+                                Number of Threads to use.
+        -mem MEMORY, --MEMORY MEMORY
+                                Gigabytes of RAM to use for Demultiplexing
+        -rep REPOSITORY, --REPOSITORY REPOSITORY
+                                Specify the Location of the Github Repository Folder for SPTCR Seq
+        -pri PRIMER, --PRIMER PRIMER
+                                Specify Custom Primers if not having used either 10X Visium or Single Cell
+                                for the reconstruction of Full Reads by Pychopper.
+        -conf CONFIGURATION, --CONFIGURATION CONFIGURATION
+                                Specify the possible Configurations of the Custom Primers for Pychopper if
+                                not having used either 10X Visium or Single Cell for the reconstruction of
+                                Full Reads by Pychopper. See PyChoppers Documentation
+                                (https://github.com/epi2me-labs/pychopper) for explanation
+        -chop PYCHOPPER, --PYCHOPPER PYCHOPPER
+                                Specify if Pychopper should be performed on Input. Will use Input Fastq as
+                                Pychopped File.
+        -trim ADAPTER_TRIM, --ADAPTER_TRIM ADAPTER_TRIM
+                                Specify if Reads should be trimmed from Adapters. If set to False will use
+                                PyChopper Output
+        -igb IGBLAST, --IGBLAST IGBLAST
+                                If True, the preprocessed Fastq is aligned with IgBLAST Following
+                                Processing. If already done, use the Path to the IgBlast Output and skip
+        -demux DEMULTIPLEX, --DEMULTIPLEX DEMULTIPLEX
+                                If set to True, extracts Barcode and UMI Region of the Reads and updates
+                                the IgBlast Table. Form is default for downstream purposes, it is
+                                recommended to leave as default if you intend to correct the SPTCR-seq
+                                reads as well.
+
+
+
+#### Example
+        NAME="TEST"
+        INPUT_FASTQ="PATH/TO/INPUT/FASTQ"
+        THREADS=12 ## Number of Threads Given
+        MEMORY=16 ## Gigabytes Given for Demultiplexing Step
+        REPOSITORY= PATH/TO/GITHUB/REPO/SPTCR-Seq-Pipeline
+
+        bash ./2_Preprocess_Reads.sh \
+                -n ${NAME} \
+                -i "${INPUT_FASTQ}" \
+                -t ${THREADS} \
+                -mem ${MEMORY} \
+                -rep "${REPOSITORY}"
+
+#### Example Output
         
         ./Outfolder/Demultiplexing_sample/sample_vdj_umi_barcode_uncorrected_df.csv
         Important Output Table used for downstream scripts or raw. Shows VDj Arrangement, spatial Barcode and UMI Region.

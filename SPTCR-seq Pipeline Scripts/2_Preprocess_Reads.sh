@@ -65,25 +65,25 @@ EOF
 }
 ##########################################
 ##### Argparse Options #####
-ARGPARSE_DESCRIPTION="Pipeline to barcode and extract umir regions of Nanopore Reads for Libraries prepared for 10X Genomics"
+ARGPARSE_DESCRIPTION="Pipeline to preprocess, demultiplex and extract UMI regions of Nanopore Reads for Libraries prepared for 10X Genomics"
 argparse "$@" <<EOF || exit 1
 
-parser.add_argument('-n','--NAME',help="Name of Output Folder",default="-")
-parser.add_argument('-i', '--INPUT_FASTQ', help="Specify the Path to the merged Input Fastq File",required=True)
-parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="PWD")
+parser.add_argument('-n','--NAME',help="Chosen Name for the Pipeline. Will Be Used as Name for the Pipelines Outfolder.",default="-")
+parser.add_argument('-i', '--INPUT_FASTQ', help="Specify the Path to the raw Input Fastq File",required=True)
+parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Output Folder. If not specified, will use current working Directory.", default="PWD")
 
-parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
-parser.add_argument('-mem','--MEMORY',help="RAM to user", default="8")
+parser.add_argument('-t','--THREADS',help="Number of Threads to use.", default="2")
+parser.add_argument('-mem','--MEMORY',help="Gigabytes of RAM to use for Demultiplexing", default="8")
 
-parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="./")
+parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Github Repository Folder for SPTCR Seq",default="./")
 
 parser.add_argument('-pri', '--PRIMER', help="Specify Custom Primers if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper.",default="10X")
-parser.add_argument('-conf', '--CONFIGURATION', help="Specify the possible Configurations of the Custom Primers for Pychopper if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper.")
+parser.add_argument('-conf', '--CONFIGURATION', help="Specify the possible Configurations of the Custom Primers for Pychopper if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper. See PyChoppers Documentation (https://github.com/epi2me-labs/pychopper) for explanation")
 
-parser.add_argument('-chop', '--PYCHOPPER', help="Specify if Reads should be made full length by Pychopper",default="True")
-parser.add_argument('-trim', '--ADAPTER_TRIM', help="Specify if Reads should be from Adapters",default="True")
-parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing.",default="True")
-parser.add_argument('-demux', '--DEMULTIPLEX', help="If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes.",default="True")
+parser.add_argument('-chop', '--PYCHOPPER', help="Specify if Pychopper should be performed on Input. Will use Input Fastq as Pychopped File.",default="True")
+parser.add_argument('-trim', '--ADAPTER_TRIM', help="Specify if Reads should be trimmed from Adapters. If set to False will use PyChopper Output",default="True")
+parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing. If already done, use the Path to the IgBlast Output and skip",default="")
+parser.add_argument('-demux', '--DEMULTIPLEX', help="If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes, it is recommended to leave as default if you intend to correct the SPTCR-seq reads as well.",default="True")
 
 
 EOF
@@ -201,14 +201,14 @@ if [ ${ADAPTER_TRIM} = True ]; then
     TRIMMED="${TRIMMED}_sana"
 
 else echo " :::: Skipping Trimming Adapters ::::"
-    TRIMMED="${INPUT_FASTQ}"
+    TRIMMED="${PYCHOPPED}"
 fi
 
 ################################################################
 ################## IgBlast BLOCK #######################
 ################################################################
 
-if [ ${IGBLAST} = True ]; then
+if [ ${IGBLAST} = "" ]; then
     echo " :::: Quering (trimmed) Input to IgBlast for vdj Clustering :::: "
     mkdir "${OUTFOLDER}"/IGB_Trimmed
     mkdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
@@ -231,18 +231,22 @@ if [ ${IGBLAST} = True ]; then
 
     #gunzip "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv.gz
 
-    IGBLAST="${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
+    #IGBLAST="${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
+
+    ## Moving Output Files to the Front
+    mv "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
     
+    IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
+
 else 
     echo " :::: Not quering IgBlast as indicated ::::"
+
 fi
 
 
 echo " ::::: Cleaning Up :::::"
 ### Move Output Files to the Front
 mv "${TRIMMED}" "${OUTFOLDER}"/"${SAMPLE_NAME}_Cutadapt_trimmed_sana.fastq"
-mv "${OUTFOLDER}"/IGB_Trimmed/"${SAMPLE_NAME}"_preprocessed_IGB.tsv "${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
-IGBLAST="${OUTFOLDER}"/"${SAMPLE_NAME}"_preprocessed_IGB.tsv
 
 ### Remove Created Working Directories
 rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
