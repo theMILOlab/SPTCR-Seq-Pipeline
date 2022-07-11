@@ -169,7 +169,8 @@ python "${REPOSITORY}"/SCRIPTS/TCR_GROUPING_IGB.py \
     --IGB "${INPUT_IGB}" \
     --INPUT_FASTQ "${INPUT_FASTQ}" \
     --GROUPER "${GROUPER}" \
-    --OUT "${OUTFOLDER}"/IGB_CLUSTERS 2> "${LOGS}"/tcr_clustering_log.txt
+    --OUT "${OUTFOLDER}"/IGB_CLUSTERS 
+    #2> "${LOGS}"/tcr_clustering_log.txt
 
 IGB_CLUSTERS="${OUTFOLDER}"/IGB_CLUSTERS
 
@@ -326,6 +327,7 @@ echo " :::: Performing UMI Correction on Summary ::::"
 "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
     -igb "${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv" \
     -n "${SAMPLE_NAME}" \
-    -O "${OUTFOLDER}" 2> "${LOGS}"/umi_correction.txt 
+    -O "${OUTFOLDER}" 
+    #2> "${LOGS}"/umi_correction.txt 
     
 echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast Overview File is in ${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv, UMI Corrected Summary Counts are in ${OUTFOLDER}/${SAMPLE_NAME}_igb_corr_umi_corrected.csv"

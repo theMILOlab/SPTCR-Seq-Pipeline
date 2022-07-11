@@ -175,8 +175,7 @@ echo "::::: Matching Barcodes to Extracted Segments :::::"
     -sr "${BARCODE_LIST}"  \
     -o "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/"${SAMPLE_NAME}"_scTagger_DEMUX.tsv.gz \
     -t ${THREADS} \
-    -m ${MEMORY} 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
-
+    -m ${MEMORY} >> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
 
 
 gunzip "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/*

@@ -21,6 +21,9 @@ import pandas as pd
 from tqdm import tqdm
 import os
 
+### Disable Setting Value on Copy Warning
+pd.options.mode.chained_assignment = None
+
 #######################################################
 #################### Variables ########################
 OUT=str(arg_vars["OUT"])

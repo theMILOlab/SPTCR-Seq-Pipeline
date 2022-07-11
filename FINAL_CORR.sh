@@ -27,6 +27,10 @@ do
     
 done
 
+exit
+
+
+##############################################################
 for sample in "/media/jkbuntu/JKB_500GB/Raw_Nanopore"/SPTCR16_raw.fastq
 do  
     SAMPLE_NAME="$(basename "${sample}")"
