@@ -12,7 +12,7 @@ Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Na
 ![Alt text](/Images/TCR_Expression.png?raw=true "Spatial T-Cell Deconvolution")
 
 ##### Sample 275 Spatial TRD/TRG Infiltration"
-![Alt text](/Images/GBM275_TRD_TRG_Infiltration.png?raw=true "Spatial TRD/TRG Infiltration")
+![Alt text](/Images/GBM275_TRD_TRG_Infiltration.png?raw=true "Spatial TRD/TRG Infiltration" height=300)
 
 
 
