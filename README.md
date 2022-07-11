@@ -2,27 +2,18 @@
 
 
 # SPTCR-seq
-Visualize spatially highly resolved T-Cell Infiltration with Oxford Nanopore This Pipeline is used to demultiplex, correct , annotate and UMI correct T-Cell Receptor cDNA Oxford Nanopore long reads.
+Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Nanopore Sequencing. This Pipeline is used to demultiplex, correct , annotate and UMI correct target enriched T-Cell Receptor cDNA acquired with the SPTCR-seq Protocol.
 
 #### Pipeline Overview
 ![image](https://user-images.githubusercontent.com/70334482/175873404-d5ef14b1-5be4-4789-8ae9-5214b924a89e.png)
 
 #### TCR Infiltration Analysis in spatial Context
-##### Sample 275 TRA/TRB Infiltration Plottet
-<img src="https://user-images.githubusercontent.com/70334482/176155991-3dde846a-71f9-4297-a5e9-2c0b3c305c0c.png" width="300" height=300>
-
-
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
-
-
+##### Sample 275 TRA/TRB Spatial T-Cell Deconvolution
 ![Alt text](/Images/TCR_Expression.png?raw=true "Spatial T-Cell Deconvolution")
 
+##### Sample 275 Spatial TRD/TRG Infiltration"
+![Alt text](/Images/GBM275_TRD_TRG Infiltration.png?raw=true "Spatial TRD/TRG Infiltration")
 
-![Alt text](/Images/GBM275_TRD_TRG Infiltration.png?raw=true "Title")
-
-
-
-#title="Spatial TRD/TRG Infiltration"
 
 
 ## Installation
