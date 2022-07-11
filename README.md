@@ -131,26 +131,35 @@ Performs preprocessing of the Reads for Correction & matching the Barcodes to th
 see Example/PreProcessing for exemplary output of the PreProcessing Pipeline.
 
 **Explanation of Output**
+
 ***./SAMPLENAME/PreProcessing/***
+
 */LOGS/*
+
 Holds the Log File for the PreProcessing and demultiplexing pipeline.
 
 *./SAMPLENAME_Cutadapt_trimmed_sana.fastq & ./SAMPLENAME_Cutadapt_trimmed_sana.fastq.fxi*
+
 PreProcessed Fastq & its Fastq adjoining index
 
 *./SAMPLENAME_preprocessed_IGB.tsv*
+
 Raw IgBlast Call of PreProcessed Reads
 
 */Demultiplexing_SAMPLENAME/*
+
 Folder Created by 1_Demultiplex_UMI_Extraction.sh. Holds the demultiplexed IgBlast Output.
 
 *./SAMPLENAME_all_barcode_matches.csv*
+
 Holds all relevant Barcode Matches in given edit distance for read found by scTagger. By Default we simply choose the First given Match as Barcode. 
 
 *./SAMPLENAME_barcode_umi.csv*
+
 Serves as a Demultiplexing, Deduplication Table. Holds Columns: Spatial Barcode,ReadID,UMI for given Input Fastq.
 
 *./SAMPLENAME_vdj_umi_barcode_uncorrected_df.csv*
+
 Overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI
 
 
@@ -209,18 +218,23 @@ see Example/PreProcessing for exemplary output of the PreProcessing Pipeline.
 
 **Explanation of Output**
 ***./OUTFOLDER/Demultiplexing_SAMPLENAME/***
+
 Folder Created by 1_Demultiplex_UMI_Extraction.sh. Holds the demultiplexed IgBlast Output.
 
 */LOGS/*
+
 Holds the Log File for the PreProcessing and demultiplexing pipeline.
 
 *./SAMPLENAME_all_barcode_matches.csv*
+
 Holds all relevant Barcode Matches in given edit distance for read found by scTagger. By Default we simply choose the First given Match as Barcode. 
 
 *./SAMPLENAME_barcode_umi.csv*
+
 Serves as a Demultiplexing, Deduplication Table. Holds Columns: Spatial Barcode,ReadID,UMI for given Input Fastq.
 
 *./SAMPLENAME_vdj_umi_barcode_uncorrected_df.csv*
+
 Overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI
 
 
@@ -239,6 +253,7 @@ prepared for 10X Genomics
 
 
 **Arguments**
+
         -h, --help            show this help message and exit
         -n NAME, --NAME NAME  Name of Output Folder
         -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
@@ -291,12 +306,15 @@ prepared for 10X Genomics
 see Example/ClusterCorrect for exemplary output of the PreProcessing Pipeline.
 
 **Explanation of Output**
+
 see Example/Example/ClusterCorrect for exemplary output of the Clustering and Correction Pipeline. Output for CLEANUP=False:
 
 *Example_corr_igb_overview_igb.csv*
+
 Overview Table generated for Convenience. Holds VDJ Information as well as Barcode, Umi per ReadID. Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI
 
 *Example_corrected_IGB.tsv*
+
 Raw IgBlast Output of corrected Fastq.
 
 *Example_corrected_merged.fastq*
@@ -308,17 +326,21 @@ Corrected Fastq.
 Overview Table of the corrected IGB Output Count summarized and UMI COrrected. Hold Columns: Spatial Barcode,Uncorrected Count,UMI Corrected,Locus,V,D,J,CDR3_aa
 
 ***ClusterCorrect/LOGS/***
+
 Holds the Logs for each Step of the Pipeline
 
 ***ClusterCorrect/IGB_CLUSTERS/***
+
 Holds the by their Arrangement split Fastqs of the Input Fastq.
 
 ***ClusterCorrect/CORRECTION/***
 
 *RATTLE_CLUSTERS*
+
 Holds all Folders with Output of RATTLE Clustering of each grouped Fastq.
 
 *RATTLE_CORRECT*
+
 Holds the Folders for each corrected Fastq Group.
 
 
