@@ -31,15 +31,15 @@ For Installation:
         cd ./SPTCR-Seq-Pipeline
         ./setup.sh
 
-!! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
+        !! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
 
-1. For parallel processing in correction step do:
+3. For parallel processing in correction step do:
         sudo apt-get install parallel        
 
-2. Activate Environment to run the Pipeline
+4. Activate Environment to run the Pipeline
         conda activate -n SPTCR_ENV
 
-3. For minimal Pipeline see Exemplary Pipeline: example.sh 
+5. For minimal Pipeline see Exemplary Pipeline: example.sh 
 
 
 ## Running Pipeline
