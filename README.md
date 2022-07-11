@@ -14,7 +14,7 @@ Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Na
 ##### Sample 275 Spatial TRD/TRG Infiltration"
 ![Alt text](/Images/GBM275_TRD_TRG_Infiltration.png?raw=true "Spatial TRD/TRG Infiltration" width=300)
 
-<img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/Images/GBM275_TRD_TRG_Infiltration.png" width="48">
+<img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/GBM275_TRD_TRG_Infiltration.png" width="300">
 
 ## Installation
 
