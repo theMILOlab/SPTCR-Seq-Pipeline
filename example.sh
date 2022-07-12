@@ -23,12 +23,12 @@ do
 
     ############################
     "${full}" \
-    -n "$SAMPLE_NAME" \
-    -i"${sample}" \
-    -t ${THREADS} \
-    -mem ${MEMORY} \
-    -rep "/PATH/TO/GITHUB/REPOSITORY" \
-    -cln False 
+        -n "$SAMPLE_NAME" \
+        -i"${sample}" \
+        -t ${THREADS} \
+        -mem ${MEMORY} \
+        -rep "/PATH/TO/GITHUB/REPOSITORY" \
+        -cln False 
     
     
 done
