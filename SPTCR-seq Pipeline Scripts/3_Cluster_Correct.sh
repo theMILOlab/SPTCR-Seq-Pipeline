@@ -338,7 +338,7 @@ if [ ${IGBLAST} = "True" ]; then
         -n "${SAMPLE_NAME}" \
         -o "${OUTFOLDER}" 
 
-    echo " :::: Performing UMI Correction on Corrected Summary ::::"
+    echo " :::: Performing UMI Correction on Uncorrected Summary ::::"
 
     "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
         -igb "${OUTFOLDER}/${SAMPLE_NAME}_uncorrected_igb_overview_igb.csv" \
