@@ -311,7 +311,7 @@ else echo " :::: Keeping all Intermediate Files ::::"
 fi
 
 if [ ${IGBLAST} = "True" ]; then
-    echo " :::: Generate the VDj Annotation Summary ::::"
+    echo " :::: Generate the VDj Annotation Summary of the Corrected Reads ::::"
 
     python "${DEMUX_SUMMARY}" \
         -igb "${IGBLAST_TABLE}" \
@@ -321,13 +321,29 @@ if [ ${IGBLAST} = "True" ]; then
         -n "${SAMPLE_NAME}" \
         -o "${OUTFOLDER}" 
 
-    echo " :::: Performing UMI Correction on Summary ::::"
+    echo " :::: Performing UMI Correction on Corrected Summary ::::"
 
     "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
         -igb "${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv" \
         -n "${SAMPLE_NAME}" \
         -O "${OUTFOLDER}" 
-        #2> "${LOGS}"/umi_correction.txt 
+
+    echo " :::: Generate the VDj Annotation Summary of the Uncorrected Reads ::::"
+
+    python "${DEMUX_SUMMARY}" \
+        -igb "${"${INPUT_IGB}"}" \
+        -bc  "${BARCODE_UMI_FILE}" \
+        --MOD "True" \
+        --OUTN "uncorrected_igb_overview_igb" \
+        -n "${SAMPLE_NAME}" \
+        -o "${OUTFOLDER}" 
+
+    echo " :::: Performing UMI Correction on Corrected Summary ::::"
+
+    "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
+        -igb "${OUTFOLDER}/${SAMPLE_NAME}_uncorrected_igb_overview_igb.csv" \
+        -n "${SAMPLE_NAME}" \
+        -O "${OUTFOLDER}" 
         
     echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast Overview File is in ${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv, UMI Corrected Summary Counts are in ${OUTFOLDER}/${SAMPLE_NAME}_igb_corr_umi_corrected.csv"
 
