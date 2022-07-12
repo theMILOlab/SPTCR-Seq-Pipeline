@@ -8,6 +8,7 @@ parser.add_argument('-igb','--IGB',help="Path to IgBlast csv that should be UMI-
 parser.add_argument('-bc','--BCOL',help="Name of the Barcode Column in the Input csv", required=False,default="Spatial Barcode" )
 parser.add_argument('-umi','--UMICOL',help="Name of the UMI Column in the Input csv", required=False,default="UMI" )
 parser.add_argument('-n','--NAME',help="Name of the Pipeline. Defaults to fastq basename_date", required=False,default="" )
+parser.add_argument('-outn','--OUTNAME',help="Extension to add to outfile", required=False,default="_umi_corrected_count_table" )
 parser.add_argument('-d','--STRDIST',help="String Distance to use for UMI Clustering", default=2 )
 
 
@@ -32,7 +33,7 @@ read_dir=arg_vars["IGB"]
 string_dist=arg_vars["STRDIST"]
 barcode_col=arg_vars["BCOL"]
 umi_col=arg_vars["UMICOL"]
-
+OUTNAME=arg_vars["OUTNAME"]
 #######################################################
 ############ Summarizing and Preparing DF #############
 
@@ -96,9 +97,10 @@ vj['D']=''
 #print(vdj,vj)
 tcrs=pd.concat([vdj,vj])
 print(tcrs)
+
 #######################################################
 ##################### Write File Out ##################
 #out_path=os.path(OUT)
-write_name=sample_name+"_igb_corr_umi_corrected.csv"
+write_name=sample_name+"_{0}.csv".format(OUTNAME)
 outpath=os.path.join(OUT,write_name)
 tcrs.to_csv(outpath,index=False)

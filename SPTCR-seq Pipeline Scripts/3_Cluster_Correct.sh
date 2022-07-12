@@ -317,21 +317,23 @@ if [ ${IGBLAST} = "True" ]; then
         -igb "${IGBLAST_TABLE}" \
         -bc  "${BARCODE_UMI_FILE}" \
         --MOD "True" \
-        --OUTN "corr_igb_overview_igb" \
+        --OUTN "corrected_igb_overview_igb" \
         -n "${SAMPLE_NAME}" \
         -o "${OUTFOLDER}" 
 
     echo " :::: Performing UMI Correction on Corrected Summary ::::"
 
     "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
-        -igb "${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv" \
+        -igb "${OUTFOLDER}/${SAMPLE_NAME}_corrected_igb_overview_igb.csv" \
         -n "${SAMPLE_NAME}" \
+        -outn 'CORRECTED_umi_corrected_count_table' \
         -O "${OUTFOLDER}" 
 
+    ##########################
     echo " :::: Generate the VDj Annotation Summary of the Uncorrected Reads ::::"
 
     python "${DEMUX_SUMMARY}" \
-        -igb "${"${INPUT_IGB}"}" \
+        -igb "${INPUT_IGB}" \
         -bc  "${BARCODE_UMI_FILE}" \
         --MOD "True" \
         --OUTN "uncorrected_igb_overview_igb" \
@@ -343,11 +345,30 @@ if [ ${IGBLAST} = "True" ]; then
     "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
         -igb "${OUTFOLDER}/${SAMPLE_NAME}_uncorrected_igb_overview_igb.csv" \
         -n "${SAMPLE_NAME}" \
+        -outn 'uncorrected_umi_corrected_count_table' \
         -O "${OUTFOLDER}" 
         
     echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast Overview File is in ${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv, UMI Corrected Summary Counts are in ${OUTFOLDER}/${SAMPLE_NAME}_igb_corr_umi_corrected.csv"
 
 else 
-    echo " :::: Not quering IgBlast as indicated. Done with SPTCR-seq Correction Pipeline. ::::"
+    echo " :::: Generate the VDj Annotation Summary of the Uncorrected Reads ::::"
+
+    python "${DEMUX_SUMMARY}" \
+        -igb "${INPUT_IGB}" \
+        -bc  "${BARCODE_UMI_FILE}" \
+        --MOD "True" \
+        --OUTN "uncorrected_igb_overview_igb" \
+        -n "${SAMPLE_NAME}" \
+        -o "${OUTFOLDER}" 
+
+    echo " :::: Performing UMI Correction on Uncorrected Summary ::::"
+
+    "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
+        -igb "${OUTFOLDER}/${SAMPLE_NAME}_uncorrected_igb_overview_igb.csv" \
+        -n "${SAMPLE_NAME}" \
+        -outn 'uncorrected_umi_corrected_count_table' \
+        -O "${OUTFOLDER}"
+
+    echo " :::: Not quering IgBlast for corrected as indicated. Done with SPTCR-seq Correction Pipeline. ::::"
     exit
 fi

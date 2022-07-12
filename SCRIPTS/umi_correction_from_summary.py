@@ -6,6 +6,7 @@ parser.add_argument('-O','--OUT',help= "Path to Outfolder", required=False, defa
 parser.add_argument('-igb','--IGB',help="Path to IgBlast csv that should be UMI-corrected",default="")
 parser.add_argument('-bc','--BCOL',help="Name of the Barcode Column in the Input csv", required=False,default="Spatial Barcode" )
 parser.add_argument('-n','--NAME',help="Name of the Pipeline. Defaults to fastq basename_date", required=False,default="" )
+parser.add_argument('-outn','--OUTNAME',help="Extension to add to outfile", required=False,default="_umi_corrected_count_table" )
 parser.add_argument('-d','--STRDIST',help="String Distance to use for UMI Clustering", default=2 )
 parser.add_argument('-m','--NO_CLUST',help="If True skips UMI Clustering step and only reads in given path as UMI per BC Dataframe.", default='' )
 
@@ -39,7 +40,7 @@ read_dir=arg_vars["IGB"]
 string_dist=arg_vars["STRDIST"]
 barcode_col=arg_vars["BCOL"]
 UMI_CLUST=arg_vars["NO_CLUST"]
-
+OUTNAME=arg_vars["OUTNAME"]
 #######################################################
 ################ Summarize Input CSV ##############
 #######################################################
@@ -234,4 +235,4 @@ UMI_uncorrected_count_table['UMI Corrected']=UMI_uncorrected_count_table.apply(l
 
 ### Write DF to disk
 print(UMI_uncorrected_count_table)   
-UMI_uncorrected_count_table.to_csv('{0}/{1}_UMI_corrected_count_table.csv'.format(OUT,sample_name),index=False)
+UMI_uncorrected_count_table.to_csv('{0}/{1}_{2}.csv'.format(OUT,sample_name,OUTNAME),index=False)
