@@ -1,6 +1,10 @@
 ### Make sure you have the needed build tools with:
 sudo apt-get update
-sudo apt-get install cmake libz-dev build-essential
+
+### if not already added add following repository for  libstdc++6 libc6 libc-bin
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test 
+sudo apt-get update
+sudo apt-get install cmake libz-dev build-essential libstdc++6 libc6 libc-bin
 
 ## Install gcc and g++ compiler version 9 alternatives needed for RATTLE Compilation
 sudo apt -y install gcc-9 g++-9
