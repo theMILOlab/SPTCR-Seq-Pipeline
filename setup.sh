@@ -1,7 +1,7 @@
 #! /usr/bin/env bash 
 
 ### Install Mamba in Base Environment
-conda install mamba -n base -c conda-forge
+conda install -c conda-forge micromamba
 
 ### Create SPTCR_ENV
 mamba env create -f SPTCR_ENV.yml
