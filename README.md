@@ -1,11 +1,8 @@
-# ONLY FOR INTERNAL PURPOSES (YET) REPOSITORY CONTAINS in ./TOOLS THIRD PARTY CODE
 
+# SPTCR-seq Pipeline
 
-### Install Mamba in Base Environment
-conda install -c conda-forge micromamba
-micromamba shell init --shell=bash --prefix=~/micromamba
+## ONLY FOR INTERNAL PURPOSES (YET) REPOSITORY CONTAINS in ./TOOLS THIRD PARTY CODE
 
-# SPTCR-seq
 Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Nanopore Sequencing. This Pipeline is used to demultiplex, correct , annotate and UMI correct target enriched T-Cell Receptor cDNA acquired with the SPTCR-seq Protocol.
 
 #### Pipeline Overview
@@ -17,6 +14,26 @@ Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Na
 
 ##### Sample 275 Spatial TRD/TRG Infiltration
 <img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/GBM275_TRD_TRG_Infiltration.png" width="300">
+
+
+### Install (Micro)mamba in Base Environment
+
+We recommend using the Conda C++ Drop-In package manager mamba (https://github.com/mamba-org/mamba) to resolve all the Dependencies faster. 
+Execute the following Installation steps from conda base environment to automatically install the package manager. 
+If you want to do installation by hand, just install as followed and subsequently, simply change your installation commands from 'conda install ...' to 'mamba install ...'.
+
+```
+conda install mamba -n base -c conda-forge
+```
+
+To install SPTCR-Seq Pipeline with the setup script we minimally require micromamba. Its a lightweight, reduced version of mamba and can be used to especially for fast installation. Install and initialize the script by doing as followed:
+
+```
+conda install -c conda-forge micromamba
+micromamba shell init --shell=bash --prefix=~/micromamba
+```
+
+If it finished you can proceed to install remaining dependencies.
 
 ## Installation
 
