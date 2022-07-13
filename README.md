@@ -1,6 +1,10 @@
 # ONLY FOR INTERNAL PURPOSES (YET) REPOSITORY CONTAINS in ./TOOLS THIRD PARTY CODE
 
 
+### Install Mamba in Base Environment
+conda install -c conda-forge micromamba
+micromamba shell init --shell=bash --prefix=~/micromamba
+
 # SPTCR-seq
 Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Nanopore Sequencing. This Pipeline is used to demultiplex, correct , annotate and UMI correct target enriched T-Cell Receptor cDNA acquired with the SPTCR-seq Protocol.
 
