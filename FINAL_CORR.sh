@@ -8,7 +8,7 @@ sample="/media/jkbuntu/JKB_500GB/Raw_Nanopore/SPTCR16_raw.fastq"
 SAMPLE_NAME="$(basename "${sample}")"
 SAMPLE_NAME="$(cut -d'_' -f1 <<<${SAMPLE_NAME})"
 
-OUT="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Final_Correction/${SAMPLE_NAME}"
+OUT="/media/jkbuntu/JKB_500GB/ZWANGSGESTOERT/${SAMPLE_NAME}"
 echo "$SAMPLE_NAME"
 #mkdir "${OUT}"
 #cd "${OUT}"
@@ -20,11 +20,12 @@ echo "$SAMPLE_NAME"
     -t 24 \
     -mem 60 \
     -rep "/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline" \
-    -cln False 
+    -cln False \
+    -lm True
 
 # Copy Work to Harddrive and remove
 cp -R "${OUT}" "/media/jkbuntu/WD12TB/FINAL_PUBLISH_CORRECTION"
-rm -r "${OUT}"
+#rm -r "${OUT}"
 
 exit
 
