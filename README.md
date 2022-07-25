@@ -390,7 +390,31 @@ Holds the Folders for each corrected Fastq Group.
         -rep ".." \
         -cln False 
 
+### Associate TRA/TRB
 
+For Convenience we provide a shell Script to use MADHYPE for association of TRA & TRB Receptors in Space.
+
+**Installation:**
+        ## Create Conda Environment with Python 2
+        conda create -n MADHYPE_ENV python=2.7
+
+        ## Clone Repository into SPTCR-Seq-Pipeline/TOOLS
+        cd TOOLS
+        git clone https://github.com/birnbaumlab/MAD-HYPE.git
+
+        ## Install Dependencies of MADHYPE
+        cd MAD-HYPE
+        python setup.py install
+
+**Usage***
+        # in SPTCR ENV
+        python ./MADHYPE_DATA_PREPARATION.py \
+                -igb PATH/TO/IGB
+
+        ## in MADHYPE_ENV
+        python2 ./run_madhype.py
+
+        
 ### Citations
 
 Ravi, V.M., Will, P., Kueckelhaus, J., Sun, N., Joseph, K., Salié, H., Vollmer, L., Kuliesiute, U., von Ehr, J., Benotmane, J.K., Neidert, N., Follo, M., Scherer, F., Goeldner, J.M., Behringer, S.P., Franco, P., Khiat, M., Zhang, J., Hofmann, U.G., Fung, C., Ricklefs, F.L., Lamszus, K., Boerries, M., Ku, M., Beck, J., Sankowski, R., Schwabenland, M., Prinz, M., Schüller, U., Killmer, S., Bengsch, B., Walch, A.K., Delev, D., Schnell, O., Heiland, D.H., 2022. Spatially resolved multi-omics deciphers bidirectional tumor-host interdependence in glioblastoma. Cancer Cell 40, 639-655.e13. doi:10.1016/j.ccell.2022.05.009
@@ -400,6 +424,8 @@ Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequen
 de la Rubia, I., Indi, J.A., Carbonell, S., Lagarde, J., Albà, M.M., Eyras, E., 2020. Reference-free reconstruction and quantification of transcriptomes from long-read sequencing. BioRxiv. doi:10.1101/2020.02.08.939942
 
 Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet j. 17, 10. doi:10.14806/ej.17.1.200
+
+Holec, P.V., Berleant, J., Bathe, M., Birnbaum, M.E., 2019. A Bayesian framework for high-throughput T cell receptor pairing. Bioinformatics 35, 1318–1325. doi:10.1093/bioinformatics/bty801
 
 tange_2022_6570228,
         author       = {Tange, Ole},
