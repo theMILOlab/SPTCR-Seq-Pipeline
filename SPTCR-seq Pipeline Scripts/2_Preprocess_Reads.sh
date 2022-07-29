@@ -84,7 +84,8 @@ parser.add_argument('-chop', '--PYCHOPPER', help="Specify if Pychopper should be
 parser.add_argument('-trim', '--ADAPTER_TRIM', help="Specify if Reads should be trimmed from Adapters. If set to False will use PyChopper Output",default="True")
 parser.add_argument('-igb', '--IGBLAST', help="If True, the preprocessed Fastq is aligned with IgBLAST Following Processing. If already done, use the Path to the IgBlast Output and skip",default="YES")
 parser.add_argument('-demux', '--DEMULTIPLEX', help="If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes, it is recommended to leave as default if you intend to correct the SPTCR-seq reads as well.",default="True")
-
+parser.add_argument('-bc', '--BARCODES', default='visium_bc.tsv', 
+                    help='Specify the Path to the Barcode Whitelist extracted from tissue_positions_list.csv from the Spaceranger Output. If left unfilled, all possible Visium Barcodes will be matched.')
 
 EOF
 
@@ -265,6 +266,7 @@ if [ ${DEMULTIPLEX} = True ]; then
         -n "${SAMPLE_NAME}" \
         -t ${THREADS} \
         -mem ${MEMORY} \
+        -bc "${BARCODES}" \
         -rep "${REPOSITORY}"
 else
     echo ":::: Demultiplexing set to False. If you use the Output for Downstream Applications, please match the Table Columns. ::::"

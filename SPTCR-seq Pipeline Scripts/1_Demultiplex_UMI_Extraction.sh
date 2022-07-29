@@ -81,7 +81,7 @@ parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Re
 parser.add_argument('-a', '--ADAPTER', default='CTACACGACGCTCTTCCGATCT', 
                     help='Specify Illumina Read 1 Sequence. Adapter is matched as Anchor, to demultiplex and extract the UMI Region.')
 parser.add_argument('-bc', '--BARCODES', default='visium_bc.tsv', 
-                    help='Specify the Path to Barcode Whitelist/tissue_positions_list.csv from the 10X Output. If left unfilled, all possible Visium Barcodes will be matched.')
+                    help='Specify the Path to the Barcode Whitelist extracted from tissue_positions_list.csv from the Spaceranger Output. If left unfilled, all possible Visium Barcodes will be matched.')
 
 EOF
 
