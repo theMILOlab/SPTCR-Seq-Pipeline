@@ -80,6 +80,8 @@ parser.add_argument('-mem','--MEMORY',help="RAM to user", default="16")
 parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="../")
 parser.add_argument('-a', '--ADAPTER', default='CTACACGACGCTCTTCCGATCT', 
                     help='Specify Illumina Read 1 Sequence. Adapter is matched as Anchor, to demultiplex and extract the UMI Region.')
+parser.add_argument('-bc', '--BARCODES', default='visium_bc.tsv', 
+                    help='Specify the Path to Barcode Whitelist/tissue_positions_list.csv from the 10X Output. If left unfilled, all possible Visium Barcodes will be matched.')
 
 EOF
 
@@ -122,7 +124,15 @@ timestamp() {
 STARTTIME=$(date +%s)
 
 
-BARCODE_LIST="${REPOSITORY}"/Reference/Barcodes/visium_bc.tsv
+######## Barcodes
+
+if [ "${BARCODES}" = "visium_bc.tsv" ];then
+    BARCODE_LIST="${REPOSITORY}"/Reference/Barcodes/visium_bc.tsv
+else
+    BARCODE_LIST="${BARCODES}"
+fi 
+
+
 DEMUX_GENERATOR="${REPOSITORY}"/SCRIPTS/generate_demux_umi_dfs.sh
 DEMUXXER="${REPOSITORY}"/SCRIPTS/demultiplex_extract_umi_region.py
 SCTAGGER="${REPOSITORY}"/TOOLS/scTagger/py
@@ -168,6 +178,8 @@ mkdir "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX
     -t ${THREADS} \
     -sa ${ADAPTER} \
     -o "${OUTFOLDER}"/"${SAMPLE_NAME}"_DEMUX/"${SAMPLE_NAME}"_lr_bc.tsv.gz 2>> "${LOGS}"/"${SAMPLE_NAME}"_Demux_stderr.txt
+
+echo "::::: Preparing Barcode List :::::"
 
 echo "::::: Matching Barcodes to Extracted Segments :::::"
 "${SCTAGGER}"/match_lr_bc-trie.py \
