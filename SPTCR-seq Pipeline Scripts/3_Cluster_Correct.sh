@@ -299,12 +299,12 @@ if [ ${CLEANUP} = "True" ]; then
 
 
     ### Remove Created Working Directories
-    #rm -r "${OUTFOLDER}"/IGB_Corrected
-    #rm -r "${OUTFOLDER}"/CORRECTION
+    rm -r "${OUTFOLDER}"/IGB_Corrected
+    rm -r "${OUTFOLDER}"/CORRECTION
     
     rm -r "${IGB_CLUSTERS}"
-    #rm -r "${OUTFOLDER}"/CORRECTION/RATTLE_CORRECT
-    #rm -r "${OUTFOLDER}"/CORRECTION/RATTLE_CLUSTERS
+    rm -r "${OUTFOLDER}"/CORRECTION/RATTLE_CORRECT
+    rm -r "${OUTFOLDER}"/CORRECTION/RATTLE_CLUSTERS
 
 else echo " :::: Keeping all Intermediate Files ::::"
 fi

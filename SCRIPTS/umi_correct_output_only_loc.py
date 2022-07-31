@@ -50,48 +50,35 @@ OUTNAME=arg_vars["OUTNAME"]
 igb=pd.read_csv(read_dir)
 
 ### Preparing Data
-## Subsetting and Merging V,(D),J Columns to one
-vdj=igb[igb['Locus'].isin(['TRB','TRD'])]
-vdj=vdj.dropna(subset=['Locus])
-vdj=vdj[['Locus',barcode_col,umi_col]]
-
-vj=igb[igb['Locus'].isin(['TRA','TRG'])]
-vj=vj.dropna(subset=['Locus])
-vj=vj[['Locus',barcode_col,umi_col]]
-
-## Grouping TCR Columns to one
-vdj=vdj.groupby(['Locus','Spatial Barcode'])['UMI'].apply(list).reset_index(name='UMI List')
-vdj['Uncorrected Count']=vdj.apply(lambda x: len(x['UMI List']),axis='columns')
-vdj=vdj.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=True)
-
-
-vj=vj.groupby(['Locus','Spatial Barcode'])['UMI'].apply(list).reset_index(name='UMI List')
-vj['Uncorrected Count']=""
-vj['Uncorrected Count']=vj.apply(lambda x: len(x['UMI List']),axis='columns')
-vj=vj.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=True)
+igb=igb.dropna(subset=['Locus'])
+igb=igb[['Locus',barcode_col,umi_col]]
+igb=igb.groupby(['Locus','Spatial Barcode'])['UMI'].apply(list).reset_index(name='UMI List')
+igb['Uncorrected Count']=igb.apply(lambda x: len(x['UMI List']),axis='columns')
+igb=igb.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=True)
 
 #######################################################
 ##################### UMI Correcting ##################
 clusterer = UMIClusterer(cluster_method="directional")
 
-tcrs=pd.concat([vdj,vj])
-tcrs=tcrs.reset_index(drop=True)
+igb=igb.reset_index(drop=True)
 
-tcrs['UMI Corrected']=""
-for index, row in tqdm(tcrs.iterrows()):
+igb['UMI Corrected']=""
+
+for index, row in tqdm(igb.iterrows()):
     if row['Uncorrected Count'] > 1:
         umi_bytes=[str.encode(umi) for umi in row['UMI List']]
         umis=dict(Counter(umi_bytes))
         clustered_umis = clusterer(umis, threshold=2)
-        tcrs.loc[index,'UMI Corrected']=len(clustered_umis)
+        igb.loc[index,'UMI Corrected']=len(clustered_umis)
     else:
-        tcrs.loc[index,'UMI Corrected']=1
-
-print(tcrs)
+        igb.loc[index,'UMI Corrected']=1
+        
+igb=igb[["Locus","Spatial Barcode","Uncorrected Count","UMI Corrected"]]
+print(igb)
 
 #######################################################
 ##################### Write File Out ##################
 #out_path=os.path(OUT)
 write_name=sample_name+"_{0}.csv".format(OUTNAME)
 outpath=os.path.join(OUT,write_name)
-tcrs.to_csv(outpath,index=False)
+igb.to_csv(outpath,index=False)
