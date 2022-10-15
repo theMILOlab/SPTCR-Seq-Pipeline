@@ -93,9 +93,8 @@ mkdir "${OUT}"
 ################################################################
 ################## Scrip Execution BLOCK########################
 ################################################################
-
-echo "################## PreProcessing $NAME ########################"
 cd "${OUT}"
+echo "################## PreProcessing $NAME ########################"
 bash "${preproc}" \
         -n ${NAME} \
         -i "${INPUT_FASTQ}" \
@@ -103,10 +102,13 @@ bash "${preproc}" \
         -mem ${MEMORY} \
         -rep "${REPOSITORY}"
 
+
+cd "${OUT}"
 echo "################## Correcting $NAME ########################"
 bash "${cluscorr}" \
-        -i "./PreProcessing/${NAME}_Cutadapt_trimmed_sana.fastq" \
-        -b "./PreProcessing/${NAME}_preprocessed_IGB.tsv" \
+        -i "${OUT}/PreProcessing/${NAME}_Cutadapt_trimmed_sana.fastq" \
+        -o "${OUT}" \
+        -b "${OUT}/PreProcessing/${NAME}_preprocessed_IGB.tsv" \
         -n ${NAME} \
         -t ${THREADS} \
         --GROUPER "locus,v_family" \

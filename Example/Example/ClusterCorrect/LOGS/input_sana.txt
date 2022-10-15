@@ -1,1 +1,0 @@
-[INFO][0m File: ./PreProcessing/Example_Cutadapt_trimmed_sana.fastq	Pass records: 6769	Discarded lines: 0

@@ -82,6 +82,8 @@ for index, row in tqdm(tcrs.iterrows()):
     else:
         tcrs.loc[index,'UMI Corrected']=1
 
+####### Combine Counts of Complement and Reverse Complement Barcode
+
 
 #######################################################
 ##################### Revert Changes of TCR Col ##################

@@ -1,7 +1,7 @@
 This is cutadapt 4.1 with Python 3.9.13
 Command line parameters: -b file:/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Reference/Primer/Cutadapt/5_3_10X_Adapter.fa --cores=0 --action trim --match-read-wildcards -o /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/CUTADAPT/Example_Cutadapt_trimmed.fastq /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/CUTADAPT/Example_Cutadapt_dual_trim.fastq
 Processing single-end reads on 12 cores ...
-Finished in 0.24 s (36 µs/read; 1.68 M reads/minute).
+Finished in 0.23 s (34 µs/read; 1.78 M reads/minute).
 
 === Summary ===
 

@@ -156,9 +156,6 @@ BARCODE_UMI_FILE="${out}"/PreProcessing/Demultiplexing_"${SAMPLE_NAME}"/"${SAMPL
 ################################################################
 ################## Cluster BLOCK #######################
 ################################################################
-echo " :::: Checking Fastq Integrity ::::"
-seqkit sana "${INPUT_FASTQ}" -o "${INPUT_FASTQ}_sana" 2> "${LOGS}"/input_sana.txt
-TRIMMED="${INPUT_FASTQ}_sana"
 
 
 echo " :::: Clustering Reads by VJ Arrangement ::::"
@@ -170,7 +167,6 @@ python "${REPOSITORY}"/SCRIPTS/TCR_GROUPING_IGB.py \
     --INPUT_FASTQ "${INPUT_FASTQ}" \
     --GROUPER "${GROUPER}" \
     --OUT "${OUTFOLDER}"/IGB_CLUSTERS 
-    #2> "${LOGS}"/tcr_clustering_log.txt
 
 IGB_CLUSTERS="${OUTFOLDER}"/IGB_CLUSTERS
 
@@ -308,7 +304,7 @@ if [ ${CLEANUP} = "True" ]; then
 
 else echo " :::: Keeping all Intermediate Files ::::"
 fi
-
+cd "${OUTFOLDER}"
 if [ ${IGBLAST} = "True" ]; then
     echo " :::: Generate the VDj Annotation Summary of the Corrected Reads ::::"
 
@@ -344,10 +340,10 @@ if [ ${IGBLAST} = "True" ]; then
     "${REPOSITORY}/SCRIPTS/umi_correct_output.py" \
         -igb "${OUTFOLDER}/${SAMPLE_NAME}_uncorrected_igb_overview_igb.csv" \
         -n "${SAMPLE_NAME}" \
-        -outn 'uncorrected_umi_corrected_count_table' \
+        -outn 'UNCORRECTED_umi_corrected_count_table' \
         -O "${OUTFOLDER}" 
         
-    echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast Overview File is in ${OUTFOLDER}/${SAMPLE_NAME}_corr_igb_overview_igb.csv, UMI Corrected Summary Counts are in ${OUTFOLDER}/${SAMPLE_NAME}_igb_corr_umi_corrected.csv"
+    echo "Done with SPTCR-seq Correction Pipeline. Corrected IgBlast Overview File is in ${OUTFOLDER}/${SAMPLE_NAME}_(un)corrected_igb_overview_igb.csv, UMI Corrected Summary Counts are in ${OUTFOLDER}/${SAMPLE_NAME}_(UN)CORRECTED_umi_corrected_count_table.csv"
 
 else 
     echo " :::: Generate the VDj Annotation Summary of the Uncorrected Reads ::::"
