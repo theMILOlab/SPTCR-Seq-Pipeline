@@ -9,17 +9,15 @@
 THREADS=12
 MEMORY=64
 
-#full="/PATH/TO/GITHUB/REPOSITORY/SPTCR-seq Pipeline Scripts/SPTCR_FULL_Pipeline.sh"
-full="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/SPTCR-seq Pipeline Scripts/SPTCR_FULL_Pipeline.sh"
-for sample in "/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/"*.fastq
+
+full="PATH/TO/GITHUB_REPO/SPTCR-Seq-Pipeline/SPTCR-seq Pipeline Scripts/SPTCR_FULL_Pipeline.sh"
+for sample in "/PATH/TP/FASTQ/FOLDER/"*.fastq
 do  
     SAMPLE_NAME="$(basename "${sample}")"
     SAMPLE_NAME="$(cut -d'_' -f1 <<<${SAMPLE_NAME})"
 
-    OUT="/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/"
-    "${SAMPLE_NAME}"
-    #echo "$SAMPLE_NAME"
-    #mkdir "${OUT}"
+    OUT="/PATH/TO/OUTFOLDER/${SAMPLE_NAME}"
+    echo "$SAMPLE_NAME"
     cd "${OUT}"
 
     ############################
@@ -28,9 +26,9 @@ do
         -i"${sample}" \
         -t ${THREADS} \
         -mem ${MEMORY} \
-        -rep "/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline" \
+        -rep "/PATH/TO/GITHUB/REPOSITORY" \
         -cln False \
         -o "${OUT}"
-    #-rep "/PATH/TO/GITHUB/REPOSITORY" \
+
     
 done

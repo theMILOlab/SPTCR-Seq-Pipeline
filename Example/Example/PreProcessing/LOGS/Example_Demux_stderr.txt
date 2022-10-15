@@ -1,8 +1,8 @@
 Namespace(reads=['/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana'], ranges=[[], []], gzipped=False, threads=12, short_read_adapter='CTACACGACGCTCTTCCGATCT', outfile='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode.tsv.gz', plotfile=None, num_bp_after=16)
 Reading /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana
-0it [00:00, ?it/s]80000it [00:00, 1410620.59it/s]
+0it [00:00, ?it/s]80000it [00:00, 1438412.85it/s]
 Aligning CTACACGACGCTCTTCCGATCT to 20000 reads on 12 threads
-  0%|          | 0/20000 [00:00<?, ?it/s]  0%|          | 1/20000 [00:00<1:43:05,  3.23it/s]100%|██████████| 20000/20000 [00:00<00:00, 63297.02it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s]  0%|          | 1/20000 [00:00<1:52:48,  2.95it/s]100%|██████████| 20000/20000 [00:00<00:00, 57907.42it/s]
 No ranges for SR adapters have been preset. Detecting directly from data...
 -->  95.19% of strend reads fall around 47
 -->  0.23% of strend reads fall around 904
@@ -11,14 +11,14 @@ Found these ranges on + strand:	[(36, 61)]
 -->  0.51% of strend reads fall around -820
 Found these ranges on - strand:	[(-44, -22)]
 Filtering alignments using ranges on 12 threads
-  0%|          | 0/20000 [00:00<?, ?it/s]100%|██████████| 20000/20000 [00:00<00:00, 884370.51it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s]100%|██████████| 20000/20000 [00:00<00:00, 875345.19it/s]
 Writng to <_io.TextIOWrapper name='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode.tsv.gz' encoding='UTF-8'>
-  0%|          | 0/20000 [00:00<?, ?it/s]100%|██████████| 20000/20000 [00:00<00:00, 214244.33it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s] 98%|█████████▊| 19523/20000 [00:00<00:00, 194267.26it/s]100%|██████████| 20000/20000 [00:00<00:00, 190568.32it/s]
 Namespace(reads=['/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana'], ranges=[[], []], gzipped=False, threads=12, short_read_adapter='CTACACGACGCTCTTCCGATCT', outfile='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode_UMI.tsv.gz', plotfile=None, num_bp_after=28)
 Reading /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana
-0it [00:00, ?it/s]80000it [00:00, 1423480.81it/s]
+0it [00:00, ?it/s]80000it [00:00, 1266883.84it/s]
 Aligning CTACACGACGCTCTTCCGATCT to 20000 reads on 12 threads
-  0%|          | 0/20000 [00:00<?, ?it/s]  0%|          | 1/20000 [00:00<1:44:25,  3.19it/s]100%|██████████| 20000/20000 [00:00<00:00, 62491.49it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s]  0%|          | 1/20000 [00:00<1:51:22,  2.99it/s]100%|██████████| 20000/20000 [00:00<00:00, 58620.56it/s]
 No ranges for SR adapters have been preset. Detecting directly from data...
 -->  95.19% of strend reads fall around 47
 -->  0.23% of strend reads fall around 904
@@ -27,14 +27,14 @@ Found these ranges on + strand:	[(36, 61)]
 -->  0.51% of strend reads fall around -820
 Found these ranges on - strand:	[(-44, -22)]
 Filtering alignments using ranges on 12 threads
-  0%|          | 0/20000 [00:00<?, ?it/s]100%|██████████| 20000/20000 [00:00<00:00, 846111.98it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s]100%|██████████| 20000/20000 [00:00<00:00, 862998.88it/s]
 Writng to <_io.TextIOWrapper name='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode_UMI.tsv.gz' encoding='UTF-8'>
-  0%|          | 0/20000 [00:00<?, ?it/s] 74%|███████▍  | 14782/20000 [00:00<00:00, 147613.90it/s]100%|██████████| 20000/20000 [00:00<00:00, 150726.50it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s] 68%|██████▊   | 13579/20000 [00:00<00:00, 134259.73it/s]100%|██████████| 20000/20000 [00:00<00:00, 137999.12it/s]
 Namespace(reads=['/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana'], ranges=[[], []], gzipped=False, threads=12, short_read_adapter='CTACACGACGCTCTTCCGATCT', outfile='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_DEMUX/Example_lr_bc.tsv.gz', plotfile=None, num_bp_after=20)
 Reading /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana
-0it [00:00, ?it/s]80000it [00:00, 1431906.25it/s]
+0it [00:00, ?it/s]80000it [00:00, 1454865.33it/s]
 Aligning CTACACGACGCTCTTCCGATCT to 20000 reads on 12 threads
-  0%|          | 0/20000 [00:00<?, ?it/s]  0%|          | 1/20000 [00:00<1:48:02,  3.09it/s]100%|██████████| 20000/20000 [00:00<00:00, 60457.30it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s]  0%|          | 1/20000 [00:00<1:44:29,  3.19it/s]100%|██████████| 20000/20000 [00:00<00:00, 62465.11it/s]
 No ranges for SR adapters have been preset. Detecting directly from data...
 -->  95.19% of strend reads fall around 47
 -->  0.23% of strend reads fall around 904
@@ -43,9 +43,9 @@ Found these ranges on + strand:	[(36, 61)]
 -->  0.51% of strend reads fall around -820
 Found these ranges on - strand:	[(-44, -22)]
 Filtering alignments using ranges on 12 threads
-  0%|          | 0/20000 [00:00<?, ?it/s]100%|██████████| 20000/20000 [00:00<00:00, 898599.71it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s]100%|██████████| 20000/20000 [00:00<00:00, 999786.42it/s]
 Writng to <_io.TextIOWrapper name='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_DEMUX/Example_lr_bc.tsv.gz' encoding='UTF-8'>
-  0%|          | 0/20000 [00:00<?, ?it/s] 94%|█████████▍| 18837/20000 [00:00<00:00, 187905.15it/s]100%|██████████| 20000/20000 [00:00<00:00, 189335.59it/s]
+  0%|          | 0/20000 [00:00<?, ?it/s] 94%|█████████▍| 18837/20000 [00:00<00:00, 188153.06it/s]100%|██████████| 20000/20000 [00:00<00:00, 189005.83it/s]
 Namespace(long_read_segments='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_DEMUX/Example_lr_bc.tsv.gz', short_read_barcodes='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Reference/Barcodes/visium_bc.tsv', max_error=2, mem=64.0, barcode_length=16, threads=12, plotfile=None, outfile='/media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example/PreProcessing/Demultiplexing_Example/Example_DEMUX/Example_scTagger_DEMUX.tsv.gz')
 Reading short reads barcodes
 There are 4,992 SR barcodes
