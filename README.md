@@ -85,24 +85,19 @@ Performs preprocessing of the Reads for Correction & matching the Barcodes to th
 
 #### Usage
 
-        usage: 2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER] [-t THREADS]
-                                [-mem MEMORY] [-rep REPOSITORY] [-pri PRIMER] [-conf CONFIGURATION]
-                                [-chop PYCHOPPER] [-trim ADAPTER_TRIM] [-igb IGBLAST]
-                                [-demux DEMULTIPLEX]
+        2_Preprocess_Reads.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER] [-t THREADS] [-mem MEMORY] [-rep REPOSITORY] 
+                                [-pri PRIMER] [-conf CONFIGURATION] [-chop PYCHOPPER] [-trim ADAPTER_TRIM] [-igb IGBLAST]
+                                [-demux DEMULTIPLEX] [-bc BARCODES]
 
-        Pipeline to preprocess, demultiplex and extract UMI regions of Nanopore Reads for Libraries
-        prepared for 10X Genomics
+        Pipeline to preprocess, demultiplex and extract UMI regions of Nanopore Reads for Libraries prepared for 10X Genomics
 
 **Arguments**
-
         -h, --help            show this help message and exit
-        -n NAME, --NAME NAME  Chosen Name for the Pipeline. Will Be Used as Name for the Pipelines
-                                Outfolder.
+        -n NAME, --NAME NAME  Chosen Name for the Pipeline. Will Be Used as Name for the Pipelines Outfolder.
         -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
                                 Specify the Path to the raw Input Fastq File
         -o OUTFOLDER, --OUTFOLDER OUTFOLDER
-                                Specify the Directory for the Output Folder. If not specified, will use
-                                current working Directory.
+                                Specify the Directory for the Output Folder. If not specified, will use current working Directory.
         -t THREADS, --THREADS THREADS
                                 Number of Threads to use.
         -mem MEMORY, --MEMORY MEMORY
@@ -110,28 +105,21 @@ Performs preprocessing of the Reads for Correction & matching the Barcodes to th
         -rep REPOSITORY, --REPOSITORY REPOSITORY
                                 Specify the Location of the Github Repository Folder for SPTCR Seq
         -pri PRIMER, --PRIMER PRIMER
-                                Specify Custom Primers if not having used either 10X Visium or Single Cell
-                                for the reconstruction of Full Reads by Pychopper.
+                                Specify Custom Primers if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper.
         -conf CONFIGURATION, --CONFIGURATION CONFIGURATION
-                                Specify the possible Configurations of the Custom Primers for Pychopper if
-                                not having used either 10X Visium or Single Cell for the reconstruction of
-                                Full Reads by Pychopper. See PyChoppers Documentation
-                                (https://github.com/epi2me-labs/pychopper) for explanation
+                                Specify the possible Configurations of the Custom Primers for Pychopper if not having used either 10X Visium or Single Cell for the reconstruction of Full Reads by Pychopper. See
+                                PyChoppers Documentation (https://github.com/epi2me-labs/pychopper) for explanation
         -chop PYCHOPPER, --PYCHOPPER PYCHOPPER
-                                Specify if Pychopper should be performed on Input. Will use Input Fastq as
-                                Pychopped File.
+                                Specify if Pychopper should be performed on Input. Will use Input Fastq as Pychopped File.
         -trim ADAPTER_TRIM, --ADAPTER_TRIM ADAPTER_TRIM
-                                Specify if Reads should be trimmed from Adapters. If set to False will use
-                                PyChopper Output
+                                Specify if Reads should be trimmed from Adapters. If set to False will use PyChopper Output
         -igb IGBLAST, --IGBLAST IGBLAST
-                                If True, the preprocessed Fastq is aligned with IgBLAST Following
-                                Processing. If already done, use the Path to the IgBlast Output and skip
+                                If True, the preprocessed Fastq is aligned with IgBLAST Following Processing. If already done, use the Path to the IgBlast Output and skip
         -demux DEMULTIPLEX, --DEMULTIPLEX DEMULTIPLEX
-                                If set to True, extracts Barcode and UMI Region of the Reads and updates
-                                the IgBlast Table. Form is default for downstream purposes, it is
-                                recommended to leave as default if you intend to correct the SPTCR-seq
-                                reads as well.
-
+                                If set to True, extracts Barcode and UMI Region of the Reads and updates the IgBlast Table. Form is default for downstream purposes, it is recommended to leave as default if you intend
+                                to correct the SPTCR-seq reads as well.
+        -bc BARCODES, --BARCODES BARCODES
+                                Specify the Path to the Barcode Whitelist extracted from tissue_positions_list.csv from the Spaceranger Output. If left unfilled, all possible Visium Barcodes will be matched.
 
 
 #### Example
@@ -189,9 +177,9 @@ Overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,
 Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp. Deduplication happens after Correction with SCRIPTS/umi_correction_from_summary.py. Part of 2_Preprocess_Reads.sh but can be called externally. 
 
 #### Usage
-1_Demultiplex_UMI_Extraction.sh [-h] [-n NAME] -i INPUT_FASTQ [-igb INPUT_IGB]
-                                       [-o OUTFOLDER] [-t THREADS] [-mem MEMORY] [-rep REPOSITORY]
-                                       [-a ADAPTER]
+        1_Demultiplex_UMI_Extraction.sh [-h] [-n NAME] -i INPUT_FASTQ [-igb INPUT_IGB] [-o OUTFOLDER] 
+                                        [-t THREADS] [-mem MEMORY] [-rep REPOSITORY] [-a ADAPTER] [-bc BARCODES]
+
 
 Pipeline to barcode and extract UMI regions of ONT Reads for Libraries prepared for 10X Genomics
 
@@ -200,23 +188,22 @@ Pipeline to barcode and extract UMI regions of ONT Reads for Libraries prepared 
         -h, --help            show this help message and exit
         -n NAME, --NAME NAME  Name of Output Folder
         -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
-                        Specify the Path to the Raw unmodified Input Fastq File
+                                Specify the Path to the Raw unmodified Input Fastq File
         -igb INPUT_IGB, --INPUT_IGB INPUT_IGB
-                        Specify the Path to IgBlast File to be demultiplexed with
-                        demultiplex_summarize.py. If not specified will only output table for later
-                        demultiplexing.
+                                Specify the Path to IgBlast File to be demultiplexed with demultiplex_summarize.py. If not specified will only output table for later demultiplexing.
         -o OUTFOLDER, --OUTFOLDER OUTFOLDER
-                        Specify the Directory for the Outputfolder
+                                Specify the Directory for the Outputfolder
         -t THREADS, --THREADS THREADS
-                        Number of Threads
+                                Number of Threads
         -mem MEMORY, --MEMORY MEMORY
-                        RAM to user
+                                RAM to user
         -rep REPOSITORY, --REPOSITORY REPOSITORY
-                        Specify the Location of the Repositroy Folder holding all References and
-                        scripts for SPTCR Seq
+                                Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq
         -a ADAPTER, --ADAPTER ADAPTER
-                        Specify Illumina Read 1 Sequence. Adapter is matched as Anchor, to
-                        demultiplex and extract the UMI Region..
+                                Specify Illumina Read 1 Sequence. Adapter is matched as Anchor, to demultiplex and extract the UMI Region.
+        -bc BARCODES, --BARCODES BARCODES
+                                Specify the Path to the Barcode Whitelist extracted from tissue_positions_list.csv from the Spaceranger Output. If left unfilled, all possible Visium Barcodes will be matched.
+
 
 #### Example
         NAME="TEST"
@@ -265,9 +252,10 @@ Overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,
         Clusters Reads based on their Locus and Variable Gene-Family Annotation generated by IgBlast Alignment, next Read-groups are parallel corrected using Rattle Algorithm and finally annotated by IGBlast.
         
 #### Usage
-3_Cluster_Correct.sh [-h] [-n NAME] -i INPUT_FASTQ -b INPUT_IGB [-o OUTFOLDER] [-t THREADS]
-                            [-lm LOWMEM] [-rep REPOSITORY] [-igb IGBLAST] [-cln CLEANUP]
-                            [-bc BCUMI] [-grp GROUPER]
+
+3_Cluster_Correct.sh [-h] [-n NAME] -i INPUT_FASTQ -b INPUT_IGB [-o OUTFOLDER] [-t THREADS] 
+                        [-lm LOWMEM] [-rep REPOSITORY] [-igb IGBLAST] [-cln CLEANUP] 
+                        [-bc BCUMI] [-bars BARCODES] [-grp GROUPER]
 
 Pipeline to group & Correct T-Cell Receptor Reads generated by Oxford Nanopore Reads of Libraries
 prepared for 10X Genomics
@@ -278,34 +266,27 @@ prepared for 10X Genomics
         -h, --help            show this help message and exit
         -n NAME, --NAME NAME  Name of Output Folder
         -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
-                                Specify the Path to (preprocessed) Fastq File
+                        Specify the Path to (preprocessed) Fastq File
         -b INPUT_IGB, --INPUT_IGB INPUT_IGB
-                                Path to IgBlast.tsv. Use Full IgBlast Output from PreProcessed Reads for
-                                the grouping of TCR Reads.
+                        Path to IgBlast.tsv. Use Full IgBlast Output from PreProcessed Reads for the grouping of TCR Reads.
         -o OUTFOLDER, --OUTFOLDER OUTFOLDER
-                                Specify the Directory for the Outputfolder, default = PWD
+                        Specify the Directory for the Outputfolder, default = PWD
         -t THREADS, --THREADS THREADS
-                                Number of Threads to use, default=2
+                        Number of Threads to use, default=2
         -lm LOWMEM, --LOWMEM LOWMEM
-                                Set to True if Memory & Compute Intensive Parallel-Correction Step should
-                                be done sequentially to reduce System Pressure. default=False
+                        Set to True if Memory & Compute Intensive Parallel-Correction Step should be done sequentially to reduce System Pressure. default=False
         -rep REPOSITORY, --REPOSITORY REPOSITORY
-                                Specify the Location of the Repositroy Folder holding all References and
-                                scripts for SPTCR Seq,default,default=./
+                        Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq,default,default=./
         -igb IGBLAST, --IGBLAST IGBLAST
-                                If True, the corrected Fastq is aligned with IgBLAST Following Correction.
-                                default=True
+                        If True, the corrected Fastq is aligned with IgBLAST Following Correction. default=True
         -cln CLEANUP, --CLEANUP CLEANUP
-                                If True, created intermediate Files and Folders will be deleted. For
-                                Debugging you can set this to False. default=False
+                        If True, created intermediate Files and Folders will be deleted. For Debugging you can set this to False. default=False
         -bc BCUMI, --BCUMI BCUMI
-                                Specify the path to the SAMPLENAME_barcode_umi.csv generated by the
-                                preprocessing pipeline. Defaults to
-                                OUTFOLDER/PreProcessing/SAMPLENAME_barcode_umi.csv
+                        Specify the path to the SAMPLENAME_barcode_umi.csv generated by the preprocessing pipeline. Defaults to OUTFOLDER/PreProcessing/SAMPLENAME_barcode_umi.csv
+        -bars BARCODES, --BARCODES BARCODES
+                        Path to .tsv holding barcodes under Tissue, defaults to: ./Reference/Barcodes/visium_bc.tsv
         -grp GROUPER, --GROUPER GROUPER
-                                Grouper to be used by TCR_GROUPING_IGB.py for grouping the TCR Reads into
-                                Fastqs. Pick one or a combination of: locus,v_family, d_family, j_family,
-                                default= locus, v_family
+                        Grouper to be used by TCR_GROUPING_IGB.py for grouping the TCR Reads into Fastqs. Pick one or a combination of: locus,v_family, d_family, j_family, default= locus, v_family
 
 
 #### Example
@@ -383,36 +364,13 @@ Holds the Folders for each corrected Fastq Group.
 
         ############################
         "${full}" \
-        -n "$SAMPLE_NAME" \
-        -i"${sample}" \
-        -t 8 \
-        -mem 16 \
-        -rep ".." \
-        -cln False 
-
-### Associate TRA/TRB
-
-For Convenience we provide a shell Script to use MADHYPE for association of TRA & TRB Receptors in Space.
-
-**Installation:**
-        ## Create Conda Environment with Python 2
-        conda create -n MADHYPE_ENV python=2.7
-
-        ## Clone Repository into SPTCR-Seq-Pipeline/TOOLS
-        cd TOOLS
-        git clone https://github.com/birnbaumlab/MAD-HYPE.git
-
-        ## Install Dependencies of MADHYPE
-        cd MAD-HYPE
-        python setup.py install
-
-**Usage***
-        # in SPTCR ENV
-        python ./MADHYPE_DATA_PREPARATION.py \
-                -igb PATH/TO/IGB
-
-        ## in MADHYPE_ENV
-        python2 ./run_madhype.py
+                -n "$SAMPLE_NAME" \
+                -i"${sample}" \
+                -t ${THREADS} \
+                -mem ${MEMORY} \
+                -rep "/PATH/TO/GITHUB/REPOSITORY" \
+                -cln False \
+                -o "${OUT}"
 
         
 ### Citations
