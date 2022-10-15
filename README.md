@@ -92,6 +92,7 @@ Performs preprocessing of the Reads for Correction & matching the Barcodes to th
         Pipeline to preprocess, demultiplex and extract UMI regions of Nanopore Reads for Libraries prepared for 10X Genomics
 
 **Arguments**
+
         -h, --help            show this help message and exit
         -n NAME, --NAME NAME  Chosen Name for the Pipeline. Will Be Used as Name for the Pipelines Outfolder.
         -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
