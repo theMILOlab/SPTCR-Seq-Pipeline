@@ -1,19 +1,10 @@
 
 # SPTCR-seq Pipeline
 
-## ONLY FOR INTERNAL PURPOSES (YET) REPOSITORY CONTAINS in ./TOOLS THIRD PARTY CODE
-
 Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Nanopore Sequencing. This Pipeline is used to demultiplex, correct , annotate and UMI correct target enriched T-Cell Receptor cDNA acquired with the SPTCR-seq Protocol.
 
 #### Pipeline Overview
 ![image](https://user-images.githubusercontent.com/70334482/175873404-d5ef14b1-5be4-4789-8ae9-5214b924a89e.png)
-
-#### TCR Infiltration Analysis in spatial Context
-##### Sample 275 TRA/TRB Spatial T-Cell Deconvolution
-<img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/TCR_Expression.png">
-
-##### Sample 275 Spatial TRD/TRG Infiltration
-<img src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/blob/main/Images/GBM275_TRD_TRG_Infiltration.png" width="300">
 
 
 ### Install (Micro)mamba in Base Environment
