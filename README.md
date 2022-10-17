@@ -17,7 +17,7 @@ If you want to do installation by hand, just install as followed and subsequentl
 conda install mamba -n base -c conda-forge
 ```
 
-To install SPTCR-Seq Pipeline with the setup script we minimally require micromamba. Its a lightweight, reduced version of mamba and can be used to especially for fast installation. Install and initialize the script by doing as followed:
+To install SPTCR-Seq Pipeline with the setup script we use micromamba to resolve dependencies faster. Its a lightweight, reduced version of mamba and can be used to especially for fast installation. Install and initialize the script by doing as followed:
 
 ```
 conda install -c conda-forge micromamba
@@ -25,6 +25,11 @@ micromamba shell init --shell=bash --prefix=~/micromamba
 ```
 
 If it finished you can proceed to install remaining dependencies.
+
+
+```
+If you do not wish to use micromamba and install the Pipeline with conda or mamba, just replace the "micromamba ..." commands in setup.sh with -> 'conda/mamba ...'
+```
 
 ## Installation
 
@@ -48,13 +53,14 @@ conda install mamba -n base -c conda-forge
 3. Execute setup.sh to setup an Environment "SPTCR_ENV" with all Dependencies and build Tools from Source:
 
         cd ./SPTCR-Seq-Pipeline
+                !!See above for installation with Micromamba/Mamba
         ./setup.sh
 
-> !! If you have problems compiling RATTLE (especially contained spoa) from source see ./TOOLS/change_c++ versions.txt for some notes on Installation. RATTLE needs GCC/ G++ 9 to compile, see guide on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
+> !! If you have problems compiling RATTLE (especially included spoa) from source see ./TOOLS/change_c++ versions.txt for some help on Installation. RATTLE needs GCC/ G++ 9 to compile, see guide on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
      
 
 4. Activate Environment to run the Pipeline
-        conda activate -n SPTCR_ENV
+        conda activate -n SPTCR_ENV  OR   micromamba  activate -n SPTCR_ENV 
 
 5. For minimal user intervention Pipeline see Exemplary Pipeline: example.sh 
 
@@ -62,10 +68,17 @@ conda install mamba -n base -c conda-forge
 ## Running Pipeline
 
 ### Overview: 
-The Computational Workflow is compromised of two major steps: 
+The Computational Workflow compromises two major steps: 
 
-        1. Preprocessing Reads (2_Preprocess_Reads.sh)
-        2. Cluster & Correct Reads (3_Cluster_Correct.sh)
+        1. Preprocessing Reads (2_Preprocess_Reads.sh), includes:
+           1. Orientation and Trimming of Nanopore Reads
+           2. UMI Region Extraction & Demultiplexing
+           3. Primary Annotation
+
+        2. Cluster & Correct Reads (3_Cluster_Correct.sh), includes:
+           1. Read Grouping by Arrangement
+           2. Correction of T-Cell Receptor Reads by SPOA
+           3. Summary & UMI Correction of Output
 
 When Calling SPTCR_Full_Pipeline.sh with the indicated args, these scripts will be called sequentially with standard args. This is the recommended form to call SPTCR_Pipeline.
 If you want more control of the intermediate steps or reuse already calculated preprocessed reads, then you have to call the scripts sequentially.
@@ -374,8 +387,6 @@ Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequen
 de la Rubia, I., Indi, J.A., Carbonell, S., Lagarde, J., Albà, M.M., Eyras, E., 2020. Reference-free reconstruction and quantification of transcriptomes from long-read sequencing. BioRxiv. doi:10.1101/2020.02.08.939942
 
 Martin, M., 2011. Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet j. 17, 10. doi:10.14806/ej.17.1.200
-
-Holec, P.V., Berleant, J., Bathe, M., Birnbaum, M.E., 2019. A Bayesian framework for high-throughput T cell receptor pairing. Bioinformatics 35, 1318–1325. doi:10.1093/bioinformatics/bty801
 
 tange_2022_6570228,
         author       = {Tange, Ole},
