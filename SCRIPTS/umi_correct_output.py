@@ -125,6 +125,8 @@ tcrs_clean_barcodes=tcrs_clean_barcodes.drop(columns=['UMI Corrected Reverse','U
 tcrs_clean_barcodes=tcrs_clean_barcodes.groupby(['TCR','Spatial Barcode']).sum()
 tcrs_clean_barcodes=tcrs_clean_barcodes.sort_values(by=['UMI Corrected'],ascending=False)
 tcrs_clean_barcodes=tcrs_clean_barcodes.reset_index(drop=False)
+tcrs=tcrs_clean_barcodes.copy()
+del tcrs_clean_barcodes
 
 #######################################################
 ##################### Revert Changes of TCR Col ##################

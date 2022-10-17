@@ -80,7 +80,9 @@ def readfq(fp): # this is a generator function
                 break
 
 
-
+'''
+    Code taken from https://github.com/ksahlin/isONcorrect/blob/master/scripts/evaluate_sirv_to_transcriptome.py
+'''
 
 def cigar_to_seq_mm2(read, full_r_seq, full_q_seq):
     # print()
