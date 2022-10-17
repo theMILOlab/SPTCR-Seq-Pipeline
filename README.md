@@ -1,7 +1,7 @@
 
 # SPTCR-seq Pipeline
 
-Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Nanopore Sequencing. This Pipeline is used to demultiplex, correct , annotate and UMI correct target enriched T-Cell Receptor cDNA acquired with the SPTCR-seq Protocol.
+Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Nanopore Sequencing. SPTCR-seq Pipeline demultiplexes, error corrects, annotates and corrects Nanopore Counts by UMIs (target enriched) T-Cell Receptor Reads acquired from Oxford Nanopore.
 
 #### Pipeline Overview
 ![image](https://user-images.githubusercontent.com/70334482/175873404-d5ef14b1-5be4-4789-8ae9-5214b924a89e.png)
@@ -13,12 +13,12 @@ Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Na
 
 We recommend using the Conda C++ Drop-In package manager mamba (https://github.com/mamba-org/mamba) to resolve all the Dependencies faster. 
 Execute the following Installation steps from conda base environment to automatically install the package manager. 
-If you want to do installation by hand, just install as followed and subsequently, simply change your installation commands from 'conda install ...' to 'mamba install ...'.
+If you want to do installation by hand, just install as followed and subsequently, simply change your installation commands from 'conda install ...' to 'mamba install ...' or 'micromamba install ...'.
 
 
         conda install mamba -n base -c conda-forge
 
-To install SPTCR-Seq Pipeline with the we use micromamba to resolve dependencies faster. Its a lightweight, reduced version of mamba and can be used to especially for fast installation. Install and initialize the script by doing as followed:
+To install SPTCR-Seq Pipeline with the we use micromamba to resolve dependencies faster. Its a lightweight, reduced version of mamba and can be used for fast installation in complex environments. Install and initialize the script by doing as followed:
 
 
         conda install -c conda-forge micromamba
