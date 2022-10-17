@@ -7,50 +7,51 @@ Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Na
 ![image](https://user-images.githubusercontent.com/70334482/175873404-d5ef14b1-5be4-4789-8ae9-5214b924a89e.png)
 
 
+## Installation
+
 ### Install (Micro)mamba in Base Environment
 
 We recommend using the Conda C++ Drop-In package manager mamba (https://github.com/mamba-org/mamba) to resolve all the Dependencies faster. 
 Execute the following Installation steps from conda base environment to automatically install the package manager. 
 If you want to do installation by hand, just install as followed and subsequently, simply change your installation commands from 'conda install ...' to 'mamba install ...'.
 
-```
-conda install mamba -n base -c conda-forge
-```
 
-To install SPTCR-Seq Pipeline with the setup script we use micromamba to resolve dependencies faster. Its a lightweight, reduced version of mamba and can be used to especially for fast installation. Install and initialize the script by doing as followed:
+        conda install mamba -n base -c conda-forge
 
-```
-conda install -c conda-forge micromamba
-micromamba shell init --shell=bash --prefix=~/micromamba
-```
+To install SPTCR-Seq Pipeline with the we use micromamba to resolve dependencies faster. Its a lightweight, reduced version of mamba and can be used to especially for fast installation. Install and initialize the script by doing as followed:
+
+
+        conda install -c conda-forge micromamba
+        micromamba shell init --shell=bash --prefix=~/micromamba
+
 
 If it finished you can proceed to install remaining dependencies.
 
+        If you do not wish to use micromamba and install the Pipeline with conda or mamba, just replace the "micromamba ..." commands with -> 'conda/mamba ...'
 
-```
-If you do not wish to use micromamba and install the Pipeline with conda or mamba, just replace the "micromamba ..." commands in setup.sh with -> 'conda/mamba ...'
-```
 
-## Installation
-
-We recommend using the Conda C++ Drop-In package manager mamba (https://github.com/mamba-org/mamba) to resolve all the Dependencies faster. 
-Execute the following Installation steps from conda base environment to automatically install the package manager. 
-If you want to do installation by hand, just install as followed and subsequently, simply change your installation commands from 'conda install ...' to 'mamba install ...'.
-
-```
-conda install mamba -n base -c conda-forge
-```
-
-**For Installation:**
+**Steps:**
 1. Clone this Repository with
    
         git clone https://github.com/theMILOlab/SPTCR-Seq-Pipeline.git
+        cd SPTCR-Seq-Pipeline
 
 2. For parallel processing in correction step do:
    
-        sudo apt-get install parallel   
+        sudo apt-get install parallel
 
-3. Execute setup.sh to setup an Environment "SPTCR_ENV" with all Dependencies and build Tools from Source:
+3. Setup Environment   
+
+        ### Create SPTCR_ENV
+        micromamba create -f SPTCR_ENV.yml
+
+        ## Activate ENV
+        micromamba activate SPTCR_ENV
+
+        ## Setup Databases for PyIR (IGBlast) to Annotate TCRs
+        pyir setup
+
+4. Execute setup.sh to build Tools from Source:
 
         cd ./SPTCR-Seq-Pipeline
                 !!See above for installation with Micromamba/Mamba
@@ -58,9 +59,6 @@ conda install mamba -n base -c conda-forge
 
 > !! If you have problems compiling RATTLE (especially included spoa) from source see ./TOOLS/change_c++ versions.txt for some help on Installation. RATTLE needs GCC/ G++ 9 to compile, see guide on how to maintain multiple compiler and c++ versions on your computer and to compile RATTLE. Also check the issue section of RATTLE (https://github.com/comprna/RATTLE) !!
      
-
-4. Activate Environment to run the Pipeline
-        conda activate -n SPTCR_ENV  OR   micromamba  activate -n SPTCR_ENV 
 
 5. For minimal user intervention Pipeline see Exemplary Pipeline: example.sh 
 

@@ -1,0 +1,118 @@
+Using kit: PCS109
+Configurations to consider: "+:Read1,-TSO|-:TSO,-Read1"
+Counting fastq records in input file: /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana
+Total fastq records in input file: 20000
+Tuning the cutoff parameter (q) on 5629 sampled reads (50.0%) passing quality filters (Q >= 7.0).
+Optimizing over 30 cutoff values.
+  0%|          | 0/30 [00:00<?, ?it/s]  3%|▎         | 1/30 [00:00<00:23,  1.26it/s]Process ForkProcess-22:
+Process ForkProcess-21:
+Process ForkProcess-23:
+Process ForkProcess-24:
+Process ForkProcess-16:
+Process ForkProcess-15:
+Process ForkProcess-13:
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+Traceback (most recent call last):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 237, in _process_worker
+    call_item = call_queue.get(block=True)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 237, in _process_worker
+    call_item = call_queue.get(block=True)
+Traceback (most recent call last):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/queues.py", line 102, in get
+    with self._rlock:
+Traceback (most recent call last):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 237, in _process_worker
+    call_item = call_queue.get(block=True)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/queues.py", line 102, in get
+    with self._rlock:
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/queues.py", line 102, in get
+    with self._rlock:
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+KeyboardInterrupt
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 237, in _process_worker
+    call_item = call_queue.get(block=True)
+KeyboardInterrupt
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 237, in _process_worker
+    call_item = call_queue.get(block=True)
+KeyboardInterrupt
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 237, in _process_worker
+    call_item = call_queue.get(block=True)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/queues.py", line 103, in get
+    res = self._recv_bytes()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/queues.py", line 102, in get
+    with self._rlock:
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 237, in _process_worker
+    call_item = call_queue.get(block=True)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/queues.py", line 102, in get
+    with self._rlock:
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/connection.py", line 221, in recv_bytes
+    buf = self._recv_bytes(maxlength)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/queues.py", line 102, in get
+    with self._rlock:
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/connection.py", line 419, in _recv_bytes
+    buf = self._recv(4)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/connection.py", line 384, in _recv
+    chunk = read(handle, remaining)
+KeyboardInterrupt
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+KeyboardInterrupt
+KeyboardInterrupt
+KeyboardInterrupt
+  3%|▎         | 1/30 [00:01<00:33,  1.15s/it]
+Traceback (most recent call last):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/bin/cdna_classifier.py", line 355, in <module>
+    for read, (segments, hits, usable_len) in backend(batch, executor, qv, max(1000, int((len(read_sample)) / args.t))):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/site-packages/pychopper/chopper.py", line 110, in chopper_edlib
+    for i, hits in enumerate(batch_hits):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/site-packages/pychopper/edlib_backend.py", line 13, in find_locations
+    for res in pool.map(_find_locations_single, zip(batch, [(all_primers, max_ed)] * len(batch))):
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/process.py", line 567, in _chain_from_iterable_of_lists
+    for element in iterable:
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/_base.py", line 609, in result_iterator
+    yield fs.pop().result()
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/concurrent/futures/_base.py", line 441, in result
+    self._condition.wait(timeout)
+  File "/home/jkbuntu/micromamba/envs/SPTCR_ENV/lib/python3.10/threading.py", line 320, in wait
+    waiter.acquire()
+KeyboardInterrupt

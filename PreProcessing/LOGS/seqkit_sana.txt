@@ -1,0 +1,1 @@
+[INFO][0m File: /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/Example/Example_TCR.fastq	Pass records: 20000	Discarded lines: 0

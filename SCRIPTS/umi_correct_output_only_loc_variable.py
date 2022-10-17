@@ -31,6 +31,7 @@ from collections import defaultdict, Counter
 import pandas as pd
 from tqdm import tqdm
 import os
+from Bio.Seq import Seq
 
 ### Disable Setting Value on Copy Warning
 pd.options.mode.chained_assignment = None
@@ -45,6 +46,7 @@ barcode_col=arg_vars["BCOL"]
 umi_col=arg_vars["UMICOL"]
 OUTNAME=arg_vars["OUTNAME"]
 BARCODES=arg_vars["BARCODES"]
+
 #######################################################
 ############ Summarizing and Preparing DF #############
 
@@ -52,9 +54,9 @@ BARCODES=arg_vars["BARCODES"]
 igb=pd.read_csv(read_dir)
 
 ### Preparing Data
-igb=igb.dropna(subset=['Locus','Variable'])
-igb=igb[['Locus',barcode_col,umi_col]]
-igb=igb.groupby(['Locus','Spatial Barcode','Variable'])['UMI'].apply(list).reset_index(name='UMI List')
+igb=igb.dropna(subset=['Locus','V'])
+igb=igb[['Locus','V',barcode_col,umi_col]]
+igb=igb.groupby(['Locus','V','Spatial Barcode'])['UMI'].apply(list).reset_index(name='UMI List')
 igb['Uncorrected Count']=igb.apply(lambda x: len(x['UMI List']),axis='columns')
 igb=igb.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=True)
 
@@ -75,8 +77,8 @@ for index, row in tqdm(igb.iterrows()):
     else:
         igb.loc[index,'UMI Corrected']=1
         
-igb=igb[["Locus","Spatial Barcode","Uncorrected Count","UMI Corrected"]]
-print(igb)
+igb=igb[["Locus",'V',"Spatial Barcode","Uncorrected Count","UMI Corrected"]]
+
 
 ####### Combine Counts of Complement and Reverse Complement Barcode
 
@@ -115,15 +117,15 @@ igb_clean_barcodes['UMI Corrected']=igb_clean_barcodes[['UMI Corrected Forward',
 igb_clean_barcodes['Uncorrected Count']=igb_clean_barcodes[['Uncorrected Count Forward','Uncorrected Count Reverse','Uncorrected Count Complement']].sum(axis=1)
 igb_clean_barcodes=igb_clean_barcodes.drop(columns=['UMI Corrected Reverse','UMI Corrected Forward','UMI Corrected Complement','Uncorrected Count Reverse','Uncorrected Count Forward','Uncorrected Count Complement'])
 
-igb_clean_barcodes=igb_clean_barcodes.groupby(['TCR','Spatial Barcode']).sum()
+igb_clean_barcodes=igb_clean_barcodes.groupby(['Locus','V','Spatial Barcode']).sum()
 igb_clean_barcodes=igb_clean_barcodes.sort_values(by=['UMI Corrected'],ascending=False)
 igb_clean_barcodes=igb_clean_barcodes.reset_index(drop=False)
 igb=igb_clean_barcodes.copy()
 del igb_clean_barcodes
-
+print(igb)
 #######################################################
 ##################### Write File Out ##################
-#out_path=os.path(OUT)
+
 write_name=sample_name+"_{0}.csv".format(OUTNAME)
 outpath=os.path.join(OUT,write_name)
 igb.to_csv(outpath,index=False)

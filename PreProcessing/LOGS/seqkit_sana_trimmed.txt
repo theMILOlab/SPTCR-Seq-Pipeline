@@ -1,0 +1,1 @@
+[INFO][0m File: /media/jkbuntu/SAMSUNG2TB/Dropbox/KBJasim/Projects/Capture_Sequencing/Github SPTCR-seq Pipeline/SPTCR-Seq-Pipeline/PreProcessing/CUTADAPT/Example_Cutadapt_trimmed.fastq	Pass records: 0	Discarded lines: 0

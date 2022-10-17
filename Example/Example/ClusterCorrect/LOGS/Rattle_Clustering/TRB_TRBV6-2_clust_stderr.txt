@@ -1,4 +1,7 @@
 RNA mode: false
-Reading fasta file... Done
+Reading fasta file... 
+Done
 Gene clustering done
 30 gene clusters found
+Isoform clustering done
+39 isoform clusters found

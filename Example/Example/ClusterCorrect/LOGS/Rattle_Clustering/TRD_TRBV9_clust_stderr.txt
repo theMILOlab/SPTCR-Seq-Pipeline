@@ -1,4 +1,2 @@
 RNA mode: false
-Reading fasta file... Done
-Gene clustering done
-0 gene clusters found
+Reading fasta file... 

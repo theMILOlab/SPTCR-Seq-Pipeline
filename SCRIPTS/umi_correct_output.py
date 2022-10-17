@@ -62,9 +62,7 @@ vdj=vdj.groupby(['TCR','Spatial Barcode'])['UMI'].apply(list).reset_index(name='
 vdj['Uncorrected Count']=vdj.apply(lambda x: len(x['UMI List']),axis='columns')
 vdj=vdj.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=True)
 
-
 vj=vj.groupby(['TCR','Spatial Barcode'])['UMI'].apply(list).reset_index(name='UMI List')
-vj['Uncorrected Count']=""
 vj['Uncorrected Count']=vj.apply(lambda x: len(x['UMI List']),axis='columns')
 vj=vj.sort_values(by='Uncorrected Count',ascending=False).reset_index(drop=True)
 
@@ -117,7 +115,7 @@ comp_tcrs=comp_tcrs.rename(columns={'UMI Corrected':'UMI Corrected Complement','
 
 ## Merge Tables & Correct Count
 tcrs_clean_barcodes=pd.concat([rev_comp_tcrs,fwd_tcrs,comp_tcrs])
-print(tcrs_clean_barcodes['Direction'].value_counts())
+#print(tcrs_clean_barcodes['Direction'].value_counts())
 tcrs_clean_barcodes['UMI Corrected']=tcrs_clean_barcodes[['UMI Corrected Forward','UMI Corrected Reverse','UMI Corrected Complement']].sum(axis=1)
 tcrs_clean_barcodes['Uncorrected Count']=tcrs_clean_barcodes[['Uncorrected Count Forward','Uncorrected Count Reverse','Uncorrected Count Complement']].sum(axis=1)
 tcrs_clean_barcodes=tcrs_clean_barcodes.drop(columns=['UMI Corrected Reverse','UMI Corrected Forward','UMI Corrected Complement','Uncorrected Count Reverse','Uncorrected Count Forward','Uncorrected Count Complement'])
@@ -128,16 +126,19 @@ tcrs_clean_barcodes=tcrs_clean_barcodes.reset_index(drop=False)
 tcrs=tcrs_clean_barcodes.copy()
 del tcrs_clean_barcodes
 
+
 #######################################################
 ##################### Revert Changes of TCR Col ##################
 
 vdj=tcrs[(tcrs['TCR'].str.startswith('TRB'))|(tcrs['TCR'].str.startswith('TRD'))]
 vdj[['Locus','V','D','J','CDR3_aa']]=vdj['TCR'].str.split('___',expand=True)
-vdj=vdj.drop(columns=['TCR','UMI List'])
+vdj=vdj.drop(columns=['TCR'])
+#,'UMI List'
 
 vj=tcrs[(tcrs['TCR'].str.startswith('TRA'))|(tcrs['TCR'].str.startswith('TRG'))]
 vj[['Locus','V','J','CDR3_aa']]=vj['TCR'].str.split('___',expand=True)
-vj=vj.drop(columns=['TCR','UMI List'])
+vj=vj.drop(columns=['TCR'])
+#,'UMI List'
 vj['D']=''
 
 tcrs=pd.concat([vdj,vj])
@@ -145,7 +146,7 @@ print(tcrs)
 
 #######################################################
 ##################### Write File Out ##################
-#out_path=os.path(OUT)
+
 write_name=sample_name+"_{0}.csv".format(OUTNAME)
 outpath=os.path.join(OUT,write_name)
 tcrs.to_csv(outpath,index=False)
