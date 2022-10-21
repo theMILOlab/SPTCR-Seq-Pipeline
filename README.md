@@ -201,7 +201,7 @@ Folder Created by 1_Demultiplex_UMI_Extraction.sh. Holds the demultiplexed IgBla
 
 *./SAMPLENAME_all_barcode_matches.csv*
 
-Holds all relevant Barcode Matches in given edit distance for read found by scTagger. By Default we simply choose the First given Match as Barcode. 
+Holds all relevant Barcode Matches in given edit distance (default 2) for reads found . By Default we simply choose the First given Match as Barcode. 
 
 *./SAMPLENAME_barcode_umi.csv*
 
@@ -209,12 +209,12 @@ Serves as a Demultiplexing, Deduplication Table. Holds Columns: Spatial Barcode,
 
 *./SAMPLENAME_vdj_umi_barcode_uncorrected_df.csv*
 
-Overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI
+Output from ./Scripts/demultiplex_summarize.py overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI. 
 
 
 ### 1.1 Demultiplexing Reads
 ***
-Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp. Deduplication happens after Correction with SCRIPTS/umi_correction_from_summary.py. Part of 2_Preprocess_Reads.sh but can be called externally. 
+Demultiplexing Pipeline that matches the Barcodes to the long Reads. The script extracts the UMI Region from the Long Read by Substracting the Strings Adapter-seq+16bp - Adapter-seq+28bp. Deduplication happens after Correction with SCRIPTS/demultiplex_summarize.py. Part of 2_Preprocess_Reads.sh but can be called externally. 
 
 #### Usage
         1_Demultiplex_UMI_Extraction.sh [-h] [-n NAME] -i INPUT_FASTQ [-igb INPUT_IGB] [-o OUTFOLDER] 
@@ -236,7 +236,7 @@ Pipeline to barcode and extract UMI regions of ONT Reads for Libraries prepared 
         -t THREADS, --THREADS THREADS
                                 Number of Threads
         -mem MEMORY, --MEMORY MEMORY
-                                RAM to user
+                                RAM to use for Barcode Matching 
         -rep REPOSITORY, --REPOSITORY REPOSITORY
                                 Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq
         -a ADAPTER, --ADAPTER ADAPTER
@@ -283,7 +283,7 @@ Serves as a Demultiplexing, Deduplication Table. Holds Columns: Spatial Barcode,
 
 *./SAMPLENAME_vdj_umi_barcode_uncorrected_df.csv*
 
-Overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI
+Output from ./Scripts/demultiplex_summarize.py overview Table of the demultiplexed IgBlast File. Holds Columns: ReadID,Locus,V,D,J,CDR3,CDR3_aa,Spatial Barcode,UMI. 
 
 
 

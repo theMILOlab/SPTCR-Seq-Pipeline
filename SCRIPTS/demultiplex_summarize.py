@@ -24,7 +24,7 @@ from pathlib import Path
 
 #######################################################
 #################### Variables ########################
- 
+
 OUT=str(arg_vars["OUT"])
 ending=str(arg_vars["OUTN"])
 read_dir=arg_vars["IGB"]
@@ -43,6 +43,7 @@ print('Reading only columns with names:',col_names)
 
 MOD_READ_ID=arg_vars['MOD']
 #print(MOD_READ_ID, type(MOD_READ_ID))
+
 #############################################
 ## Read in VDJ Annotation File
 vdj=pd.read_csv(read_dir,sep=SEP,usecols=col_names)
@@ -56,6 +57,7 @@ else:
     vdj['sequence_id']=vdj['sequence_id'].str.split('|',n=1).str[1]
     vdj['sequence_id']=vdj['sequence_id'].str.split('runid').str[0]
     vdj=vdj.rename(columns={'sequence_id':'ReadID'})
+    
 ### Modifying Column Names
 vdj=vdj.rename(columns={col_names[0]:'ReadID',col_names[1]:'Locus',col_names[2]:'V',col_names[3]:'D',col_names[4]:'J',col_names[5]:'CDR3',col_names[6]:'CDR3_aa'})
 
@@ -67,4 +69,4 @@ umi_barcode_df=pd.read_csv(umi_bc)
 ## Demultiplex VDJ Annotation File with Barcode and UMI File
 demux_umi_df=pd.merge(left=vdj,right=umi_barcode_df,on='ReadID')
 print("VDJ Dataframe with UMIs: \n",demux_umi_df)
-demux_umi_df.to_csv('{0}/{1}_{2}.csv'.format(OUT,sample_name,ending),index=False)
+demux_umi_df.to_csv('{0}/{1}_{2}.csv'.format(OUT,sample_name,ending),index=False) 

@@ -255,7 +255,7 @@ rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
 rmdir "${OUTFOLDER}"/IGB_Trimmed
 rm -r "${OUTFOLDER}"/CUTADAPT
 rm -r "${OUTFOLDER}"/PYCHOPPER
-
+ 
 
 
 

@@ -75,7 +75,7 @@ parser.add_argument('-igb', '--INPUT_IGB', help="Specify the Path to IgBlast Fil
 parser.add_argument('-o', '--OUTFOLDER', help="Specify the Directory for the Outputfolder", default="PWD")
 
 parser.add_argument('-t','--THREADS',help="Number of Threads", default="2")
-parser.add_argument('-mem','--MEMORY',help="RAM to user", default="16")
+parser.add_argument('-mem','--MEMORY',help="RAM to use for Barcode Matching", default="16")
 
 parser.add_argument('-rep', '--REPOSITORY', help="Specify the Location of the Repositroy Folder holding all References and scripts for SPTCR Seq",default="../")
 parser.add_argument('-a', '--ADAPTER', default='CTACACGACGCTCTTCCGATCT', 
@@ -225,3 +225,4 @@ if [ -f "${INPUT_IGB}" ]; then
 else
     echo " Not Input IgBlast File given"
 fi
+ 
