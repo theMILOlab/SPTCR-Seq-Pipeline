@@ -1,0 +1,176 @@
+Namespace(reads=['./SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana'], ranges=[[], []], gzipped=False, threads=24, short_read_adapter='CTACACGACGCTCTTCCGATCT', outfile='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode.tsv.gz', plotfile=None, num_bp_after=16)
+Reading ./SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana
+
+0it [00:00, ?it/s]
+80000it [00:00, 1482721.48it/s]
+Aligning CTACACGACGCTCTTCCGATCT to 20000 reads on 24 threads
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+  0%|          | 1/20000 [00:00<1:29:05,  3.74it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 70804.40it/s]
+No ranges for SR adapters have been preset. Detecting directly from data...
+-->  95.19% of strend reads fall around 47
+-->  0.23% of strend reads fall around 904
+Found these ranges on + strand:	[(36, 61)]
+-->  90.00% of strend reads fall around -32
+-->  0.51% of strend reads fall around -820
+Found these ranges on - strand:	[(-44, -22)]
+Filtering alignments using ranges on 24 threads
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+ 28%|██▊       | 5692/20000 [00:00<00:00, 54959.53it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 182259.22it/s]
+Writng to <_io.TextIOWrapper name='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode.tsv.gz' encoding='UTF-8'>
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 208666.13it/s]
+Namespace(reads=['./SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana'], ranges=[[], []], gzipped=False, threads=24, short_read_adapter='CTACACGACGCTCTTCCGATCT', outfile='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode_UMI.tsv.gz', plotfile=None, num_bp_after=28)
+Reading ./SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana
+
+0it [00:00, ?it/s]
+80000it [00:00, 1407933.40it/s]
+Aligning CTACACGACGCTCTTCCGATCT to 20000 reads on 24 threads
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+  0%|          | 1/20000 [00:00<1:26:38,  3.85it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 73119.08it/s]
+No ranges for SR adapters have been preset. Detecting directly from data...
+-->  95.19% of strend reads fall around 47
+-->  0.23% of strend reads fall around 904
+Found these ranges on + strand:	[(36, 61)]
+-->  90.00% of strend reads fall around -32
+-->  0.51% of strend reads fall around -820
+Found these ranges on - strand:	[(-44, -22)]
+Filtering alignments using ranges on 24 threads
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 244500.96it/s]
+Writng to <_io.TextIOWrapper name='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_UMI_Extraction/Example_Extracted_Adapter_Barcode_UMI.tsv.gz' encoding='UTF-8'>
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 201551.85it/s]
+Namespace(reads=['./SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana'], ranges=[[], []], gzipped=False, threads=24, short_read_adapter='CTACACGACGCTCTTCCGATCT', outfile='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_DEMUX/Example_lr_bc.tsv.gz', plotfile=None, num_bp_after=20)
+Reading ./SPTCR-Seq-Pipeline/Example/Example_TCR.fastq_sana
+
+0it [00:00, ?it/s]
+80000it [00:00, 1413562.17it/s]
+Aligning CTACACGACGCTCTTCCGATCT to 20000 reads on 24 threads
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+  0%|          | 1/20000 [00:00<2:00:27,  2.77it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 54358.07it/s]
+No ranges for SR adapters have been preset. Detecting directly from data...
+-->  95.19% of strend reads fall around 47
+-->  0.23% of strend reads fall around 904
+Found these ranges on + strand:	[(36, 61)]
+-->  90.00% of strend reads fall around -32
+-->  0.51% of strend reads fall around -820
+Found these ranges on - strand:	[(-44, -22)]
+Filtering alignments using ranges on 24 threads
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 249298.13it/s]
+Writng to <_io.TextIOWrapper name='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_DEMUX/Example_lr_bc.tsv.gz' encoding='UTF-8'>
+
+  0%|          | 0/20000 [00:00<?, ?it/s]
+100%|██████████| 20000/20000 [00:00<00:00, 230749.14it/s]
+Namespace(long_read_segments='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_DEMUX/Example_lr_bc.tsv.gz', short_read_barcodes='./SPTCR-Seq-Pipeline/Reference/Barcodes/visium_bc.tsv', max_error=2, mem=60.0, barcode_length=16, threads=24, plotfile=None, outfile='./SPTCR-Seq-Pipeline/Example/Only_Summary/Demultiplexing_Example/Example_DEMUX/Example_scTagger_DEMUX.tsv.gz')
+Reading short reads barcodes
+There are 4,992 SR barcodes
+Reading long reads barcodes
+There are 20,000 LRs
+[(2, b'AAA'), (2, b'AAC'), (2, b'AAG'), (2, b'AAT'), (2, b'ACA'), (2, b'ACC'), (2, b'ACG'), (2, b'ACT'), (2, b'AGA'), (2, b'AGC'), (2, b'AGG'), (2, b'AGT'), (2, b'ATA'), (2, b'ATC'), (2, b'ATG'), (2, b'ATT'), (2, b'CAA'), (2, b'CAC'), (2, b'CAG'), (2, b'CAT'), (2, b'CCA'), (2, b'CCC'), (2, b'CCG'), (2, b'CCT'), (2, b'CGA'), (2, b'CGC'), (2, b'CGG'), (2, b'CGT'), (2, b'CTA'), (2, b'CTC'), (2, b'CTG'), (2, b'CTT'), (2, b'GAA'), (2, b'GAC'), (2, b'GAG'), (2, b'GAT'), (2, b'GCA'), (2, b'GCC'), (2, b'GCG'), (2, b'GCT'), (2, b'GGA'), (2, b'GGC'), (2, b'GGG'), (2, b'GGT'), (2, b'GTA'), (2, b'GTC'), (2, b'GTG'), (2, b'GTT'), (2, b'TAA'), (2, b'TAC'), (2, b'TAG'), (2, b'TAT'), (2, b'TCA'), (2, b'TCC'), (2, b'TCG'), (2, b'TCT'), (2, b'TGA'), (2, b'TGC'), (2, b'TGG'), (2, b'TGT'), (2, b'TTA'), (2, b'TTC'), (2, b'TTG'), (2, b'TTT')]
+Running get_matches_prefix on 24 threads and 64 tasks
+Memory usage: 0.08GB
+::::Example Demultiplexing::::
+                                    ReadID           Barcode
+0     1e3bc9e7-6e55-4242-806d-d6eae46b621f  GGTGGGATTAGGTCCC
+1     f8e40593-e913-4259-9a42-9266a7c14f09  TCCTTACGACGGTCCG
+2     1c3e69d7-8858-43df-a329-f3f551fbf1e4  AACCAGACTCTTCGGT
+3     b2e47859-226a-4446-9c86-3c1999fc90f7  AGTGATGACGCGTATA
+4     bba4f060-27ae-4eba-9566-cdc7a92a4d17  CGTAGCAGTAATGGAC
+...                                    ...               ...
+7100  52512dd4-f228-4015-9ad7-98cf86399b26  GAGCTCAACATGAGCG
+7101  36c68a8d-3891-4643-85a6-4edb53324b0b  GACTGATTGGTCACAA
+7102  58d566c4-f0ad-4815-aefd-c5f75da645f6  GTCTTAATGACCCTTC
+7103  dd7c2464-e3d3-40cc-9a2d-fcb763c2bbea  CAAACTCTCAAGAGCA
+7104  19aff814-9700-41ae-bef2-6328d5ec4113  CATTTATCGTTCAAGA
+
+[7105 rows x 2 columns]
+::::Example Add UMI Column::::
+Adapter and Barcode and UMI                                   ReadID  ...  Adapter Len
+4   420d5498-c641-4173-8ace-785f873a2dfa  ...         30.0
+7   1e3bc9e7-6e55-4242-806d-d6eae46b621f  ...         30.0
+8   8881aaa6-4a4d-4806-a329-ceffdcb6f63e  ...         30.0
+9   067c9ac4-ab07-4e1e-8017-2addeb04a0b7  ...         30.0
+10  f8e40593-e913-4259-9a42-9266a7c14f09  ...         30.0
+
+[5 rows x 5 columns]
+Adapter and Barcode                                   ReadID  ...  Adapter Len
+4   420d5498-c641-4173-8ace-785f873a2dfa  ...         18.0
+7   1e3bc9e7-6e55-4242-806d-d6eae46b621f  ...         18.0
+8   8881aaa6-4a4d-4806-a329-ceffdcb6f63e  ...         18.0
+9   067c9ac4-ab07-4e1e-8017-2addeb04a0b7  ...         18.0
+10  f8e40593-e913-4259-9a42-9266a7c14f09  ...         18.0
+
+[5 rows x 5 columns]
+:::: Example ::::
+--- Merging UMI Extraction Dfs ---
+                                 ReadID  ...  Adapter Len_y
+0  420d5498-c641-4173-8ace-785f873a2dfa  ...           18.0
+1  1e3bc9e7-6e55-4242-806d-d6eae46b621f  ...           18.0
+2  8881aaa6-4a4d-4806-a329-ceffdcb6f63e  ...           18.0
+3  067c9ac4-ab07-4e1e-8017-2addeb04a0b7  ...           18.0
+4  f8e40593-e913-4259-9a42-9266a7c14f09  ...           18.0
+
+[5 rows x 9 columns]
+--- Substracting Barcode-UMI Regions ---
+Merged UMI Barcode DF Example
+                                 ReadID           UMI           Barcode
+0  1e3bc9e7-6e55-4242-806d-d6eae46b621f  CATTTATGAGTT  GGTGGGATTAGGTCCC
+1  f8e40593-e913-4259-9a42-9266a7c14f09  GGGTGTTAGGTT  TCCTTACGACGGTCCG
+2  1c3e69d7-8858-43df-a329-f3f551fbf1e4  AAACGAAACGAG  AACCAGACTCTTCGGT
+3  b2e47859-226a-4446-9c86-3c1999fc90f7  TATTTGGTCATT  AGTGATGACGCGTATA
+4  bba4f060-27ae-4eba-9566-cdc7a92a4d17  CAGTGCATATTA  CGTAGCAGTAATGGAC
+0       ACGACCGAACAC
+1       CTCAGTTTGCTT
+2       CACCTAATTCAC
+3       CTAATTGTCTAT
+4       GTACAGCTTGCA
+            ...     
+7100    ACCGGCATTAAC
+7101    AAAAAACCTCTG
+7102    TTTTTTTTTTTT
+7103    ATAGCACGAGAG
+7104    AAAAGAATGACG
+Name: UMI, Length: 7105, dtype: object
+       Spatial Barcode                                ReadID           UMI
+0     AAACAATCTACTAGCA  12a1e67b-6fc7-4c8a-ab35-d8656f141d04  ACGACCGAACAC
+1     AAACAGGGTCTATATT  cd0f8892-d2a9-4dfc-899d-9fd0b476442c  CTCAGTTTGCTT
+2     AAACCGGGTAGGTACC  6c652882-b2cf-4940-bdc4-84fdf9aba6a9  CACCTAATTCAC
+3     AAACCGGGTAGGTACC  40b94a71-e06f-4a66-b1f5-2feb9ff5f7f7  CTAATTGTCTAT
+4     AAACCTAAGCAGCCGG  9fc7e314-a249-4b6f-8111-a4c71351d009  GTACAGCTTGCA
+...                ...                                   ...           ...
+4179  TTGTTTCATTAGTCTA  3410d799-0234-4893-af81-2b254cc353a9  AGGTCTTCTTTT
+4180  TTGTTTCCATACAACT  2233264d-d29a-45d2-a040-dd6f8f1e1e2b  TGTCTGAGTTTT
+4181  TTGTTTCCATACAACT  819d956c-1fc4-41fc-9d63-228da7a95494  TGGAGCATCGTT
+4182  TTGTTTGTGTAAATTC  fefcbd92-67fc-4523-b8dc-94e0e3dd946d  ACCATTCTGTTT
+4183  TTGTTTGTGTAAATTC  7b5758fd-ed05-45d0-b496-5ddcbacee919  CCAAGGATGTTT
+
+[4184 rows x 3 columns]
+4184
+2921
+       Spatial Barcode                                ReadID           UMI
+0     AAACAATCTACTAGCA  12a1e67b-6fc7-4c8a-ab35-d8656f141d04  ACGACCGAACAC
+1     AAACAGGGTCTATATT  cd0f8892-d2a9-4dfc-899d-9fd0b476442c  CTCAGTTTGCTT
+2     AAACCGGGTAGGTACC  6c652882-b2cf-4940-bdc4-84fdf9aba6a9  CACCTAATTCAC
+3     AAACCGGGTAGGTACC  40b94a71-e06f-4a66-b1f5-2feb9ff5f7f7  CTAATTGTCTAT
+4     AAACCTAAGCAGCCGG  9fc7e314-a249-4b6f-8111-a4c71351d009  GTACAGCTTGCA
+...                ...                                   ...           ...
+7100  CCAGAAGTCGATCCAA  267caec0-759c-4d83-83d1-35cb058f4418  GTTAATGCCGGT
+7101  GTGGTACCCAATCCAA  6c3db648-a44c-4f85-a90c-4d20001e4f70  CAGAGGTTTTTT
+7102  TGACGTGGCTGCACAA  608dddaa-5efa-4a70-afd5-3e17d29eafa5  AAAAAAAAAAAA
+7103  TAGACTAATGAAACAA  c58a2537-7724-455c-81c8-5f8b5f428ab0  CTCTCGTGCTAT
+7104  GAATTTACACAAACAA  dc4a9c90-6c0c-4195-8878-dc8ec5663d55  CGTCATTCTTTT
+
+[7105 rows x 3 columns]

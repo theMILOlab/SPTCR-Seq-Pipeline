@@ -48,6 +48,9 @@ If it finished you can proceed to install remaining dependencies.
         ## Activate ENV
         micromamba activate SPTCR_ENV
 
+        > If env was create with conda/ mamba activating the environment can be done with conda/mamba activate SPTCR_Env. Only if installed with micromamba it has to be micromamba activate SPTCR_ENV
+
+
         ## Setup Databases for PyIR (IGBlast) to Annotate TCRs
         pyir setup
 
@@ -70,16 +73,50 @@ The Computational Workflow compromises two major steps:
 
         1. Preprocessing Reads (2_Preprocess_Reads.sh), includes:
            1. Orientation and Trimming of Nanopore Reads
-           2. UMI Region Extraction & Demultiplexing
-           3. Primary Annotation
+           2. Primary Annotation (1_DEmultiplex_UMI_Extraction.sh)
+           3. UMI Region Extraction & Demultiplexing
 
         2. Cluster & Correct Reads (3_Cluster_Correct.sh), includes:
            1. Read Grouping by Arrangement
-           2. Correction of T-Cell Receptor Reads by SPOA
+           2. Consensus correction of T-Cell Receptor Reads by SPOA
            3. Summary & UMI Correction of Output
 
 When Calling SPTCR_Full_Pipeline.sh with the indicated args, these scripts will be called sequentially with standard args. This is the recommended form to call SPTCR_Pipeline.
 If you want more control of the intermediate steps or reuse already calculated preprocessed reads, then you have to call the scripts sequentially.
+
+### Full Pipeline
+Performs the full SPTCR-Pipeline on raw input Fastq File. Only required Input is the Input Fastq. 
+
+### Usage
+
+        usage: SPTCR_FULL_Pipeline.sh [-h] [-n NAME] -i INPUT_FASTQ [-o OUTFOLDER]
+                                [-t THREADS] [-mem MEMORY] [-rep REPOSITORY]
+                                [-cln CLEANUP] [-lm LOWMEM]
+
+        Full Pipeline to Demultiplex, PreProcess & Correct T-Cell Receptor Reads
+        optained by Oxford Nanopore Long Read Sequencing
+
+        options:
+        -h, --help            show this help message and exit
+        -n NAME, --NAME NAME  Sample Name/Name of Output Folder
+        -i INPUT_FASTQ, --INPUT_FASTQ INPUT_FASTQ
+                                Specify the Path (preprocessed) Fastq File
+        -o OUTFOLDER, --OUTFOLDER OUTFOLDER
+                                Specify the Directory for the Outputfolder
+        -t THREADS, --THREADS THREADS
+                                Number of Threads
+        -mem MEMORY, --MEMORY MEMORY
+                                RAM to user
+        -rep REPOSITORY, --REPOSITORY REPOSITORY
+                                Specify the Location of the Github Repository Folder
+                                for SPTCR Seq
+        -cln CLEANUP, --CLEANUP CLEANUP
+                                If True, created intermediate Files and Folders will
+                                be deleted. For Debugging you can set this to False.
+        -lm LOWMEM, --LOWMEM LOWMEM
+                                Set to True if Memory & Compute Intensive Parallel-
+                                Correction Step should be done sequentially
+
 
 ### 1. Combined Demultiplexing & Preprocessing of Reads
 ***    

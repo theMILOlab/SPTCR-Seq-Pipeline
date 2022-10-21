@@ -166,6 +166,7 @@ if [ ${PYCHOPPER} = True ]; then
 else echo " :::: Skipping Pychopper ::::"
     PYCHOPPED="${INPUT_FASTQ}" 
 fi
+
 ##################
 if [ ${ADAPTER_TRIM} = True ]; then
     echo "$(timestamp)"
@@ -254,6 +255,8 @@ rmdir "${OUTFOLDER}"/IGB_Trimmed/TEMP_"${SAMPLE_NAME}"
 rmdir "${OUTFOLDER}"/IGB_Trimmed
 rm -r "${OUTFOLDER}"/CUTADAPT
 rm -r "${OUTFOLDER}"/PYCHOPPER
+
+
 
 
 echo " ::::: Demultiplexing Output :::::"

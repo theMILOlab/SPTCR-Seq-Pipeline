@@ -93,14 +93,17 @@ mkdir "${OUT}"
 ################################################################
 ################## Scrip Execution BLOCK########################
 ################################################################
+
 cd "${OUT}"
+
 echo "################## PreProcessing $NAME ########################"
 bash "${preproc}" \
         -n ${NAME} \
         -i "${INPUT_FASTQ}" \
         -t ${THREADS} \
         -mem ${MEMORY} \
-        -rep "${REPOSITORY}"
+        -rep "${REPOSITORY}" \
+        
 
 
 cd "${OUT}"
