@@ -5,6 +5,7 @@ Explore spatially resolved T-Cell Infiltration at high resolution with Oxford Na
 
 #### Pipeline Overview
 ![image](https://user-images.githubusercontent.com/70334482/175873404-d5ef14b1-5be4-4789-8ae9-5214b924a89e.png)
+<img width="1568" alt="Workflow" src="https://github.com/theMILOlab/SPTCR-Seq-Pipeline/assets/70334482/953430e1-ee2b-4fe0-a553-13daf85234f5">
 
 
 ## Installation
